@@ -83,9 +83,9 @@ public class Vision extends SubsystemBase {
     return ty;
   }
 
-  public double getTa(){
-    return ta;
-  }
+  // public double getTa(){
+  //   return ta;
+  // }
 
   public void getDistance() {
 
