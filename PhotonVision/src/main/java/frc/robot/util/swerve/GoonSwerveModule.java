@@ -4,9 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
-
+import com.ctre.phoenix6.configs.ParentConfigurator;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -23,11 +24,10 @@ public class GoonSwerveModule {
     public String name; // example: frontleft
     private Rotation2d angleOffset;
     private Rotation2d lastAngle;
-
     private WPI_TalonFX angleMotor;
     private WPI_TalonFX driveMotor;
     private WPI_CANCoder angleEncoder;
-
+                             
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
     public GoonSwerveModule(int modNum, String moduleName, SwerveModuleConstants swerveModuleConstants){

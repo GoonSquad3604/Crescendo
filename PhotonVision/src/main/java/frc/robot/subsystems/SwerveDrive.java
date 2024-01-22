@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 
-import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.hal.HAL.SimPeriodicAfterCallback;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -30,13 +30,13 @@ public class SwerveDrive extends SubsystemBase {
   private static SwerveDrive _instance;
   public SwerveDriveOdometry swerveDriveOdometry;
   private GoonSwerveModule[] swerveMods; 
-  private PigeonIMU m_Pigeon;
+  private Pigeon2 m_Pigeon;
   private Field2d m_Field2d;
 
 
   public SwerveDrive() {
     m_Field2d = new Field2d();
-    m_Pigeon = new PigeonIMU(Constants.Swerve.pigeonID);
+    m_Pigeon = new Pigeon2(Constants.Swerve.pigeonID);
     m_Pigeon.configFactoryDefault();
     zeroGyro();
 
