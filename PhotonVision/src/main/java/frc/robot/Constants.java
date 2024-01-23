@@ -31,8 +31,8 @@ public final class Constants {
     public static final class Swerve{
 
         // /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(23); //TODO: Match this to robot
-        public static final double wheelBase = Units.inchesToMeters(23); //TODO: Math this to robot
+        public static final double trackWidth = Units.inchesToMeters(22.5); //TODO: Match this to robot
+        public static final double wheelBase = Units.inchesToMeters(22.5); //TODO: Math this to robot
 
         public static final int pigeonID = 25;
         

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.net.Proxy.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
@@ -46,7 +47,7 @@ public class Vision extends SubsystemBase {
   private final double cameraAngle = Units.degreesToRadians(20);
   private final double targetLowerHeight = 0.59;
   private double distance;
-  AprilTagFieldLayout aprilTagFieldLayout;
+  static AprilTagFieldLayout aprilTagFieldLayout;
 
   /** Creates a new Vision. */
   public Vision() {
@@ -58,7 +59,7 @@ public class Vision extends SubsystemBase {
       AprilTagFieldLayout aprilTagFieldLayout = null;
     }
     Transform3d robotToCam = new Transform3d(new Translation3d(.5,0,.5),new Rotation3d(0,0,0));
-
+    
 
    PhotonPoseEstimator photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
   }
@@ -95,13 +96,14 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("Distance", distance);
   }
 
+  List<Integer> tags = new ArrayList<>();
   @Override
   public void periodic() {
     
     result = camera.getLatestResult();
     hasTarget = result.hasTargets();
     List<PhotonTrackedTarget> targets = result.getTargets();
-
+    tags.clear();
     if(hasTarget){
       PhotonTrackedTarget bestTarget = result.getBestTarget();
       tx = bestTarget.getYaw();
@@ -115,8 +117,12 @@ public class Vision extends SubsystemBase {
     getDistance();
     SmartDashboard.putBoolean("hastarget", hasTarget);
     SmartDashboard.putNumber("tx", tx);
+    SmartDashboard.putNumber("x", bestCameraToTarget.getX());
     SmartDashboard.putNumber("ty", ty);
+    SmartDashboard.putNumber("y", bestCameraToTarget.getY());
     SmartDashboard.putNumber("ta", ta);
+    SmartDashboard.putNumber("z", bestCameraToTarget.getZ());
+
     SmartDashboard.putNumber("targetID",targetID);
   }
 }
