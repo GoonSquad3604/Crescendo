@@ -1,32 +1,56 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.drive;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Vision;
+import java.util.function.BooleanSupplier;
+import frc.robot.commands.drive.SwerveDefaultDrive;
 
 public class Aim extends Command {
-  /** Creates a new Aim. */
-  public Aim() {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  Vision m_Vision;
+  private SwerveDrive m_Drive;
+  private double direction;
+  private double speed = 1.0;
+
+  private double tx1;
+  public Aim(SwerveDrive drive) {
+    m_Vision = Vision.getInstance();
+    m_Drive = drive;
+
+    addRequirements(m_Drive, m_Vision);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if(m_Vision.getHasTarget()) {
+      end(false);
+    }    
+    tx1 = m_Vision.getTx();
+    if(m_Vision.getTx() > 0) direction = 1.0;
+    else direction = -1.0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_Drive.drive(new Translation2d(0,0), speed*direction, true, false);
+    if(m_Vision.getTx() > 0) direction = 1.0;
+    else direction = -1.0;
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(m_Vision.getTx()) < 0.1;
   }
 }

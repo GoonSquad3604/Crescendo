@@ -49,7 +49,7 @@ public class Vision extends SubsystemBase {
 
   private final double cameraHeight = 0.17;
   private final double cameraAngle = Units.degreesToRadians(20);
-  private final double targetLowerHeight = 0.59;
+  private final double targetLowerHeight = 1.4;
   private double distance;
   static AprilTagFieldLayout aprilTagFieldLayout;
 
