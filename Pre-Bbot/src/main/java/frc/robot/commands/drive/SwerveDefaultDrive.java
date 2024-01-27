@@ -20,9 +20,12 @@ public class SwerveDefaultDrive extends Command {
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
+  private DoubleSupplier slower;
+
+  private double speed;
 
   /** Creates a new SwerveDefaultDrive. */
-  public SwerveDefaultDrive(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+  public SwerveDefaultDrive(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, DoubleSupplier slower, BooleanSupplier robotCentricSup) {
 
     this.s_Swerve = SwerveDrive.getInstance();
     
@@ -30,6 +33,7 @@ public class SwerveDefaultDrive extends Command {
     this.strafeSup = strafeSup;
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
+    this.slower = slower;
 
     addRequirements(s_Swerve);
   }
@@ -37,11 +41,14 @@ public class SwerveDefaultDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    if(slower.getAsDouble()>.5){
+      speed = .25;
+    }
+    else speed =1;
     /* Get Values, Deadband*/
-    double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.General.stickDeadband);
-    double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.General.stickDeadband);
-    double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.General.stickDeadband);
+    double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.General.stickDeadband)*speed;
+    double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.General.stickDeadband)*speed;
+    double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.General.stickDeadband)*speed;
 
     /* Drive */
     s_Swerve.drive(

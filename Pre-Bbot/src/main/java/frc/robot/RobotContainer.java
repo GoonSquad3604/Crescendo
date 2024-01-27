@@ -1,3 +1,4 @@
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -10,7 +11,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drive.Aim;
+import frc.robot.commands.drive.Aim2PID;
+import frc.robot.commands.drive.AimPID;
 import frc.robot.commands.drive.SwerveDefaultDrive;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Vision;
 
@@ -23,12 +27,14 @@ public class RobotContainer {
     
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
-
-  private Vision s_Vision = Vision.getInstance();
+  // private final Shooter s_Shooter = Shooter.getInstance();
+  private Vision s_Vision = Vision.getInstance(s_Swerve);
   public RobotContainer() {
 
     /* Default Commands */
@@ -37,6 +43,7 @@ public class RobotContainer {
         () -> driver.getLeftY(), 
         () -> driver.getLeftX(), 
         () -> driver.getRightX(), 
+        () -> driver.getLeftTriggerAxis(),
         robotCentric)
     );
 
@@ -50,8 +57,16 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
     driverX.onTrue(new Aim(s_Swerve));
+    driverB.onTrue(new Aim2PID(s_Swerve, driver, s_Vision));
 
-    
+    // driverY.onTrue(new InstantCommand(() -> s_Shooter.spin()));
+        
+    // driverY.onFalse(new InstantCommand(() -> s_Shooter.stop()));
+
+    // driverA.onTrue(new InstantCommand(() -> s_Shooter.spin(1)));
+    // driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
+
+
   }
 
   public Command getAutonomousCommand() {

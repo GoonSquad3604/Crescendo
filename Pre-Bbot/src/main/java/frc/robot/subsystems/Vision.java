@@ -18,6 +18,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -43,21 +44,26 @@ public class Vision extends SubsystemBase {
   private double y=0;
   private double z=0;
 
-  private double[] pose;
   Transform3d bestCameraToTarget;
   private int targetID;
 
-  private final double cameraHeight = 0.17;
-  private final double cameraAngle = Units.degreesToRadians(20);
-  private final double targetLowerHeight = 1.4;
+  private final double cameraHeight = 0.165;
+  private final double cameraAngle = Units.degreesToRadians(19.9);
+  private final double targetLowerHeight = 1.36;
   private double distance;
   static AprilTagFieldLayout aprilTagFieldLayout;
-
+  private Rotation2d rotation;
+  private Transform3d fieldToCamera;
+  PhotonPoseEstimator photonPoseEstimator;
+  private Rotation2d targetToRobotRotation2d;
+  private double toTargetRotation;
+  private SwerveDrive m_Swerve;
   /** Creates a new Vision. */
-  public Vision() {
+  public Vision(SwerveDrive swerve) {
     camera = new PhotonCamera("photonvision");
+    //m_Swerve = drive;
     try{
-      AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
+      AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
     }
     catch(Exception e) {
       AprilTagFieldLayout aprilTagFieldLayout = null;
@@ -65,18 +71,18 @@ public class Vision extends SubsystemBase {
    Transform3d robotToCam = new Transform3d(new Translation3d(.5,0,.5),new Rotation3d(0,0,0));
     
 
-   PhotonPoseEstimator photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
+    photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
   }
 
-  public static Vision getInstance(){
+  public static Vision getInstance(SwerveDrive swerve){
     if(_instance == null){
-      _instance = new Vision();
+      _instance = new Vision(swerve);
     }
 
     return _instance;
 
   }
-
+  
   public boolean getHasTarget(){
     return hasTarget;
   }
@@ -88,13 +94,16 @@ public class Vision extends SubsystemBase {
     return ty;
   }
 
-  // public double getTa(){
-  //   return ta;
-  // }
+  public double targetToRobotRotation(){
+    toTargetRotation = m_Swerve.getPose().getRotation().getRadians();
+    return toTargetRotation;
+  }
+  
 
   public void getDistance() {
 
     //distance = Math.pow(3.3, -(ty/16.5)+0.27);
+
     
     distance = PhotonUtils.calculateDistanceToTargetMeters(cameraHeight, targetLowerHeight, cameraAngle, Units.degreesToRadians(ty));
     SmartDashboard.putNumber("Distance", distance);
@@ -106,9 +115,15 @@ public class Vision extends SubsystemBase {
     
     result = camera.getLatestResult();
     hasTarget = result.hasTargets();
+    // if (result.getMultiTagResult().estimatedPose.isPresent){
+    //   fieldToCamera = result.getMultiTagResult().estimatedPose.best;
+    
+    // }
     List<PhotonTrackedTarget> targets = result.getTargets();
     tags.clear();
+
     if(hasTarget){
+      //photonPoseEstimator.update();
       PhotonTrackedTarget bestTarget = result.getBestTarget();
       tx = bestTarget.getYaw();
       ty = bestTarget.getPitch();
@@ -120,12 +135,20 @@ public class Vision extends SubsystemBase {
       z = bestCameraToTarget.getZ();
 
       targetID = bestTarget.getFiducialId();
-      
+
+     
+     try{var targetpose = aprilTagFieldLayout.getTagPose(5);
+      SmartDashboard.putNumber("apriltagheight", targetpose.get().getZ());
+      }
+    catch(Exception e){}
+
+     
     }
 
 
-
+    //targetToRobotRotation = targetToRobotRotation();
     getDistance();   
+    //SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
     SmartDashboard.putBoolean("hastarget", hasTarget);
     SmartDashboard.putNumber("tx", tx);
     SmartDashboard.putNumber("ty", ty);

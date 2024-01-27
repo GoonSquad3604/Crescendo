@@ -19,7 +19,7 @@ public class Aim extends Command {
 
   private double tx1;
   public Aim(SwerveDrive drive) {
-    m_Vision = Vision.getInstance();
+    m_Vision = Vision.getInstance(drive);
     m_Drive = drive;
 
     addRequirements(m_Drive, m_Vision);
@@ -30,7 +30,6 @@ public class Aim extends Command {
     if(m_Vision.getHasTarget()) {
       end(false);
     }    
-    tx1 = m_Vision.getTx();
     if(m_Vision.getTx() > 0) direction = 1.0;
     else direction = -1.0;
   }
@@ -39,8 +38,8 @@ public class Aim extends Command {
   @Override
   public void execute() {
     m_Drive.drive(new Translation2d(0,0), speed*direction, true, false);
-    if(m_Vision.getTx() > 0) direction = 1.0;
-    else direction = -1.0;
+    if(m_Vision.getTx() > 0) direction = -.5;
+    else direction = .5;
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +50,6 @@ public class Aim extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Vision.getTx()) < 0.1;
+    return Math.abs(m_Vision.getTx()) < 0.3;
   }
 }
