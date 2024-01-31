@@ -25,14 +25,14 @@ public class Aim2PID extends PIDCommand {
         // This should return the measurement
         () -> Math.abs(swerve.getPose().getRotation().getRadians()),
         // This should return the setpoint (can also be a constant)
-        () -> vision.targetToRobotRotation(),
+        () -> vision.targetToRobotRotation(swerve),
         // This uses the output
         output -> {
             swerve.drive(new Translation2d(driver.getLeftY()*.2,driver.getLeftX()*.2),output, true,false);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(.3,1);
+    getController().setTolerance(.1,1);
     getController().enableContinuousInput(-180,180);
     m_Drive = SwerveDrive.getInstance();
     addRequirements(m_Drive);

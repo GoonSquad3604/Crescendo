@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.net.Proxy.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -18,6 +19,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -57,26 +59,28 @@ public class Vision extends SubsystemBase {
   PhotonPoseEstimator photonPoseEstimator;
   private Rotation2d targetToRobotRotation2d;
   private double toTargetRotation;
-  private SwerveDrive m_Swerve;
+
+  private Transform3d robotToCam;
+  private Pose3d robotPose;
   /** Creates a new Vision. */
-  public Vision(SwerveDrive swerve) {
+  public Vision() {
     camera = new PhotonCamera("photonvision");
-    //m_Swerve = drive;
+ 
     try{
       AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
     }
     catch(Exception e) {
       AprilTagFieldLayout aprilTagFieldLayout = null;
     }
-   Transform3d robotToCam = new Transform3d(new Translation3d(.5,0,.5),new Rotation3d(0,0,0));
+    robotToCam = new Transform3d(new Translation3d(.5,0,.5),new Rotation3d(0,0,0));
     
 
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
   }
 
-  public static Vision getInstance(SwerveDrive swerve){
+  public static Vision getInstance(){
     if(_instance == null){
-      _instance = new Vision(swerve);
+      _instance = new Vision();
     }
 
     return _instance;
@@ -94,20 +98,18 @@ public class Vision extends SubsystemBase {
     return ty;
   }
 
-  public double targetToRobotRotation(){
-    toTargetRotation = m_Swerve.getPose().getRotation().getRadians();
+  public double targetToRobotRotation(SwerveDrive m_Swerve){
+    toTargetRotation = m_Swerve.getPose().getRotation().getRadians()+tx;
     return toTargetRotation;
   }
   
 
-  public void getDistance() {
-
-    //distance = Math.pow(3.3, -(ty/16.5)+0.27);
-
-    
+  public void getDistance() {    
     distance = PhotonUtils.calculateDistanceToTargetMeters(cameraHeight, targetLowerHeight, cameraAngle, Units.degreesToRadians(ty));
     SmartDashboard.putNumber("Distance", distance);
   }
+
+  
 
   List<Integer> tags = new ArrayList<>();
   @Override
@@ -129,6 +131,8 @@ public class Vision extends SubsystemBase {
       ty = bestTarget.getPitch();
       ta = bestTarget.getArea();
       bestCameraToTarget = bestTarget.getBestCameraToTarget();
+      Pose3d bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
+      robotPose = PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget,bestTagPose, robotToCam); 
 
       x = bestCameraToTarget.getX();
       y = bestCameraToTarget.getY();

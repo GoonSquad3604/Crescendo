@@ -131,6 +131,11 @@ public final class Constants {
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
     }
+    public static final class ShooterConstants{
+        public static final int leftID =4;
+        public static final int rightID = 2;
+        public static final int indexID = 3;
+    }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 3;

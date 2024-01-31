@@ -4,34 +4,42 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+
 public class Shooter extends SubsystemBase {
  
   private static Shooter _instance;
-  private static final int leftID =1;
-  private static final int rightID = 2;
+
 
   private CANSparkFlex leftMotor;
   private CANSparkFlex rightMotor;
+  private CANSparkFlex indexMotor;
 
   private SparkPIDController leftController;
   private SparkPIDController rightController;
+  private SparkPIDController indexController;
 
   private RelativeEncoder leftEncoder;
   private RelativeEncoder rightEncoder;
-  
-  private double leftPower, kP, rightPower, kD, kI, kF;
+  private RelativeEncoder indexEncoder;
+  private DigitalInput sensor;
+
+  private double leftPower, kP, rightPower, kD, kI, kF, indexPower;
 
 
   /** Creates a new Shooter. */
@@ -42,20 +50,25 @@ public class Shooter extends SubsystemBase {
     kD=0;
     kI=0;
     kF = 0.00016;
+    indexPower = -0.5;
 
-    leftMotor = new CANSparkFlex(leftID, MotorType.kBrushless);
-    rightMotor = new CANSparkFlex(rightID, MotorType.kBrushless);
+    leftMotor = new CANSparkFlex(Constants.ShooterConstants.leftID, MotorType.kBrushless);
+    rightMotor = new CANSparkFlex(Constants.ShooterConstants.rightID, MotorType.kBrushless);
+    indexMotor = new CANSparkFlex(Constants.ShooterConstants.indexID, MotorType.kBrushless);
 
     leftMotor.restoreFactoryDefaults();
     rightMotor.restoreFactoryDefaults();
-
+    indexMotor.restoreFactoryDefaults();
+    
     rightMotor.setInverted(true);
 
     leftController = leftMotor.getPIDController();
     rightController = rightMotor.getPIDController();
+    indexController = indexMotor.getPIDController();
 
     leftEncoder = leftMotor.getEncoder();
     rightEncoder = rightMotor.getEncoder();
+    indexEncoder = indexMotor.getEncoder();
 
     leftController.setP(kP);
 
@@ -74,7 +87,7 @@ public class Shooter extends SubsystemBase {
     leftMotor.setIdleMode(IdleMode.kCoast);
     rightMotor.setIdleMode(IdleMode.kCoast);
 
-
+    sensor = new DigitalInput(0);
   }
 
   public static Shooter getInstance(){
@@ -96,10 +109,24 @@ public class Shooter extends SubsystemBase {
     leftMotor.set(speed);
     rightMotor.set(speed);
   }
+  public void indexPower(){
+  indexMotor.set(indexPower);
+  }
+  public void indexSpeed(double speed){
+    indexMotor.set(speed);
+  }
+  public void indexStop(){
+  indexMotor.set(0);
+  }
+  public boolean hasNote(){
+    return !sensor.get();
+  }
   @Override
   public void periodic() {
     double leftSpeed = leftEncoder.getVelocity();
     double rightSpeed = rightEncoder.getVelocity();
+     indexPower = SmartDashboard.getNumber("input indexPower", -.5);
+      SmartDashboard.putNumber("input indexPower", indexPower);
     
 
     leftPower = SmartDashboard.getNumber("input left speed", 1000);
@@ -154,5 +181,6 @@ double newI = SmartDashboard.getNumber("Put in kI ", 0);
     }
         SmartDashboard.putNumber("Put in kF ", kF);
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("sensor has target: ", hasNote());
   }
 }

@@ -19,7 +19,7 @@ public class Aim extends Command {
 
   private double tx1;
   public Aim(SwerveDrive drive) {
-    m_Vision = Vision.getInstance(drive);
+    m_Vision = Vision.getInstance();
     m_Drive = drive;
 
     addRequirements(m_Drive, m_Vision);
