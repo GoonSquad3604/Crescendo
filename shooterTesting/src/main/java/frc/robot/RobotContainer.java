@@ -37,7 +37,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    Shooter.getInstance();
   }
 
   /**
@@ -69,6 +68,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return null;
 
   }
 }

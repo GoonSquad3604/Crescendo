@@ -17,7 +17,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase {
-
+//Declares variables
   private CANSparkFlex leftShooterMotor;
   private CANSparkFlex rightShooterMotor;
   private CANSparkFlex IndexShooterMotor;
@@ -53,19 +53,21 @@ public class Shooter extends SubsystemBase {
       
       leftShooterMotor.restoreFactoryDefaults();
       rightShooterMotor.restoreFactoryDefaults();
-      //PIDS
-      AnglePIDController.setP(Constants.ShooterConstants.AnglekP);
-      AnglePIDController.setI(Constants.ShooterConstants.AnglekI);
-      AnglePIDController.setD(Constants.ShooterConstants.AnglekD);
-      leftShooterPIDController.setP(Constants.ShooterConstants.kP);
-      leftShooterPIDController.setI(Constants.ShooterConstants.kI);
-      leftShooterPIDController.setD(Constants.ShooterConstants.kD);
-      leftShooterPIDController.setFF(Constants.ShooterConstants.kFF);
-      rightShooterPIDController.setP(Constants.ShooterConstants.kP);
-      rightShooterPIDController.setI(Constants.ShooterConstants.kI);
-      rightShooterPIDController.setD(Constants.ShooterConstants.kD);
-      rightShooterPIDController.setFF(Constants.ShooterConstants.kFF);
 
+      //PIDS
+      AnglePIDController.setP(AnglekP);
+      AnglePIDController.setD(AnglekD);
+      leftShooterPIDController.setP(kP);
+      leftShooterPIDController.setI(kI);
+      leftShooterPIDController.setD(kD);
+      leftShooterPIDController.setFF(kFF);
+      rightShooterPIDController.setP(kP);
+      rightShooterPIDController.setI(kI);
+      rightShooterPIDController.setD(kD);
+      rightShooterPIDController.setFF(kFF);
+      rightShooterPIDController.setOutputRange(-1, 1);
+      leftShooterPIDController.setOutputRange(-1, 1);
+      AnglePIDController.setOutputRange(-1, 1);
       //Inverts left shooter motor
       leftShooterMotor.setInverted(true);
   }
@@ -85,10 +87,12 @@ public void runShooter(double speed) {
   leftShooterMotor.set(speed);
   rightShooterMotor.set(speed);
 }
+public void setAngle(){
+  AnglePIDController.setReference(AnglePos, ControlType.kPosition);
+}
 public void setRPM(){
   leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
   rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
-  AnglePIDController.setReference(AnglePos, ControlType.kPosition);
 }
 
   @Override
