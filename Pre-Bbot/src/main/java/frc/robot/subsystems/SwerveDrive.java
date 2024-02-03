@@ -11,11 +11,13 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrive extends SubsystemBase {
@@ -36,7 +38,27 @@ public class SwerveDrive extends SubsystemBase {
           new GoonSwerveModule(3, Constants.Swerve.Mod3.constants)
       };
 
+      
       swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+
+      AutoBuilder.configureHolonomic(
+        this::getPose,
+        this::setPose,
+        this::getSpeeds,
+        this::driveRobotRelative,
+        Constants.Swerve.pathFollowerConfig,
+        () -> {
+
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+              return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+
+        },
+        this
+      );
+        
   }
 
   public static final SwerveDrive getInstance() {
@@ -66,6 +88,15 @@ public class SwerveDrive extends SubsystemBase {
           mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
       }
   }    
+  public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds){
+    ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+
+    SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, Constants.Swerve.maxSpeed);
+     for (GoonSwerveModule mod : mSwerveMods){
+          mod.setDesiredState(targetStates[mod.moduleNumber], true);
+      }
+  }
 
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -103,6 +134,11 @@ public class SwerveDrive extends SubsystemBase {
   public Rotation2d getHeading(){
       return getPose().getRotation();
   }
+
+  public ChassisSpeeds getSpeeds() {
+    return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+  }
+  
 
   public void setHeading(Rotation2d heading){
       swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
