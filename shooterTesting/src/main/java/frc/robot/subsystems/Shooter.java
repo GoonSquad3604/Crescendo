@@ -132,10 +132,3 @@ public void setRPM(){
     // This method will be called once per scheduler run
   }
 }
-
-
-//hello if you are reading this all the thing below this is lucas's problem
-//never gonna give you up, never gonna let you down -Rick Astley
-//cheese :)
-// "I am a bozo" -not tom / Andrew
-//"True " -lucas
