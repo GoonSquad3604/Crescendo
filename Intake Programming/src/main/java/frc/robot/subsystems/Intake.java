@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Intake extends SubsystemBase {
 
   
@@ -18,9 +19,14 @@ public class Intake extends SubsystemBase {
   private static CANSparkMax leftHingeMotor;
   private static CANSparkMax rightHingeMotor;
   private SparkPIDController intakePIDController;
-  private SparkPIDController hingePIDController;
+  private static SparkPIDController hingePIDController;
   /** Creates a new Intake. */
   public Intake() {
+
+      leftHingeMotor = new CANSparkMax( 4, MotorType.kBrushless);
+      rightHingeMotor = new CANSparkMax( 5, MotorType.kBrushless);
+      intakeMotor = new CANSparkMax(6, MotorType.kBrushless);
+
 
     leftHingeMotor.follow(rightHingeMotor);
 
@@ -61,15 +67,27 @@ public static Intake getInstance() {
    }
 
    //raises the Hinge into the Intake
-   public static void raiseHinge() {
-      rightHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
-   }
-   //lowers the Hinge out of the Intake
-   public static void lowerHinge() {
-    rightHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+    public static void raiseHinge() {
+       rightHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
+       leftHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
+    }
+    //lowers the Hinge out of the Intake
+    public static void lowerHinge() {
+     rightHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+     leftHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+    }
+    public static void stopHinge() {
+     rightHingeMotor.set(0);
+    leftHingeMotor.set(0);
+    }
+   public void setHinge(double leftPower, double rightPower) {
+    rightHingeMotor.set(rightPower);
    }
 
-  
+   public static void hingePosition(double position) {
+    hingePIDController.setReference(position, CANSparkMax.ControlType.kPosition);
+   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

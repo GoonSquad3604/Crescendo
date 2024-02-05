@@ -41,13 +41,18 @@ Intake.getInstance();
 
 JoystickButton operator1 = new JoystickButton(operatorJoystick, 1);
 JoystickButton operator2 = new JoystickButton(operatorJoystick, 2);
+JoystickButton operator3 = new JoystickButton(operatorJoystick, 3);
+JoystickButton operator4 = new JoystickButton(operatorJoystick, 4);
 
-
-
- operator1.onTrue(new InstantCommand(() -> Intake.runIntake()));
- operator1.onFalse(new InstantCommand(() -> Intake.stopIntake()));
- operator2.onTrue(new InstantCommand(() -> Intake.vomit()));
+  operator1.onTrue(new InstantCommand(() -> Intake.runIntake()));
+  operator1.onFalse(new InstantCommand(() -> Intake.stopIntake()));
+  operator2.onTrue(new InstantCommand(() -> Intake.vomit()));
   operator2.onFalse(new InstantCommand(() -> Intake.stopIntake()));
+  operator3.onTrue(new InstantCommand(() -> Intake.hingePosition(Constants.HingeConstants.hingeDown)));
+   operator3.onTrue(new InstantCommand(() -> Intake.raiseHinge()));
+   operator3.onFalse(new InstantCommand(() -> Intake.stopHinge()));
+   operator4.onTrue(new InstantCommand(() -> Intake.lowerHinge()));
+   operator4.onFalse(new InstantCommand(() -> Intake.stopHinge()));
   }
 
   /**

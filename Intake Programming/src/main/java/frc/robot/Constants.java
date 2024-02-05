@@ -16,6 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  //Constants for the Intake
   public static class IntakeConstants {
     public static final double intakeSpeed = 0.5;
     public static final double vomitSpeed = -0.5;
@@ -24,6 +25,7 @@ public final class Constants {
     public static final double kD = 0;
     public static final double kFF = 0;
   }
+  //Constants for the Hinge
   public static class HingeConstants {
 
       public static final double raiseHingeSpeed = 0.15;
@@ -32,6 +34,8 @@ public final class Constants {
       public static final double kI = 0;
       public static final double kD = 0;
       public static final double kFF = 0;
+      public static final double hingeDown = 0.2;
+      public static final double hingeUp = 0.8;
 
   }
   
