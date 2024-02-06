@@ -66,7 +66,7 @@ public class Climber extends SubsystemBase {
   }
 
 
-
+  /** Checks for an instance of climber; if it doesnt exist, make a new one */
   public static Climber getInstance() {
     if (_instance == null) {
       _instance = new Climber();
@@ -81,11 +81,11 @@ public class Climber extends SubsystemBase {
     leftMotor.set(-0.5);
   }
 
-
   /** Raises right climber. */
   public void raiseRightClimber(){
     rightMotor.set(-0.5);
   }
+
 
 
   /** Lowers left climber. */
@@ -93,11 +93,11 @@ public class Climber extends SubsystemBase {
   leftMotor.set(0.5);
   }
 
-
   /** Lowers right climber. */
   public void lowerRightClimber(){
   rightMotor.set(0.5);
   }
+
 
 
   /** Stops left climber. */
