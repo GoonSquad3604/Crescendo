@@ -17,7 +17,9 @@ import frc.robot.subsystems.Vision;
 public class AimPID extends PIDCommand {
   /** Creates a new Aim2PID. */
   SwerveDrive m_Drive;
+
   SwerveDrive m_controller;
+
   public AimPID(SwerveDrive swerve, XboxController driver, Vision vision) {
     super(
         // The controller that the command will use
@@ -28,12 +30,13 @@ public class AimPID extends PIDCommand {
         () -> vision.targetToRobotRotation(swerve),
         // This uses the output
         output -> {
-            swerve.drive(new Translation2d(driver.getLeftY(),driver.getLeftX()),output, true,false);
+          swerve.drive(
+              new Translation2d(driver.getLeftY(), driver.getLeftX()), output, true, false);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(.1,1);
-    getController().enableContinuousInput(-180,180);
+    getController().setTolerance(.1, 1);
+    getController().enableContinuousInput(-180, 180);
     m_Drive = SwerveDrive.getInstance();
     addRequirements(m_Drive);
   }

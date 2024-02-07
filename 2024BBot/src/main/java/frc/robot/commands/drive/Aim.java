@@ -1,14 +1,9 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Vision;
-import java.util.function.BooleanSupplier;
-import frc.robot.commands.drive.SwerveDefaultDrive;
 
 public class Aim extends Command {
 
@@ -18,6 +13,7 @@ public class Aim extends Command {
   private double speed = 1.0;
 
   private double tx1;
+
   public Aim(SwerveDrive drive) {
     m_Vision = Vision.getInstance();
     m_Drive = drive;
@@ -27,25 +23,24 @@ public class Aim extends Command {
 
   @Override
   public void initialize() {
-    if(m_Vision.getHasTarget()) {
+    if (m_Vision.getHasTarget()) {
       end(false);
-    }    
-    if(m_Vision.getTx() > 0) direction = 1.0;
+    }
+    if (m_Vision.getTx() > 0) direction = 1.0;
     else direction = -1.0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Drive.drive(new Translation2d(0,0), speed*direction, true, false);
-    if(m_Vision.getTx() > 0) direction = -.5;
+    m_Drive.drive(new Translation2d(0, 0), speed * direction, true, false);
+    if (m_Vision.getTx() > 0) direction = -.5;
     else direction = .5;
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

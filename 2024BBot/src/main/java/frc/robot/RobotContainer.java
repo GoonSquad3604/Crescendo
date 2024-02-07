@@ -4,22 +4,18 @@
 
 package frc.robot;
 
-import frc.robot.commands.drive.SwerveDefaultDrive;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SwerveDrive;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.drive.SwerveDefaultDrive;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,29 +25,30 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private XboxController driver = new XboxController(0);  
+  private XboxController driver = new XboxController(0);
   private XboxController operatorController = new XboxController(1);
   private Joystick operatorJoystick = new Joystick(2);
 
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  
-  private final SendableChooser<Command> autoChooser;  
+  private final JoystickButton robotCentric =
+      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
+  private final SendableChooser<Command> autoChooser;
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
+
   public RobotContainer() {
 
-     /* Default Commands */
-     s_Swerve.setDefaultCommand(
-      new SwerveDefaultDrive(
-        () -> -driver.getLeftY(), 
-        () -> -driver.getLeftX(), 
-        () -> driver.getRightX(), 
-        () -> driver.getLeftTriggerAxis(),
-        robotCentric)
-    );
+    /* Default Commands */
+    s_Swerve.setDefaultCommand(
+        new SwerveDefaultDrive(
+            () -> -driver.getLeftY(),
+            () -> -driver.getLeftX(),
+            () -> driver.getRightX(),
+            () -> driver.getLeftTriggerAxis(),
+            robotCentric));
 
     configureBindings();
 
@@ -59,14 +56,14 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
- 
   private void configureBindings() {
     // Driver
     JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
     JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
     JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
-    JoystickButton driverRightBumper = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    JoystickButton driverRightBumper =
+        new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     // Operator button box
     JoystickButton operator1 = new JoystickButton(operatorJoystick, 1);
@@ -91,18 +88,16 @@ public class RobotContainer {
     operator3.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
     operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-
     driverX.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
-  
+
     driverB.toggleOnTrue(new InstantCommand(() -> s_Shooter.setRPM()));
-        
+
     driverY.toggleOnFalse(new InstantCommand(() -> s_Shooter.stop()));
 
     driverRightBumper.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM()));
 
     driverA.onTrue(new InstantCommand(() -> s_Shooter.setPower(1)));
     driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
-
   }
 
   /**

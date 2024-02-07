@@ -4,18 +4,17 @@
 
 package frc.robot.commands.drive;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 public class SwerveDefaultDrive extends Command {
 
-  private SwerveDrive s_Swerve;    
+  private SwerveDrive s_Swerve;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationSup;
@@ -25,10 +24,15 @@ public class SwerveDefaultDrive extends Command {
   private double speed;
 
   /** Creates a new SwerveDefaultDrive. */
-  public SwerveDefaultDrive(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, DoubleSupplier slower, BooleanSupplier robotCentricSup) {
+  public SwerveDefaultDrive(
+      DoubleSupplier translationSup,
+      DoubleSupplier strafeSup,
+      DoubleSupplier rotationSup,
+      DoubleSupplier slower,
+      BooleanSupplier robotCentricSup) {
 
     this.s_Swerve = SwerveDrive.getInstance();
-    
+
     this.translationSup = translationSup;
     this.strafeSup = strafeSup;
     this.rotationSup = rotationSup;
@@ -41,23 +45,23 @@ public class SwerveDefaultDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(slower.getAsDouble()>.5){
+    if (slower.getAsDouble() > .5) {
       speed = .25;
-    }
-    else speed =1;
+    } else speed = 1;
     /* Get Values, Deadband*/
-    double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.General.stickDeadband)*speed;
-    double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.General.stickDeadband)*speed;
-    double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.General.stickDeadband)*speed;
+    double translationVal =
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.General.stickDeadband)
+            * speed;
+    double strafeVal =
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.General.stickDeadband) * speed;
+    double rotationVal =
+        MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.General.stickDeadband) * speed;
 
     /* Drive */
     s_Swerve.drive(
-        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-        rotationVal * Constants.Swerve.maxAngularVelocity, 
-        !robotCentricSup.getAsBoolean(), 
-        true
-    );
-
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+        rotationVal * Constants.Swerve.maxAngularVelocity,
+        !robotCentricSup.getAsBoolean(),
+        true);
   }
-
 }

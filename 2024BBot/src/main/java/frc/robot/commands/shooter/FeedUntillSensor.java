@@ -10,7 +10,6 @@ import frc.robot.subsystems.Shooter;
 public class FeedUntillSensor extends Command {
   /** Creates a new FeedUntillSensor. */
   Shooter s_Shooter;
-  
 
   public FeedUntillSensor() {
     s_Shooter = Shooter.getInstance();

@@ -5,27 +5,27 @@
 package frc.util.auton;
 
 import com.pathplanner.lib.path.PathPlannerTrajectory;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /** Add your docs here. */
 public class GoonAutonCommand extends SequentialCommandGroup {
 
-    private Pose2d initialPose;
+  private Pose2d initialPose;
 
-    public GoonAutonCommand() {
-        // Add your commands in the addCommands() call, e.g.
-        
-      }
-    
-    protected void setInitialPose(PathPlannerTrajectory initialTrajectory) {
-        this.initialPose = new Pose2d(initialTrajectory.getInitialDifferentialPose().getTranslation(),
-                initialTrajectory.getInitialState().targetHolonomicRotation);
-    }
-    
-    public Pose2d getInitialPose() {
-        return initialPose;
-    }
+  public GoonAutonCommand() {
+    // Add your commands in the addCommands() call, e.g.
 
+  }
+
+  protected void setInitialPose(PathPlannerTrajectory initialTrajectory) {
+    this.initialPose =
+        new Pose2d(
+            initialTrajectory.getInitialDifferentialPose().getTranslation(),
+            initialTrajectory.getInitialState().targetHolonomicRotation);
+  }
+
+  public Pose2d getInitialPose() {
+    return initialPose;
+  }
 }

@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
 
@@ -22,71 +22,74 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-      leftHingeMotor = new CANSparkMax( 4, MotorType.kBrushless);
-      rightHingeMotor = new CANSparkMax( 5, MotorType.kBrushless);
-      intakeMotor = new CANSparkMax(6, MotorType.kBrushless);
+    leftHingeMotor = new CANSparkMax(4, MotorType.kBrushless);
+    rightHingeMotor = new CANSparkMax(5, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(6, MotorType.kBrushless);
 
+    leftHingeMotor.follow(rightHingeMotor);
 
-      leftHingeMotor.follow(rightHingeMotor);
+    // Intake PID values
+    intakePIDController.setFF(Constants.IntakeConstants.kFF);
+    intakePIDController.setP(Constants.IntakeConstants.kP);
+    intakePIDController.setI(Constants.IntakeConstants.kI);
+    intakePIDController.setD(Constants.IntakeConstants.kD);
+    intakePIDController.setOutputRange(-1.0, 1.0);
 
-      //Intake PID values
-      intakePIDController.setFF(Constants.IntakeConstants.kFF);
-      intakePIDController.setP(Constants.IntakeConstants.kP);
-      intakePIDController.setI(Constants.IntakeConstants.kI);
-      intakePIDController.setD(Constants.IntakeConstants.kD);
-      intakePIDController.setOutputRange(-1.0, 1.0);
-
-      //Hinge PID values
-      hingePIDController.setFF(Constants.HingeConstants.kFF);
-      hingePIDController.setP(Constants.HingeConstants.kP);
-      hingePIDController.setI(Constants.HingeConstants.kI);
-      hingePIDController.setD(Constants.HingeConstants.kD);
-      hingePIDController.setOutputRange(-1.0, 1.0);
+    // Hinge PID values
+    hingePIDController.setFF(Constants.HingeConstants.kFF);
+    hingePIDController.setP(Constants.HingeConstants.kP);
+    hingePIDController.setI(Constants.HingeConstants.kI);
+    hingePIDController.setD(Constants.HingeConstants.kD);
+    hingePIDController.setOutputRange(-1.0, 1.0);
   }
+
   public static Intake getInstance() {
-    
-      if(_instance == null){
-          _instance = new Intake();
-      }
-      return _instance;
+
+    if (_instance == null) {
+      _instance = new Intake();
+    }
+    return _instance;
   }
-    //stops the intake
+
+  // stops the intake
   public void stopIntake() {
-    intakeMotor.set(0); 
+    intakeMotor.set(0);
   }
 
-  //brings the game piece into robot
-   public void runIntake() {
+  // brings the game piece into robot
+  public void runIntake() {
     intakeMotor.set(Constants.IntakeConstants.intakeSpeed);
-   }
-  
-   //vomits the game piece
-   public void vomit() {
+  }
+
+  // vomits the game piece
+  public void vomit() {
     intakeMotor.set(Constants.IntakeConstants.vomitSpeed);
-   }
+  }
 
-   //raises the Hinge into the Intake
-    public void raiseHinge() {
-        rightHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
-        leftHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
-    }
-    //lowers the Hinge out of the Intake
-    public void lowerHinge() {
-        rightHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
-        leftHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
-    }
-    public void stopHinge() {
-        rightHingeMotor.set(0);
-        leftHingeMotor.set(0);
-    }
+  // raises the Hinge into the Intake
+  public void raiseHinge() {
+    rightHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
+    leftHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
+  }
 
-    public void setHinge(double leftPower, double rightPower) {
-        rightHingeMotor.set(rightPower);
-    }
+  // lowers the Hinge out of the Intake
+  public void lowerHinge() {
+    rightHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+    leftHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+  }
 
-    public void hingePosition(double position) {
-        hingePIDController.setReference(position, CANSparkMax.ControlType.kPosition);
-    }
+  public void stopHinge() {
+    rightHingeMotor.set(0);
+    leftHingeMotor.set(0);
+  }
+
+  public void setHinge(double leftPower, double rightPower) {
+    rightHingeMotor.set(rightPower);
+  }
+
+  public void hingePosition(double position) {
+    hingePIDController.setReference(position, CANSparkMax.ControlType.kPosition);
+  }
 
   @Override
   public void periodic() {

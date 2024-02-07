@@ -10,11 +10,11 @@ import frc.robot.subsystems.Shooter;
 public class RepositionNote extends Command {
 
   Shooter s_Shooter;
+
   /** Creates a new RepositionNote. */
   public RepositionNote() {
     s_Shooter = Shooter.getInstance();
     addRequirements(s_Shooter);
-    
   }
 
   // Called when the command is initially scheduled.

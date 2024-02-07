@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Vision;
 
@@ -18,8 +17,9 @@ import frc.robot.subsystems.Vision;
 public class OneMeterFromTag extends PIDCommand {
   /** Creates a new AimPID. */
   private SwerveDrive m_Drive;
+
   private SwerveDrive m_controller;
-  private static final double GOAL_RANGE_METERS = 1; 
+  private static final double GOAL_RANGE_METERS = 1;
 
   // private double angleTo =vision.targetToRobotRotation().getRadians();
   public OneMeterFromTag(SwerveDrive swerve, XboxController driver, Vision vision) {
@@ -32,11 +32,11 @@ public class OneMeterFromTag extends PIDCommand {
         () -> GOAL_RANGE_METERS,
         // This uses the output
         output -> {
-            swerve.drive(new Translation2d(-output*.05,0),0, true,true);
-          });
+          swerve.drive(new Translation2d(-output * .05, 0), 0, true, true);
+        });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(.3,1);
+    getController().setTolerance(.3, 1);
     m_Drive = SwerveDrive.getInstance();
     addRequirements(m_Drive);
   }
