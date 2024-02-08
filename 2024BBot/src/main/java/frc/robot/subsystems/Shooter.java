@@ -38,7 +38,7 @@ public class Shooter extends SubsystemBase {
   private double anglePos;
   private int leftRPM = 5000;
   private int rightRPM = 5000;
-  private int IndexRPM = 1000;
+  private int IndexRPM = 3000;
 
   /** Creates a new Shooter. */
   public Shooter() {
