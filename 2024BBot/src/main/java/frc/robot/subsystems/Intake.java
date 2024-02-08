@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +15,7 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
 
   private static Intake _instance;
-  private CANSparkMax intakeMotor;
+  private CANSparkFlex intakeMotor;
   private CANSparkMax leftHingeMotor;
   private CANSparkMax rightHingeMotor;
   private SparkPIDController intakePIDController;
@@ -22,24 +23,32 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-    leftHingeMotor = new CANSparkMax(4, MotorType.kBrushless);
-    rightHingeMotor = new CANSparkMax(5, MotorType.kBrushless);
-    intakeMotor = new CANSparkMax(6, MotorType.kBrushless);
+    leftHingeMotor = new CANSparkMax(Constants.IntakeConstants.leftHingeID, MotorType.kBrushless);
+    rightHingeMotor = new CANSparkMax(Constants.IntakeConstants.rightHingeID, MotorType.kBrushless);
+    intakeMotor = new CANSparkFlex(6, MotorType.kBrushless);
+
+    intakePIDController = intakeMotor.getPIDController();
+    hingePIDController = leftHingeMotor.getPIDController();
 
     leftHingeMotor.follow(rightHingeMotor);
+    //rightHingeMotor.setInverted(true);
+
+    intakeMotor.restoreFactoryDefaults(true);
+    leftHingeMotor.restoreFactoryDefaults(true);
+    rightHingeMotor.restoreFactoryDefaults(true);
 
     // Intake PID values
-    intakePIDController.setFF(Constants.IntakeConstants.kFF);
-    intakePIDController.setP(Constants.IntakeConstants.kP);
-    intakePIDController.setI(Constants.IntakeConstants.kI);
-    intakePIDController.setD(Constants.IntakeConstants.kD);
+    intakePIDController.setFF(Constants.IntakeConstants.intakekFF);
+    intakePIDController.setP(Constants.IntakeConstants.intakekP);
+    intakePIDController.setI(Constants.IntakeConstants.intakekI);
+    intakePIDController.setD(Constants.IntakeConstants.intakekD);
     intakePIDController.setOutputRange(-1.0, 1.0);
 
     // Hinge PID values
-    hingePIDController.setFF(Constants.HingeConstants.kFF);
-    hingePIDController.setP(Constants.HingeConstants.kP);
-    hingePIDController.setI(Constants.HingeConstants.kI);
-    hingePIDController.setD(Constants.HingeConstants.kD);
+    hingePIDController.setFF(Constants.IntakeConstants.hingekFF);
+    hingePIDController.setP(Constants.IntakeConstants.hingekP);
+    hingePIDController.setI(Constants.IntakeConstants.hingekI);
+    hingePIDController.setD(Constants.IntakeConstants.hingekD);
     hingePIDController.setOutputRange(-1.0, 1.0);
   }
 
@@ -58,24 +67,22 @@ public class Intake extends SubsystemBase {
 
   // brings the game piece into robot
   public void runIntake() {
-    intakeMotor.set(Constants.IntakeConstants.intakeSpeed);
+    intakeMotor.set(.5);
   }
 
   // vomits the game piece
   public void vomit() {
-    intakeMotor.set(Constants.IntakeConstants.vomitSpeed);
+    intakeMotor.set(-.6);
   }
 
   // raises the Hinge into the Intake
   public void raiseHinge() {
-    rightHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
-    leftHingeMotor.set(Constants.HingeConstants.raiseHingeSpeed);
+    rightHingeMotor.set(.2);
   }
 
   // lowers the Hinge out of the Intake
   public void lowerHinge() {
-    rightHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
-    leftHingeMotor.set(Constants.HingeConstants.lowerHingeSpeed);
+    rightHingeMotor.set(-2);
   }
 
   public void stopHinge() {
@@ -94,12 +101,12 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake P value", Constants.IntakeConstants.kP);
-    SmartDashboard.putNumber("Intake FF value", Constants.IntakeConstants.kFF);
-    SmartDashboard.putNumber("Intake Speed", Constants.IntakeConstants.intakeSpeed);
-    SmartDashboard.putNumber("Hinge P value", Constants.HingeConstants.kP);
-    SmartDashboard.putNumber("Hinge FF value", Constants.HingeConstants.kFF);
-    SmartDashboard.putNumber("Raise Hinge Speed", Constants.HingeConstants.raiseHingeSpeed);
-    SmartDashboard.putNumber("Lower Hinge Speed", Constants.HingeConstants.lowerHingeSpeed);
+    // SmartDashboard.putNumber("Intake P value", Constants.IntakeConstants.kP);
+    // SmartDashboard.putNumber("Intake FF value", Constants.IntakeConstants.kFF);
+    // SmartDashboard.putNumber("Intake Speed", Constants.IntakeConstants.intakeSpeed);
+    // SmartDashboard.putNumber("Hinge P value", Constants.HingeConstants.kP);
+    // SmartDashboard.putNumber("Hinge FF value", Constants.HingeConstants.kFF);
+    // SmartDashboard.putNumber("Raise Hinge Speed", Constants.HingeConstants.raiseHingeSpeed);
+    // SmartDashboard.putNumber("Lower Hinge Speed", Constants.HingeConstants.lowerHingeSpeed);
   }
 }

@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
 
@@ -25,8 +26,8 @@ public class Climber extends SubsystemBase {
 
   /** Creates a new Climber. */
   public Climber() {
-    leftMotor = new CANSparkMax(17, MotorType.kBrushless);
-    rightMotor = new CANSparkMax(20, MotorType.kBrushless);
+    leftMotor = new CANSparkMax(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
+    rightMotor = new CANSparkMax(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
 
     leftMotor.restoreFactoryDefaults();
     rightMotor.restoreFactoryDefaults();
@@ -59,7 +60,7 @@ public class Climber extends SubsystemBase {
 
   /** Raises Left climber. */
   public void raiseLeftClimber() {
-    leftMotor.set(-0.5);
+    leftMotor.set(0.5);
   }
 
   /** Raises right climber. */
@@ -69,7 +70,7 @@ public class Climber extends SubsystemBase {
 
   /** Lowers left climber. */
   public void lowerLeftClimber() {
-    leftMotor.set(0.5);
+    leftMotor.set(-0.5);
   }
 
   /** Lowers right climber. */

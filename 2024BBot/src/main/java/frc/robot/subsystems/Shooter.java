@@ -59,6 +59,9 @@ public class Shooter extends SubsystemBase {
     indexEncoder = indexMotor.getEncoder();
     IndexPIDController = indexMotor.getPIDController();
 
+    sensor = new DigitalInput(0);
+
+
     leftShooterMotor.restoreFactoryDefaults();
     rightShooterMotor.restoreFactoryDefaults();
     angleMotor.restoreFactoryDefaults();
@@ -105,8 +108,14 @@ public class Shooter extends SubsystemBase {
     rightShooterMotor.set(speed);
   }
 
-  public void setAngle() {
-    anglePIDController.setReference(anglePos, ControlType.kPosition);
+  public void raiseAngle() {
+    angleMotor.set(.2);
+  }
+  public void lowerAngle() {
+    angleMotor.set(-.2);
+  }
+  public void stopAngle() {
+    angleMotor.set(.0);
   }
 
   public void setRPM() {

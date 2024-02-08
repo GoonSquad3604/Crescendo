@@ -11,8 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drive.SwerveDefaultDrive;
+import frc.robot.commands.shooter.FeedUntillSensor;
+import frc.robot.commands.shooter.RepositionNote;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
@@ -38,6 +42,7 @@ public class RobotContainer {
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
+  private final Climber s_Climber = Climber.getInstance();
 
   public RobotContainer() {
 
@@ -88,16 +93,40 @@ public class RobotContainer {
     operator3.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
     operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    driverX.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
+    driverY.onTrue(new InstantCommand(() -> s_Climber.raiseLeftClimber()));
+    driverY.onFalse(new InstantCommand(() -> s_Climber.stopLeftClimber()));
 
-    driverB.toggleOnTrue(new InstantCommand(() -> s_Shooter.setRPM()));
+    driverX.onTrue(new InstantCommand(() -> s_Climber.raiseRightClimber()));
+    driverX.onFalse(new InstantCommand(() -> s_Climber.stopRightClimber()));
 
-    driverY.toggleOnFalse(new InstantCommand(() -> s_Shooter.stop()));
+    driverA.onTrue(new InstantCommand(() -> s_Climber.lowerRightClimber()));
+    driverA.onFalse(new InstantCommand(() -> s_Climber.stopRightClimber()));
 
-    driverRightBumper.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM()));
+    driverB.onTrue(new InstantCommand(() -> s_Climber.lowerLeftClimber()));
+    driverB.onFalse(new InstantCommand(() -> s_Climber.stopLeftClimber()));
 
-    driverA.onTrue(new InstantCommand(() -> s_Shooter.setPower(1)));
-    driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
+
+   
+
+    // operator4.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
+    operator4.onTrue(new InstantCommand(() -> s_Shooter.setPower(.3)));
+    operator4.onFalse(new InstantCommand(() -> s_Shooter.setPower(0)));
+
+    // operator6.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM()));
+
+    // operator7.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
+
+
+    //operator8.toggleOnFalse(new InstantCommand(() -> s_Shooter.stop()));
+
+    operator10.onTrue(new InstantCommand(()->s_Shooter.raiseAngle()));
+    operator10.onFalse(new InstantCommand(()->s_Shooter.stopAngle()));
+
+    operator11.onTrue(new InstantCommand(()->s_Shooter.lowerAngle()));
+    operator11.onFalse(new InstantCommand(()->s_Shooter.stopAngle()));
+
+    // driverA.onTrue(new InstantCommand(() -> s_Shooter.setPower(1)));
+    // driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
   }
 
   /**
