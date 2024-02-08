@@ -165,10 +165,10 @@ public final class Constants {
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
-    public static final double indexkP = 0.0;
+    public static final double indexkP = 0.00001;
     public static final double indexkI = 0.0;
     public static final double indexkD = 0.0;
-    public static final double indexkF = 0.0;
+    public static final double indexkF = 0.00016;
 
     public static final double angleHomePos = 0.0;
     public static final double angleTrapPos = 0.0;

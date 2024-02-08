@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase {
     intakePIDController = intakeMotor.getPIDController();
     hingePIDController = leftHingeMotor.getPIDController();
 
-    leftHingeMotor.follow(rightHingeMotor);
+    //leftHingeMotor.follow(rightHingeMotor);
     //rightHingeMotor.setInverted(true);
 
     intakeMotor.restoreFactoryDefaults(true);
@@ -77,12 +77,15 @@ public class Intake extends SubsystemBase {
 
   // raises the Hinge into the Intake
   public void raiseHinge() {
-    rightHingeMotor.set(.2);
+    rightHingeMotor.set(.1);
+    leftHingeMotor.set(-.1);
   }
 
   // lowers the Hinge out of the Intake
   public void lowerHinge() {
-    rightHingeMotor.set(-2);
+    rightHingeMotor.set(-.1);
+    leftHingeMotor.set(.1);
+
   }
 
   public void stopHinge() {
