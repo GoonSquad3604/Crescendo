@@ -156,12 +156,30 @@ public final class Constants {
     public static final int indexID = 4;
     public static final int angleID = 5;
 
+    // RPMS
+    public static final int leftShooterSpeakerRPM = 5000;
+    public static final int rightShooterSpeakerRPM = 5000;
+
+    public static final int leftShooterAmpRPM = 1000;
+    public static final int rightShooterAmpRPM = 1000;
+
+    public static final int leftShooterTrapRPM = 3000;
+    public static final int rightShooterTrapRPM = 3000;
+
+    // Shooter Positions
+    public static final double shooterSpeaker = 0;
+    public static final double shooterAmp = 0;
+    public static final double shooterTrap = 0;
+
+    // PIDS
     public static final double shooterkP = 0.0005;
     public static final double shooterkI = 0.0;
     public static final double shooterkD = 0.0;
     public static final double shooterkF = 0.00016;
 
-    public static final double anglekP = 0.0;
+    public static final double angleUpP = 0.0;
+    public static final double angleDownP = 0.0;
+
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
@@ -194,8 +212,8 @@ public final class Constants {
     public static final int leftHingeID = 12;
     public static final int rightHingeID = 8;
 
-    public static final double intakekFF = 0.0;
-    public static final double intakekP = 0.0;
+    public static final double intakekFF = 0.0001;
+    public static final double intakekP = 0.0005;
     public static final double intakekI = 0.0;
     public static final double intakekD = 0.0;
 
@@ -204,15 +222,13 @@ public final class Constants {
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-
     public static final double intakeSpeed = 0.0;
     public static final double vomitSpeed = 0.0;
+    public static final int intakeRPM = 2000;
 
     public static final double raiseHingeSpeed = 0.0;
     public static final double lowerHingeSpeed = 0.0;
   }
-
- 
 
   public static final
   class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned

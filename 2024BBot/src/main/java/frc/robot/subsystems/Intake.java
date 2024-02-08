@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,8 +32,8 @@ public class Intake extends SubsystemBase {
     intakePIDController = intakeMotor.getPIDController();
     hingePIDController = leftHingeMotor.getPIDController();
 
-    //leftHingeMotor.follow(rightHingeMotor);
-    //rightHingeMotor.setInverted(true);
+    // leftHingeMotor.follow(rightHingeMotor);
+    // rightHingeMotor.setInverted(true);
 
     intakeMotor.restoreFactoryDefaults(true);
     leftHingeMotor.restoreFactoryDefaults(true);
@@ -67,9 +67,13 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(0);
   }
 
+  public void intakeRPM() {
+    intakePIDController.setReference(Constants.IntakeConstants.intakeRPM, ControlType.kVelocity);
+  }
+
   // brings the game piece into robot
   public void runIntake() {
-    intakeMotor.set(1);
+    intakeMotor.set(.8);
   }
 
   // vomits the game piece
@@ -87,7 +91,6 @@ public class Intake extends SubsystemBase {
   public void lowerHinge() {
     rightHingeMotor.set(-.1);
     leftHingeMotor.set(.1);
-
   }
 
   public void stopHinge() {

@@ -135,6 +135,10 @@ public class SwerveDrive extends SubsystemBase {
         getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
   }
 
+  public void zeroGyro() {
+    gyro.setYaw(0);
+  }
+
   public void zeroHeading() {
     swerveOdometry.resetPosition(
         getGyroYaw(),

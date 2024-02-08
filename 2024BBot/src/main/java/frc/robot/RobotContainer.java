@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drive.SwerveDefaultDrive;
@@ -51,7 +54,7 @@ public class RobotContainer {
         new SwerveDefaultDrive(
             () -> -driver.getLeftY(),
             () -> -driver.getLeftX(),
-            () -> driver.getRightX(),
+            () -> -driver.getRightX(),
             () -> driver.getLeftTriggerAxis(),
             robotCentric));
 
@@ -63,6 +66,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Driver
+
     JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
     JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -84,8 +88,11 @@ public class RobotContainer {
     JoystickButton operator11 = new JoystickButton(operatorJoystick, 11);
     JoystickButton operator12 = new JoystickButton(operatorJoystick, 12);
 
-    operator1.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-    operator1.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    driverRightBumper.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+   // operator1.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
+    //operator1.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    operator1.onTrue(new ParallelRaceGroup(new InstantCommand(() -> s_Intake.runIntake()),new SequentialCommandGroup( new FeedUntillSensor(), new RepositionNote())));
+    operator1.onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()), new InstantCommand(() -> s_Shooter.indexStop())));
 
     operator2.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
     operator2.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
@@ -105,31 +112,25 @@ public class RobotContainer {
     driverB.onTrue(new InstantCommand(() -> s_Climber.lowerLeftClimber()));
     driverB.onFalse(new InstantCommand(() -> s_Climber.stopLeftClimber()));
 
-
-   
-
     // operator4.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
-    operator4.onTrue(new InstantCommand(() -> s_Shooter.setRPM()));
-    operator4.onFalse(new InstantCommand(() -> s_Shooter.stop()));
+    operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM()));
+    operator4.onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-    
     operator5.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM()));
     operator5.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
     // operator7.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
 
+    // operator8.toggleOnFalse(new InstantCommand(() -> s_Shooter.stop()));
 
-    //operator8.toggleOnFalse(new InstantCommand(() -> s_Shooter.stop()));
+    operator10.onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
+    operator10.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
 
-    operator10.onTrue(new InstantCommand(()->s_Shooter.raiseAngle()));
-    operator10.onFalse(new InstantCommand(()->s_Shooter.stopAngle()));
-
-    operator11.onTrue(new InstantCommand(()->s_Shooter.lowerAngle()));
-    operator11.onFalse(new InstantCommand(()->s_Shooter.stopAngle()));
+    operator11.onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
+    operator11.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
 
     operator12.onTrue(new InstantCommand(() -> s_Intake.vomit()));
     operator12.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-
 
     // driverA.onTrue(new InstantCommand(() -> s_Shooter.setPower(1)));
     // driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
