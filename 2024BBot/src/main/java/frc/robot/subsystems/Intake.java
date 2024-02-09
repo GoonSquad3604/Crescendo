@@ -78,7 +78,7 @@ public class Intake extends SubsystemBase {
 
   // vomits the game piece
   public void vomit() {
-    intakeMotor.set(-.6);
+    intakeMotor.set(-1);
   }
 
   // raises the Hinge into the Intake

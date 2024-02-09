@@ -91,11 +91,16 @@ public class RobotContainer {
     driverRightBumper.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
    // operator1.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
     //operator1.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    operator1.onTrue(new ParallelRaceGroup(new InstantCommand(() -> s_Intake.runIntake()),new SequentialCommandGroup( new FeedUntillSensor(), new RepositionNote())));
-    operator1.onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()), new InstantCommand(() -> s_Shooter.indexStop())));
+    operator1.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()),new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
+    operator1.onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()), new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter)));
+    
+    operator2.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
+    operator2.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
+    operator2.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    operator2.onFalse(new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
+    // operator2.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
+    // operator2.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    operator2.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
-    operator2.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
     operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
     operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
@@ -116,7 +121,7 @@ public class RobotContainer {
     operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM()));
     operator4.onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-    operator5.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM()));
+    operator5.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(), s_Shooter));
     operator5.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
     // operator7.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
