@@ -31,9 +31,7 @@ public class Climber extends SubsystemBase {
   private SparkPIDController leftClimberPIDController;
 
   private static Climber _instance;
-  
-  private int leftMaxHeight;
-  private int rightMaxHeight;
+
 
   /** Creates a new Climber. */
   public Climber() {
@@ -88,13 +86,13 @@ public class Climber extends SubsystemBase {
 
 
  public void raiseCimber(){
-  leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
-  rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+  leftClimberPIDController.setReference(Constants.ClimberConstants.leftMaxHeight, ControlType.kPosition);
+  rightClimberPIDController.setReference(Constants.ClimberConstants.rightMaxHeight, ControlType.kPosition);
  }
 
  public void lowerClimber(){
-  leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
-  rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+  leftClimberPIDController.setReference(0, ControlType.kPosition);
+  rightClimberPIDController.setReference(0, ControlType.kPosition);
  }
 
 
