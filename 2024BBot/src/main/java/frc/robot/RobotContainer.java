@@ -111,7 +111,7 @@ public class RobotContainer {
     driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-   
+   //lols
 
     // operator4.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
     operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM()));
