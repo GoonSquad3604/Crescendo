@@ -171,8 +171,8 @@ public final class Constants {
     }
   
     public static final class ClimberConstants{
-        public static final int rightClimbID = 0;
-        public static final int leftClimbID = 0;
+        public static final int rightClimbID = 11;
+        public static final int leftClimbID = 7;
 
         public static final int leftClimbkP = 0;
         public static final int leftClimbkI = 0;

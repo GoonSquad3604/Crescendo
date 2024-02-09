@@ -4,66 +4,73 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import frc.robot.Constants;
 
 
 
 public class Climber extends SubsystemBase {
 
+/*  Declare variables */
 
-  private static Climber _instance;
-  CANSparkMax rightMotor;
-  CANSparkMax leftMotor;
+  private CANSparkMax rightClimberMotor;
+  private CANSparkMax leftClimberMotor;
 
+  private RelativeEncoder leftClimberEncoder;
+  private RelativeEncoder rightClimberEncoder;
 
   private SparkPIDController rightClimberPIDController;
   private SparkPIDController leftClimberPIDController;
 
-
-  DutyCycleEncoder encoder;
-  public double setSpeed, p, encoderSetPoint;
+  private static Climber _instance;
   
-
-
+  private int leftMaxHeight;
+  private int rightMaxHeight;
 
   /** Creates a new Climber. */
   public Climber() {
-    leftMotor = new CANSparkMax(17, MotorType.kBrushless);
-    rightMotor = new CANSparkMax(20, MotorType.kBrushless);
 
-    leftMotor.restoreFactoryDefaults();
-    rightMotor.restoreFactoryDefaults();
+    leftClimberMotor = new CANSparkMax(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
+    leftClimberEncoder = leftClimberMotor.getEncoder();
+    leftClimberPIDController = leftClimberMotor.getPIDController();
+
+    rightClimberMotor = new CANSparkMax(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
+    rightClimberEncoder = rightClimberMotor.getEncoder();
+    rightClimberPIDController = rightClimberMotor.getPIDController();
+
+    leftClimberMotor.restoreFactoryDefaults();
+    rightClimberMotor.restoreFactoryDefaults();
 
     
-    
-    leftClimberPIDController = leftMotor.getPIDController();
-    rightClimberPIDController = rightMotor.getPIDController();
-
-    leftClimberPIDController.setOutputRange(-.5, .5);
-    rightClimberPIDController.setOutputRange(-.5, .5);
-
+    //PIDs
     leftClimberPIDController.setP(.5);
     rightClimberPIDController.setP(.5);
+
+    leftClimberPIDController.setI(0);
+    rightClimberPIDController.setI(0);
 
     leftClimberPIDController.setD(0);
     rightClimberPIDController.setD(0);
 
-    leftClimberPIDController.setI(0);
-    rightClimberPIDController.setI(0);
-    
 
-    leftMotor.setIdleMode(IdleMode.kBrake);
-    rightMotor.setIdleMode(IdleMode.kBrake);
+    leftClimberPIDController.setOutputRange(-.5, .5);
+    rightClimberPIDController.setOutputRange(-.5, .5);
 
+
+    leftClimberMotor.setIdleMode(IdleMode.kBrake);
+    rightClimberMotor.setIdleMode(IdleMode.kBrake);
+
+    zeroEncoders();
 
   }
-
 
 
   public static Climber getInstance() {
@@ -73,50 +80,36 @@ public class Climber extends SubsystemBase {
     return _instance;
   }
 
-
-
-  /** Raises Left climber. */
-  public void raiseLeftClimber(){
-    leftMotor.set(-0.5);
+  public void zeroEncoders(){
+    leftClimberEncoder.setPosition(0);
+    rightClimberEncoder.setPosition(0);
   }
 
 
-  /** Raises right climber. */
-  public void raiseRightClimber(){
-    rightMotor.set(-0.5);
-  }
+
+ public void raiseCimber(){
+  leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
+  rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+ }
+
+ public void lowerClimber(){
+  leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
+  rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+ }
 
 
-  /** Lowers left climber. */
-  public void lowerLeftClimber(){
-  leftMotor.set(0.5);
-  }
+ public void stopClimber(){
+  leftClimberMotor.set(0);
+  rightClimberMotor.set(0);
+}
 
-
-  /** Lowers right climber. */
-  public void lowerRightClimber(){
-  rightMotor.set(0.5);
-  }
-
-
-  /** Stops left climber. */
-  public void stopLeftClimber(){
-    leftMotor.set(0);
-  }
-
-  /** Stops right climber */
-  public void stopRightClimber(){
-    rightMotor.set(0);
-  }
 
 
 
   @Override
   public void periodic() {
-
+   SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
+   SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
   }
-
-
-
 
 }
