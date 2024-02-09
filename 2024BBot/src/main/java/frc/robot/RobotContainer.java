@@ -105,17 +105,13 @@ public class RobotContainer {
     operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
     operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    driverY.onTrue(new InstantCommand(() -> s_Climber.raiseLeftClimber()));
-    driverY.onFalse(new InstantCommand(() -> s_Climber.stopLeftClimber()));
+    driverY.onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    driverY.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-    driverX.onTrue(new InstantCommand(() -> s_Climber.raiseRightClimber()));
-    driverX.onFalse(new InstantCommand(() -> s_Climber.stopRightClimber()));
+    driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-    driverA.onTrue(new InstantCommand(() -> s_Climber.lowerRightClimber()));
-    driverA.onFalse(new InstantCommand(() -> s_Climber.stopRightClimber()));
-
-    driverB.onTrue(new InstantCommand(() -> s_Climber.lowerLeftClimber()));
-    driverB.onFalse(new InstantCommand(() -> s_Climber.stopLeftClimber()));
+   
 
     // operator4.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
     operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM()));
