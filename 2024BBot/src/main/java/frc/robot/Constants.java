@@ -173,7 +173,7 @@ public final class Constants {
     public static final double shooterTrap = 0;
     public static final double shooterMax = 58.6;
 
-    public static final double shooterOffset = .54;
+    public static final double shooterOffset = .4505;
 
     // PIDS
     public static final double shooterkP = 0.0005;
