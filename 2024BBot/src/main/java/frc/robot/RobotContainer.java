@@ -102,8 +102,9 @@ public class RobotContainer {
     // operator2.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
 
-    operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
-    operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    //operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    // operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
     driverY.onTrue(new InstantCommand(() -> s_Climber.climberUp()));
     driverY.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
@@ -111,13 +112,18 @@ public class RobotContainer {
     driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-   //lols
+    
+    operator3.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPMLow(), s_Shooter));
+    operator3.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
     // operator4.onTrue(new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
-    operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM()));
+    operator4.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     operator4.onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-    operator5.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(), s_Shooter));
+    operator6.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMAMP(), s_Shooter));
+    operator6.onFalse(new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
+
+    operator5.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPMHigh(), s_Shooter));
     operator5.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
     // operator7.onTrue(new InstantCommand(() -> s_Shooter.indexStop()));
@@ -130,12 +136,17 @@ public class RobotContainer {
     operator11.onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
     operator11.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
 
-    operator12.onTrue(new InstantCommand(() -> s_Intake.vomit()));
-    operator12.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+
+    operator12.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(50)));
+
+    operator9.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(58)));
+    operator8.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(10)));
 
     // driverA.onTrue(new InstantCommand(() -> s_Shooter.setPower(1)));
     // driverA.onFalse(new InstantCommand(() -> s_Shooter.stop()));
+
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -38,6 +38,8 @@ public class Shooter extends SubsystemBase {
   private DigitalInput sensor;
 
   private static Shooter _instance;
+  private double angleD, angleP, angleI;
+
 
   private int leftRPM = 5000;
   private int rightRPM = 5000;
@@ -74,8 +76,12 @@ public class Shooter extends SubsystemBase {
 
     anglePIDController.setFeedbackDevice(angleEncoder);
 
-    anglePIDController.setI(Constants.ShooterConstants.anglekI);
-    anglePIDController.setD(Constants.ShooterConstants.anglekD);
+    // anglePIDController.setI(Constants.ShooterConstants.anglekI);
+    // anglePIDController.setD(Constants.ShooterConstants.anglekD);
+
+    anglePIDController.setP(7);
+    anglePIDController.setI(angleI);
+    anglePIDController.setD(angleD);
 
     leftShooterPIDController.setP(Constants.ShooterConstants.shooterkP);
     leftShooterPIDController.setI(Constants.ShooterConstants.shooterkI);
@@ -94,7 +100,7 @@ public class Shooter extends SubsystemBase {
 
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
-    anglePIDController.setOutputRange(-1, 1);
+    anglePIDController.setOutputRange(-.8, .8);
     IndexPIDController.setOutputRange(-1, 1);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
@@ -116,9 +122,37 @@ public class Shooter extends SubsystemBase {
     rightShooterMotor.set(speed);
   }
 
-  public void setShooterRPM() {
-    leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
-    rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
+  public void setShooterRPMSpeaker() {
+    double kP = .0005;
+    double kFF = .00016;
+    if(leftShooterPIDController.getP()!=kP){
+      leftShooterPIDController.setP(kP);
+      rightShooterPIDController.setP(kP);
+    }
+
+    if(leftShooterPIDController.getFF()!=kFF){
+      leftShooterPIDController.setFF(kFF);
+      rightShooterPIDController.setFF(kFF);
+
+    }
+   
+    leftShooterPIDController.setReference(Constants.ShooterConstants.leftShooterSpeakerRPM, ControlType.kVelocity);
+    rightShooterPIDController.setReference(Constants.ShooterConstants.leftShooterSpeakerRPM, ControlType.kVelocity);
+  }
+  public void setShooterRPMAMP() {
+    double kP = .0005;
+    double kFF = .00016;
+    if(leftShooterPIDController.getP()!=kP){
+      leftShooterPIDController.setP(kP);
+      rightShooterPIDController.setP(kP);
+    }
+    if(leftShooterPIDController.getFF()!=kFF){
+      leftShooterPIDController.setFF(kFF);
+      rightShooterPIDController.setFF(kFF);
+
+    }
+    leftShooterPIDController.setReference(2000, ControlType.kVelocity);
+    rightShooterPIDController.setReference(2000, ControlType.kVelocity);
   }
 
   public void stopShooter() {
@@ -139,6 +173,7 @@ public class Shooter extends SubsystemBase {
     angleMotor.set(.0);
   }
 
+
   public double getShooterAngleClicks() {
     return angleEncoder.getPosition();
   }
@@ -152,8 +187,30 @@ public class Shooter extends SubsystemBase {
   }
 
   // Indexer methods
-  public void setIndexRPM() {
+  public void setIndexRPMHigh() {
+    double kP = .0005;
+    double kFF = .00016;
+
+    if(IndexPIDController.getP()!=kP){
+      IndexPIDController.setP(kP);
+    }
+    if(IndexPIDController.getFF()!=kFF){
+      IndexPIDController.setFF(kFF);
+    }
     IndexPIDController.setReference(IndexRPM, ControlType.kVelocity);
+
+  }
+  public void setIndexRPMLow() {
+    double kP = .00025;
+    double kFF = .00016;
+
+    if(IndexPIDController.getP()!=kP){
+      IndexPIDController.setP(kP);
+    }
+    if(IndexPIDController.getFF()!=kFF){
+      IndexPIDController.setFF(kFF);
+    }
+    IndexPIDController.setReference(700, ControlType.kVelocity);
   }
 
   public void setIndexPower(double speed) {
@@ -169,12 +226,34 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shooterTo(double position) {
-    anglePIDController.setReference(position / 360, ControlType.kPosition);
+    anglePIDController.setReference((position / 360)+.5402, ControlType.kPosition);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
     SmartDashboard.putBoolean("sensor has target: ", hasNote());
+    SmartDashboard.putNumber("indexRPM", indexEncoder.getVelocity());
+    SmartDashboard.putNumber("ShooterRPM", leftShooterEncoder.getVelocity());
+    // double newAngleP = SmartDashboard.getNumber("AnglekP", 7);
+    // if (newAngleP!=angleP){
+    //   angleP=newAngleP;
+    //   anglePIDController.setP(angleP);
+    // }
+     SmartDashboard.putNumber("AnglekP",angleP);
+  //   double newAnglekD = SmartDashboard.getNumber("AnglekD", 0);
+  //   if(newAnglekD!=angleD){
+  //     angleD=newAnglekD;
+  //     anglePIDController.setD(angleD);
+  //   }
+  //   SmartDashboard.putNumber("AnglekD", angleD);
+  
+  //  double newAngleI = SmartDashboard.getNumber("AnglekI", 0);
+  //   if(newAngleI!=angleI){
+  //     angleI=newAngleI;
+  //     anglePIDController.setI(angleI);
+  //   }
+  //   SmartDashboard.putNumber("AnglekI", angleI);
   }
 }
+

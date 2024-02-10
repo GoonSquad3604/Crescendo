@@ -164,12 +164,16 @@ public final class Constants {
     public static final int rightShooterAmpRPM = 1000;
 
     public static final int leftShooterTrapRPM = 3000;
-    public static final int rightShooterTrapRPM = 3000;
+    public static final int rightShooterTrapRPM = 
+    3000;
 
     // Shooter Positions
     public static final double shooterSpeaker = 0;
     public static final double shooterAmp = 0;
     public static final double shooterTrap = 0;
+    public static final double shooterMax = 58.6;
+
+    public static final double shooterOffset = .54;
 
     // PIDS
     public static final double shooterkP = 0.0005;
@@ -180,6 +184,7 @@ public final class Constants {
     public static final double angleUpP = 0.0;
     public static final double angleDownP = 0.0;
 
+    
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
