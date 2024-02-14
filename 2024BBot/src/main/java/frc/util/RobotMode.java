@@ -6,7 +6,9 @@ package frc.util;
 
 /** Add your docs here. */
 public enum RobotMode {
+    HOME,
     TRAVEL,
+    CLIMBER,
     SPEAKER,
     AMP,
     TRAP

@@ -38,6 +38,7 @@ public class Intake extends SubsystemBase {
     intakeMotor.restoreFactoryDefaults(true);
     leftHingeMotor.restoreFactoryDefaults(true);
     rightHingeMotor.restoreFactoryDefaults(true);
+    
 
     // Intake PID values
     intakePIDController.setFF(Constants.IntakeConstants.intakekFF);

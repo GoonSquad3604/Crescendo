@@ -132,6 +132,7 @@ public class RobotContainer {
 
     operator10.onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
     operator10.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+    
 
     operator11.onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
     operator11.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
