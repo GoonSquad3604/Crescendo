@@ -104,7 +104,7 @@ public class Vision extends SubsystemBase {
     // PhotonUtils.getYawToPose(m_Swerve.getPose(),aprilTagFieldLayout.getTagPose(5));
     return toTargetRotation;
   }
- 
+
   public Double getDistance() {
     distance =
         PhotonUtils.calculateDistanceToTargetMeters(
@@ -113,14 +113,14 @@ public class Vision extends SubsystemBase {
     return distance;
   }
 
-  //NOT FINISHED + need to get the right formulas
+  // NOT FINISHED + need to get the right formulas
   public double getShooterAngle() {
-    return getDistance()*123;
+    return getDistance() * 123;
   }
+
   public double getShooterSpeed() {
-    return getDistance()*123;
+    return getDistance() * 123;
   }
-  
 
   List<Integer> tags = new ArrayList<>();
 

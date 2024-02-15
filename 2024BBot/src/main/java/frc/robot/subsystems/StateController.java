@@ -11,6 +11,7 @@ import frc.util.RobotMode;
 public class StateController extends SubsystemBase {
   /** Creates a new StateController. */
   public static StateController _instance;
+
   private Vision m_Vision;
   private RobotMode m_Mode;
   private double leftShooterSpeed;
@@ -21,20 +22,19 @@ public class StateController extends SubsystemBase {
 
   private boolean intakeEnabled;
 
-
   public StateController() {
     m_Vision = Vision.getInstance();
     setHome();
   }
 
-  public static StateController getInstance(){
+  public static StateController getInstance() {
 
-    if(_instance == null) {
+    if (_instance == null) {
       _instance = new StateController();
     }
     return _instance;
   }
-  
+
   public void setHome() {
     m_Mode = RobotMode.HOME;
     shooterAngle = Constants.ShooterConstants.shooterHome;
@@ -42,7 +42,7 @@ public class StateController extends SubsystemBase {
     rightShooterSpeed = 0;
     intakeEnabled = true;
   }
-  
+
   public void setTravel() {
     m_Mode = RobotMode.TRAVEL;
     shooterAngle = Constants.ShooterConstants.shooterTravel;
@@ -53,9 +53,9 @@ public class StateController extends SubsystemBase {
     m_Mode = RobotMode.CLIMBER;
     intakeEnabled = false;
   }
-  
+
   public void setTrap() {
-    m_Mode = RobotMode.TRAP; 
+    m_Mode = RobotMode.TRAP;
     indexSpeed = Constants.ShooterConstants.indexTrapRPM;
     shooterAngle = Constants.ShooterConstants.shooterTrap;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterTrapRPM;
@@ -64,7 +64,7 @@ public class StateController extends SubsystemBase {
 
   public void setSpeaker() {
     m_Mode = RobotMode.SPEAKER;
-    indexSpeed = m_Vision.getShooterSpeed()*1.35;
+    indexSpeed = m_Vision.getShooterSpeed() * 1.35;
     leftShooterSpeed = m_Vision.getShooterSpeed();
     rightShooterSpeed = m_Vision.getShooterSpeed();
     shooterAngle = m_Vision.getShooterAngle();
@@ -78,6 +78,10 @@ public class StateController extends SubsystemBase {
     return indexSpeed;
   }
 
+  public double getAngle() {
+    return shooterAngle;
+  }
+
   public double getLeftShooterSpeed() {
     return leftShooterSpeed;
   }
@@ -86,11 +90,14 @@ public class StateController extends SubsystemBase {
     return rightShooterSpeed;
   }
 
+  public boolean isHomeMode() {
+    return m_Mode == RobotMode.HOME;
+  }
+
   @Override
   public void periodic() {
-    if(m_Mode == RobotMode.SPEAKER) {
+    if (m_Mode == RobotMode.SPEAKER) {}
 
-    }
     // This method will be called once per scheduler run
   }
 }

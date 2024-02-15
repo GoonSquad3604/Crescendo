@@ -143,8 +143,8 @@ public final class Constants {
 
     public static final HolonomicPathFollowerConfig pathFollowerConfig =
         new HolonomicPathFollowerConfig(
-            new PIDConstants(5.0, 0, 0), // Translation constants
-            new PIDConstants(5.0, 0, 0), // Rotation constants
+            new PIDConstants(1.0, 0, 0), // Translation constants
+            new PIDConstants(1.0, 0, 0), // Rotation constants
             maxSpeed,
             wheelBase / 2, // Drive base radius (distance from center to furthest module)
             new ReplanningConfig());
@@ -164,13 +164,17 @@ public final class Constants {
     public static final int rightShooterAmpRPM = 1000;
 
     public static final int leftShooterTrapRPM = 3000;
-    public static final int rightShooterTrapRPM = 
-    3000;
+    public static final int rightShooterTrapRPM = 3000;
+
+    public static final int indexTrapRPM = 6000;
 
     // Shooter Positions
     public static final double shooterSpeaker = 0;
     public static final double shooterAmp = 0;
     public static final double shooterTrap = 0;
+    public static final double shooterHome = 35;
+    public static final double shooterTravel = 0;
+
     public static final double shooterMax = 58.6;
 
     public static final double shooterOffset = .4505;
@@ -184,7 +188,6 @@ public final class Constants {
     public static final double angleUpP = 0.0;
     public static final double angleDownP = 0.0;
 
-    
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
@@ -192,11 +195,6 @@ public final class Constants {
     public static final double indexkI = 0.0;
     public static final double indexkD = 0.0;
     public static final double indexkF = 0.00016;
-
-    public static final double angleHomePos = 0.0;
-    public static final double angleTrapPos = 0.0;
-    public static final double angleAmpPos = 0.0;
-    public static final double angleSpeakerPos = 0.0;
   }
 
   public static final class ClimberConstants {
@@ -214,25 +212,21 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int intakeID = 6;
-    public static final int leftHingeID = 12;
-    public static final int rightHingeID = 8;
+    public static final int hingeID = 12;
 
     public static final double intakekFF = 0.0001;
     public static final double intakekP = 0.0005;
     public static final double intakekI = 0.0;
     public static final double intakekD = 0.0;
 
-    public static final double hingekFF = 0.0;
-    public static final double hingekP = 0.0;
+    public static final double hingekP = 5.0;
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-    public static final double intakeSpeed = 0.0;
-    public static final double vomitSpeed = 0.0;
-    public static final int intakeRPM = 2000;
+    public static final double hingeDown = .377;
+    public static final double hingeUp = .7;
 
-    public static final double raiseHingeSpeed = 0.0;
-    public static final double lowerHingeSpeed = 0.0;
+    public static final int intakeRPM = 2000;
   }
 
   public static final
