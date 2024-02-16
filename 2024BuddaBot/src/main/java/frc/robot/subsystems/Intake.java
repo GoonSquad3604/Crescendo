@@ -29,21 +29,24 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-    p = 3;
+    p = 5;
     i = 0;
     d = 0;
     hingeMotor = new CANSparkFlex(Constants.IntakeConstants.leftHingeID, MotorType.kBrushless);
     intakeMotor = new CANSparkFlex(6, MotorType.kBrushless);
 
     intakePIDController = intakeMotor.getPIDController();
-    hingePIDController = hingeMotor.getPIDController();
-    hingeEncoder = hingeMotor.getAbsoluteEncoder();
     // leftHingeMotor.follow(rightHingeMotor);
     // rightHingeMotor.setInverted(true);
 
-    intakeMotor.restoreFactoryDefaults(true);
-    hingeMotor.restoreFactoryDefaults(true);
+    intakeMotor.restoreFactoryDefaults();
+    hingeMotor.restoreFactoryDefaults();
+      hingePIDController = hingeMotor.getPIDController();
+          hingeEncoder = hingeMotor.getAbsoluteEncoder();
+
+
     hingePIDController.setFeedbackDevice(hingeEncoder);
+
     // Intake PID values
     intakePIDController.setFF(Constants.IntakeConstants.intakekFF);
     intakePIDController.setP(Constants.IntakeConstants.intakekP);
@@ -52,10 +55,11 @@ public class Intake extends SubsystemBase {
     intakePIDController.setOutputRange(-1.0, 1.0);
 
     // Hinge PID values
-    hingePIDController.setP(p);
+    hingePIDController.setP(5);
     hingePIDController.setI(i);
     hingePIDController.setD(d);
-    hingePIDController.setOutputRange(-.5, .5);
+    hingePIDController.setOutputRange(-.6, .6);
+    
   }
 
   public static Intake getInstance() {
@@ -102,6 +106,7 @@ public class Intake extends SubsystemBase {
   public void setHingeTo(double hingePos){
     hingePIDController.setReference(hingePos, ControlType.kPosition);
 
+    System.out.println(hingePos);
   }
 
  

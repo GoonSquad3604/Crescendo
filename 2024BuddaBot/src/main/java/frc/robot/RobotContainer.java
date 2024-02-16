@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drive.SwerveDefaultDrive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
+import frc.util.auton.GoonAutonCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,11 +32,11 @@ public class RobotContainer {
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
-  // private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
-  private final Intake s_Intake = Intake.getInstance();
+  //private final Intake s_Intake = Intake.getInstance();
   public RobotContainer() {
 
     /* Default Commands */
@@ -49,8 +50,9 @@ public class RobotContainer {
 
     configureBindings();
 
-    // autoChooser = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Auto Mode", autoChooser);
+    autoChooser = AutoBuilder.buildAutoChooser();
+    
+    SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
   private void configureBindings() {
@@ -63,7 +65,7 @@ public class RobotContainer {
     JoystickButton driverRightBumper =
         new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     JoystickButton driverHinge = new JoystickButton(driver, XboxController.Button.kStart.value);
-
+    JoystickButton driverVomit = new JoystickButton(driver, XboxController.Button.kBack.value);
     // Operator button box
     JoystickButton operator1 = new JoystickButton(operatorJoystick, 1);
     JoystickButton operator2 = new JoystickButton(operatorJoystick, 2);
@@ -80,22 +82,24 @@ public class RobotContainer {
 
     driverRightBumper.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-    driverA.onTrue(new InstantCommand(()-> s_Intake.runIntake()));
-    driverA.onFalse(new InstantCommand(()-> s_Intake.stopIntake()));
+    // driverA.onTrue(new InstantCommand(()-> s_Intake.runIntake()));
+    // driverA.onFalse(new InstantCommand(()-> s_Intake.stopIntake()));
 
-    driverB.onTrue(new InstantCommand(()-> s_Intake.raiseHinge()));
-    driverB.onFalse(new InstantCommand(()-> s_Intake.stopHinge()));
+    // driverB.onTrue(new InstantCommand(()-> s_Intake.raiseHinge()));
+    // driverB.onFalse(new InstantCommand(()-> s_Intake.stopHinge()));
 
-    driverY.onTrue(new InstantCommand(()-> s_Intake.lowerHinge()));
-    driverY.onFalse(new InstantCommand(()-> s_Intake.stopHinge()));
+    // driverY.onTrue(new InstantCommand(()-> s_Intake.lowerHinge()));
+    // driverY.onFalse(new InstantCommand(()-> s_Intake.stopHinge()));
 
-    //intake up
-    driverHinge.onTrue(new InstantCommand(() -> s_Intake.setHingeTo(.7)));
+    
+    // //intake up
+    // driverHinge.onTrue(new InstantCommand(() -> s_Intake.setHingeTo(.7)));
 
-    //intake down
-    driverX.onTrue(new InstantCommand(() -> s_Intake.setHingeTo(.39)));
-
-
+    // //intake down
+    // driverX.onTrue(new InstantCommand(() -> s_Intake.setHingeTo(.377)));
+    // driverVomit.onTrue(new InstantCommand(() -> s_Intake.vomit()));
+    // driverVomit.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    
   }
 
   /**
@@ -105,6 +109,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    Command auton =   autoChooser.getSelected();
+    return auton;
   }
 }

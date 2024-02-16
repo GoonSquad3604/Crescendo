@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,11 +24,14 @@ public class SwerveDrive extends SubsystemBase {
   public SwerveDriveOdometry swerveOdometry;
   public GoonSwerveModule[] mSwerveMods;
   public Pigeon2 gyro;
+  private final Field2d m_field = new Field2d();
 
   public SwerveDrive() {
     gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.General.CANIVORE_CANBUS);
     gyro.getConfigurator().apply(new Pigeon2Configuration());
     gyro.setYaw(0);
+    SmartDashboard.putData("Field", m_field);
+
 
     mSwerveMods =
         new GoonSwerveModule[] {
@@ -160,6 +164,9 @@ public class SwerveDrive extends SubsystemBase {
   @Override
   public void periodic() {
     swerveOdometry.update(getGyroYaw(), getModulePositions());
+    m_field.setRobotPose(swerveOdometry.getPoseMeters());
+
+    SmartDashboard.putString( "allience", DriverStation.getAlliance().get().toString());
 
     for (GoonSwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
