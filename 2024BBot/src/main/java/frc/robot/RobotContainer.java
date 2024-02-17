@@ -136,10 +136,12 @@ public class RobotContainer {
   operator7.onTrue(new ParallelCommandGroup(
       new InstantCommand(() -> s_StateController.setAmp(), s_StateController),
       new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
-    operator8.onTrue(new InstantCommand(() -> s_StateController.setTrap(), s_StateController));
+operator8.onTrue(new ParallelCommandGroup(
+      new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
+      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
 
-
-    operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(s_StateController.getLeftShooterSpeed() ,s_StateController.getRightShooterSpeed()), s_Shooter));
+   // operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(s_StateController.getLeftShooterSpeed() ,s_StateController.getRightShooterSpeed()), s_Shooter));
+   operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     operator9.and(climberTrigger).onTrue(
       new ParallelCommandGroup(
         new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),

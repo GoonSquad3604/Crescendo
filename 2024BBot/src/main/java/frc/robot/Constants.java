@@ -174,7 +174,7 @@ public final class Constants {
 
     // Shooter Positions
     public static final double shooterSpeaker = 50;
-    public static final double shooterAmp =62 ;
+    public static final double shooterAmp =64;
     public static final double shooterTrap = 55;
     public static final double shooterHome = 58;
     public static final double shooterTravel = 0;
