@@ -106,7 +106,7 @@ public final class Constants {
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 20;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-143.17);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-137.813);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -116,7 +116,7 @@ public final class Constants {
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-19.51);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-13.09);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -126,7 +126,7 @@ public final class Constants {
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 6;
       public static final int canCoderID = 22;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-164.004);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-166.73);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -136,15 +136,15 @@ public final class Constants {
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 23;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.4);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(100.723);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
     public static final HolonomicPathFollowerConfig pathFollowerConfig =
         new HolonomicPathFollowerConfig(
-            new PIDConstants(1.0, 0, 0), // Translation constants
-            new PIDConstants(1.0, 0, 0), // Rotation constants
+            new PIDConstants(5, 0, 0.75), // Translation constants
+            new PIDConstants(20.0, 0, 0), // Rotation constants
             maxSpeed,
             wheelBase / 2, // Drive base radius (distance from center to furthest module)
             new ReplanningConfig());

@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -33,17 +35,22 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final SendableChooser<Command> autoChooser;
+  public static int x;
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
   //private final Intake s_Intake = Intake.getInstance();
   public RobotContainer() {
 
+    //get alliance coLOR
+
+    int x = DriverStation.getAlliance().get().toString().equalsIgnoreCase("red") ? -1 : 1;
+
     /* Default Commands */
     s_Swerve.setDefaultCommand(
         new SwerveDefaultDrive(
-            () -> -driver.getLeftY(),
-            () -> -driver.getLeftX(),
+            () -> -driver.getLeftY()*x,
+            () -> -driver.getLeftX()*x,
             () -> -driver.getRightX(),
             () -> driver.getLeftTriggerAxis(),
             robotCentric));
