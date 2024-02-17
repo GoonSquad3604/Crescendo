@@ -166,17 +166,17 @@ public class Vision extends SubsystemBase {
     // targetToRobotRotation = targetToRobotRotation();
     getDistance();
     // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
-    SmartDashboard.putBoolean("hastarget", hasTarget);
-    SmartDashboard.putNumber("tx", tx);
-    SmartDashboard.putNumber("ty", ty);
-    SmartDashboard.putNumber("ta", ta);
-    SmartDashboard.putNumber("robotPose X: ", xPos);
-    SmartDashboard.putNumber("robotPose y: ", yPos);
+    // SmartDashboard.putBoolean("hastarget", hasTarget);
+    // SmartDashboard.putNumber("tx", tx);
+    // SmartDashboard.putNumber("ty", ty);
+    // SmartDashboard.putNumber("ta", ta);
+    // SmartDashboard.putNumber("robotPose X: ", xPos);
+    // SmartDashboard.putNumber("robotPose y: ", yPos);
 
-    SmartDashboard.putNumber("targetID", targetID);
+    // SmartDashboard.putNumber("targetID", targetID);
 
-    SmartDashboard.putNumber("x", x);
-    SmartDashboard.putNumber("y", y);
-    SmartDashboard.putNumber("z", z);
+    // SmartDashboard.putNumber("x", x);
+    // SmartDashboard.putNumber("y", y);
+    // SmartDashboard.putNumber("z", z);
   }
 }

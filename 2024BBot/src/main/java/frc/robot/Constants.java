@@ -160,19 +160,23 @@ public final class Constants {
     public static final int leftShooterSpeakerRPM = 5000;
     public static final int rightShooterSpeakerRPM = 5000;
 
-    public static final int leftShooterAmpRPM = 1000;
-    public static final int rightShooterAmpRPM = 1000;
+    public static final int leftShooterAmpRPM = 300;
+    public static final int rightShooterAmpRPM = 300;
 
-    public static final int leftShooterTrapRPM = 3000;
-    public static final int rightShooterTrapRPM = 3000;
+    public static final int leftShooterTrapRPM = 6000;
+    public static final int rightShooterTrapRPM = 6000;
 
+    public static final int indexSpeakerRPM  = 6000;
     public static final int indexTrapRPM = 6000;
+    public static final int indexAmpRPM = 800;
+
+    public static final double indexPower = .4;
 
     // Shooter Positions
-    public static final double shooterSpeaker = 0;
-    public static final double shooterAmp = 0;
-    public static final double shooterTrap = 0;
-    public static final double shooterHome = 35;
+    public static final double shooterSpeaker = 50;
+    public static final double shooterAmp =62 ;
+    public static final double shooterTrap = 55;
+    public static final double shooterHome = 58;
     public static final double shooterTravel = 0;
 
     public static final double shooterMax = 58.6;
@@ -184,6 +188,8 @@ public final class Constants {
     public static final double shooterkI = 0.0;
     public static final double shooterkD = 0.0;
     public static final double shooterkF = 0.00016;
+
+    public static final double angleP = 5.0;
 
     public static final double angleUpP = 0.0;
     public static final double angleDownP = 0.0;
@@ -208,11 +214,20 @@ public final class Constants {
     public static final int rightClimbkP = 0;
     public static final int rightClimbkI = 0;
     public static final int rightClimbkD = 0;
+
+    public static final double rightClimbedPos = -2;
+    public static final double leftClimbedPos = .6;
+
+    public static final double maxRightClimberHeight = 525;
+    public static final double maxLeftClimberHeight = -525;
+
+    public static final double minRightClimberHeight = 0;
+    public static final double minLeftClimberHeight = 0;
   }
 
   public static final class IntakeConstants {
     public static final int intakeID = 6;
-    public static final int hingeID = 12;
+    public static final int hingeID = 8;
 
     public static final double intakekFF = 0.0001;
     public static final double intakekP = 0.0005;
@@ -223,8 +238,8 @@ public final class Constants {
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-    public static final double hingeDown = .377;
-    public static final double hingeUp = .7;
+    public static final double hingeDown = .381;
+    public static final double hingeUp = .65;
 
     public static final int intakeRPM = 2000;
   }

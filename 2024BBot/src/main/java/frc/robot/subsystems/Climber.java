@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -18,8 +19,8 @@ public class Climber extends SubsystemBase {
 
   /*  Declare variables */
 
-  private CANSparkMax rightClimberMotor;
-  private CANSparkMax leftClimberMotor;
+  private CANSparkFlex rightClimberMotor;
+  private CANSparkFlex leftClimberMotor;
 
   private RelativeEncoder leftClimberEncoder;
   private RelativeEncoder rightClimberEncoder;
@@ -29,19 +30,18 @@ public class Climber extends SubsystemBase {
 
   private static Climber _instance;
 
-  private int leftMaxHeight;
-  private int rightMaxHeight;
+ 
 
   /** Creates a new Climber. */
   public Climber() {
 
     leftClimberMotor =
-        new CANSparkMax(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
+        new CANSparkFlex(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
     leftClimberEncoder = leftClimberMotor.getEncoder();
     leftClimberPIDController = leftClimberMotor.getPIDController();
 
     rightClimberMotor =
-        new CANSparkMax(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
+        new CANSparkFlex(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
     rightClimberEncoder = rightClimberMotor.getEncoder();
     rightClimberPIDController = rightClimberMotor.getPIDController();
 
@@ -80,25 +80,29 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberUp() {
-    leftClimberMotor.set(.3);
-    rightClimberMotor.set(.3);
+    leftClimberMotor.set(-1);
+    rightClimberMotor.set(1);
   }
 
   public void climberDown() {
-    leftClimberMotor.set(-.3);
-    rightClimberMotor.set(-.3);
+    leftClimberMotor.set(1);
+    rightClimberMotor.set(-1);
   }
 
   public void raiseCimber() {
-    leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
-    rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+    leftClimberPIDController.setReference(Constants.ClimberConstants.maxLeftClimberHeight, ControlType.kPosition);
+    rightClimberPIDController.setReference(Constants.ClimberConstants.maxRightClimberHeight, ControlType.kPosition);
   }
 
   public void lowerClimber() {
-    leftClimberPIDController.setReference(leftMaxHeight, ControlType.kPosition);
-    rightClimberPIDController.setReference(rightMaxHeight, ControlType.kPosition);
+    leftClimberPIDController.setReference(Constants.ClimberConstants.minLeftClimberHeight, ControlType.kPosition);
+    rightClimberPIDController.setReference(Constants.ClimberConstants.minRightClimberHeight, ControlType.kPosition);
   }
-
+  
+  public void climbPos() {
+    leftClimberPIDController.setReference(Constants.ClimberConstants.leftClimbedPos, ControlType.kPosition);
+    rightClimberPIDController.setReference(Constants.ClimberConstants.rightClimbedPos, ControlType.kPosition);
+  }
   public void stopClimber() {
     leftClimberMotor.set(0);
     rightClimberMotor.set(0);

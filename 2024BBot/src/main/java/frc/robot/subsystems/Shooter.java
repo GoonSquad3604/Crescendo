@@ -40,8 +40,8 @@ public class Shooter extends SubsystemBase {
   private static Shooter _instance;
   private double angleD, angleP, angleI, kPLeft, kFFLeft, kPRight, kFFRight;
 
-  private int leftRPM = 5000;
-  private int rightRPM = 5000;
+  private double leftRPM = 4000;
+  private double rightRPM = 6500;
   private int IndexRPM = 6000;
   private double trapAngle = 48;
 
@@ -98,8 +98,8 @@ public class Shooter extends SubsystemBase {
     IndexPIDController.setD(Constants.ShooterConstants.indexkD);
     IndexPIDController.setFF(Constants.ShooterConstants.indexkF);
 
-    rightShooterPIDController.setOutputRange(0, 1);
-    leftShooterPIDController.setOutputRange(0, 1);
+    rightShooterPIDController.setOutputRange(-1, 1);
+    leftShooterPIDController.setOutputRange(-1, 1);
     anglePIDController.setOutputRange(-.4, .4);
     IndexPIDController.setOutputRange(-1, 1);
 
@@ -135,8 +135,8 @@ public class Shooter extends SubsystemBase {
     //   rightShooterPIDController.setFF(kFF);
     // }
 
-    leftShooterPIDController.setReference(4000, ControlType.kVelocity);
-    rightShooterPIDController.setReference(6500  , ControlType.kVelocity);
+    leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
+    rightShooterPIDController.setReference(rightRPM  , ControlType.kVelocity);
   }
 
   public void setShooterRPMAMP() {
@@ -153,7 +153,10 @@ public class Shooter extends SubsystemBase {
     leftShooterPIDController.setReference(0, ControlType.kVelocity);
     rightShooterPIDController.setReference(1000, ControlType.kVelocity);
   }
-
+  public void setShooterRPM(double leftRPM, double rightRPM) {
+    leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
+    rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
+  }
   public void stopShooter() {
     leftShooterMotor.set(0);
     rightShooterMotor.set(0);
@@ -196,7 +199,7 @@ public class Shooter extends SubsystemBase {
     if (IndexPIDController.getFF() != kFF) {
       IndexPIDController.setFF(kFF);
     }
-    IndexPIDController.setReference(IndexRPM, ControlType.kVelocity);
+    IndexPIDController.setReference(-IndexRPM, ControlType.kVelocity);
   }
 
   public void setIndexRPMLow() {
@@ -209,12 +212,18 @@ public class Shooter extends SubsystemBase {
     if (IndexPIDController.getFF() != kFF) {
       IndexPIDController.setFF(kFF);
     }
-    IndexPIDController.setReference(1600, ControlType.kVelocity);
+    IndexPIDController.setReference(-1600, ControlType.kVelocity);
+  }
+
+  public void setIndexRPM(double RPM){
+    IndexPIDController.setReference(RPM, ControlType.kVelocity);
+
   }
 
   public void setIndexPower(double speed) {
     indexMotor.set(speed);
   }
+  
 
   public void indexStop() {
     indexMotor.set(0);
@@ -233,6 +242,7 @@ public class Shooter extends SubsystemBase {
     anglePIDController.setReference((trapAngle / -360) + 0.79492, ControlType.kPosition);
   }
 
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
@@ -249,35 +259,41 @@ public class Shooter extends SubsystemBase {
     //   angleP=newAngleP;
     //   anglePIDController.setP(angleP);
     // }
-  double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
-      if(newLeftSpinP!=kPLeft){
-        kPLeft=newLeftSpinP;
-        leftShooterPIDController.setP(kPLeft);
-      }
-      SmartDashboard.putNumber("LSpinP", kPLeft);
+  leftRPM = SmartDashboard.getNumber("leftRPM", 4000);
+  SmartDashboard.putNumber("leftRPM", leftRPM);
 
-   double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
-      if(newLeftSpinFF!=kFFLeft){
-        kFFLeft=newLeftSpinFF;
-        leftShooterPIDController.setFF(kFFLeft);
+  rightRPM = SmartDashboard.getNumber("rightRPM", 6500);
+  SmartDashboard.putNumber("rightRPM", rightRPM);
 
-      }
-      SmartDashboard.putNumber("LSpinFF", kFFLeft);
+  // double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
+  //     if(newLeftSpinP!=kPLeft){
+  //       kPLeft=newLeftSpinP;
+  //       leftShooterPIDController.setP(kPLeft);
+  //     }
+  //     SmartDashboard.putNumber("LSpinP", kPLeft);
 
-     double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
-      if(newRightSpinP!=kPRight){
-        kPRight=newRightSpinP;
-        rightShooterPIDController.setP(kPRight);
-      }
-      SmartDashboard.putNumber("RSpinP", kPRight);
+  //  double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
+  //     if(newLeftSpinFF!=kFFLeft){
+  //       kFFLeft=newLeftSpinFF;
+  //       leftShooterPIDController.setFF(kFFLeft);
 
-   double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
-      if(newRightSpinFF!=kFFRight){
-        kFFRight=newRightSpinFF;
-        rightShooterPIDController.setFF(kFFRight);
+  //     }
+  //     SmartDashboard.putNumber("LSpinFF", kFFLeft);
 
-      }
-      SmartDashboard.putNumber("RSpinFF", kFFRight);
+  //    double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
+  //     if(newRightSpinP!=kPRight){
+  //       kPRight=newRightSpinP;
+  //       rightShooterPIDController.setP(kPRight);
+  //     }
+  //     SmartDashboard.putNumber("RSpinP", kPRight);
+
+  //  double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
+  //     if(newRightSpinFF!=kFFRight){
+  //       kFFRight=newRightSpinFF;
+  //       rightShooterPIDController.setFF(kFFRight);
+
+  //     }
+  //     SmartDashboard.putNumber("RSpinFF", kFFRight);
 
     // SmartDashboard.putNumber("AnglekP", angleP);
 

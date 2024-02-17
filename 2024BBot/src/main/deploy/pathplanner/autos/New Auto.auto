@@ -10,6 +10,12 @@
           "data": {
             "pathName": "OneMeterForward"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New Path"
+          }
         }
       ]
     }

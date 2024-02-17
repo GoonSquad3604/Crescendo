@@ -84,10 +84,7 @@ public class SwerveDrive extends SubsystemBase {
 
     SwerveModuleState[] targetStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, Constants.Swerve.maxSpeed);
-    for (GoonSwerveModule mod : mSwerveMods) {
-      mod.setDesiredState(targetStates[mod.moduleNumber], true);
-    }
+        setModuleStates(targetStates);
   }
 
   /* Used by SwerveControllerCommand in Auto */
