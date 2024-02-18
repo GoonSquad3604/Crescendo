@@ -5,6 +5,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -45,19 +48,30 @@ public class RobotContainer {
   private final SwerveDrive s_Swerve = SwerveDrive.getInstance();
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
- // private final Climber s_Climber = Climber.getInstance();
+ private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
 
   public RobotContainer() {
+    int x = DriverStation.getAlliance().get().toString().equalsIgnoreCase("red") ? -1 : 1;
 
     /* Default Commands */
     s_Swerve.setDefaultCommand(
         new SwerveDefaultDrive(
-            () -> -driver.getLeftY(),
-            () -> -driver.getLeftX(),
+            () -> -driver.getLeftY()*x,
+            () -> -driver.getLeftX()*x,
             () -> -driver.getRightX(),
             () -> driver.getLeftTriggerAxis(),
             robotCentric));
+
+    NamedCommands.registerCommand("runIntake", new ParallelCommandGroup(
+            new InstantCommand(() -> s_Intake.runIntake())));
+
+    NamedCommands.registerCommand("intakeDown", new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown),s_Intake));
+    NamedCommands.registerCommand("intakeUp", new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp),s_Intake));
+    NamedCommands.registerCommand("shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(35)));
+    NamedCommands.registerCommand("revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 5000),s_Shooter));
+    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));
+    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
 
     configureBindings();
 
@@ -93,9 +107,10 @@ public class RobotContainer {
     Trigger homeTrigger = new Trigger(s_StateController::isHomeMode);
     Trigger indexTrigger = new Trigger(s_Shooter::hasNote);
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
+    Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
 
     driverRightBumper.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-   operator1.onTrue(
+   operator6.onTrue(
         new ParallelCommandGroup(
             new InstantCommand(
                 () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake),
@@ -103,24 +118,27 @@ public class RobotContainer {
               new InstantCommand(() -> s_StateController.setHome(), s_StateController),
               new InstantCommand(() -> s_Shooter.shooterTo(s_StateController.getAngle()),s_Shooter))));
 
-    operator2.and(homeTrigger).onTrue(
+    operator7.and(homeTrigger).onTrue(
         new ParallelCommandGroup(
             new InstantCommand(() -> s_Intake.runIntake()),
             new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
-    operator2.and(indexTrigger).onTrue(
+
+    operator7.and(indexTrigger).onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Intake.stopIntake()),
                 new InstantCommand(() -> s_Shooter.stopShooter())));
-    operator2.onFalse(
+
+    operator7.onFalse(
         new ParallelCommandGroup(
             new InstantCommand(() -> s_Intake.stopIntake()),
             new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter)));
 
-    operator3.onTrue(new InstantCommand(() -> s_Intake.vomit()));
-    operator3.onTrue(new InstantCommand(()-> s_Shooter.setIndexPower(-.3)));
-    operator3.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    operator3.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
-    operator4.onTrue(
+    operator8.onTrue(new InstantCommand(() -> s_Intake.vomit()));
+    operator8.onTrue(new InstantCommand(()-> s_Shooter.setIndexPower(-.3)));
+    operator8.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    operator8.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+
+    operator1.onTrue(
         new ParallelCommandGroup(
             new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
             new InstantCommand(() -> s_StateController.setTravel(), s_StateController)));
@@ -129,40 +147,53 @@ public class RobotContainer {
       new InstantCommand(() -> s_StateController.setClimber(), s_StateController),
       new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
 
- operator6.onTrue(new ParallelCommandGroup(
+    operator2.onTrue(new ParallelCommandGroup(
       new InstantCommand(() -> s_StateController.setSpeaker(), s_StateController),
-      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake))); 
+      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+      new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker)))
+      ); 
 
-  operator7.onTrue(new ParallelCommandGroup(
+    operator3.onTrue(new ParallelCommandGroup(
       new InstantCommand(() -> s_StateController.setAmp(), s_StateController),
-      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
-operator8.onTrue(new ParallelCommandGroup(
-      new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
-      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
+      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+      new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp))));
 
-   // operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(s_StateController.getLeftShooterSpeed() ,s_StateController.getRightShooterSpeed()), s_Shooter));
-   operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    operator4.onTrue(new ParallelCommandGroup(
+      new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
+      new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+      new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterTrap))));
+
+   operator9.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(s_StateController.getLeftShooterSpeed() ,s_StateController.getRightShooterSpeed()), s_Shooter));
+    operator10.onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     operator9.and(climberTrigger).onTrue(
       new ParallelCommandGroup(
         new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
         new InstantCommand(() -> s_Shooter.indexStop())
     ));
     // operator9.onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-    operator10.onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(s_StateController.getIndexSpeed())));
-    operator10.and(climberTrigger).onTrue(
+   
+      operator12.onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(s_StateController.getIndexSpeed())));
+    
+      
+    operator12.and(climberTrigger).onTrue(
       new ParallelCommandGroup(
         new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
         new InstantCommand(() -> s_Shooter.indexStop())
     ));
-    operator10.onFalse(
+    operator12.onFalse(
       new ParallelCommandGroup(
         new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
         new InstantCommand(() -> s_Shooter.indexStop())
     ));
-    operator11.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(s_StateController.getAngle()),s_Shooter));
     operator11.and(climberTrigger).onTrue(new InstantCommand(() -> s_Shooter.stopAngle(),s_Shooter));
-    // operator11.and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    // operator12.and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    // driverX.onTrue(new InstantCommand(()-> s_Shooter.raiseAngle()));
+    // driverX.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+
+    // driverY.onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
+    // driverY.onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+    operator10.and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    operator11.and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+
 
 
 
@@ -184,11 +215,11 @@ operator8.onTrue(new ParallelCommandGroup(
     //operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
     // operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    // driverY.onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    // driverY.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driverY.onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    driverY.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-    // driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    // driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
     // operator3.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPMLow(), s_Shooter));
     // operator3.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
@@ -215,11 +246,12 @@ operator8.onTrue(new ParallelCommandGroup(
 
     // operator12.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(50)));
 
-    operator9.onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+    operator11.onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     // operator8.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(10)));
     
    driverA.onTrue(new InstantCommand(() -> s_Intake.cleam()));
    driverA.onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+   driverB.onTrue(new InstantCommand(() -> s_Shooter.shooterTo(12)));
 
     //operator1.onTrue(new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
 

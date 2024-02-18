@@ -57,14 +57,14 @@ public class StateController extends SubsystemBase {
 
   public void setTrap() {
     m_Mode = RobotMode.TRAP;
-    indexSpeed = Constants.ShooterConstants.indexTrapRPM;
+    indexSpeed = Constants.ShooterConstants.indexTrapSpeed;
     shooterAngle = Constants.ShooterConstants.shooterTrap;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterTrapRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterTrapRPM;
   }
   public void setAmp() {
     m_Mode = RobotMode.AMP;
-    indexSpeed = Constants.ShooterConstants.indexPower;
+    indexSpeed = Constants.ShooterConstants.indexAmpSpeed;
     shooterAngle = Constants.ShooterConstants.shooterAmp;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterAmpRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterAmpRPM;
@@ -72,7 +72,7 @@ public class StateController extends SubsystemBase {
   }
   public void setSpeaker() {
     m_Mode = RobotMode.SPEAKER;
-    indexSpeed = Constants.ShooterConstants.indexSpeakerRPM;
+    indexSpeed = Constants.ShooterConstants.indexSpeakerSpeed;
     shooterAngle = Constants.ShooterConstants.shooterSpeaker;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterSpeakerRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterSpeakerRPM;
@@ -109,6 +109,9 @@ public class StateController extends SubsystemBase {
   }
   public boolean isClimberMode() {
     return m_Mode == RobotMode.CLIMBER;
+  }
+  public boolean isAmpMode() {
+    return m_Mode == RobotMode.AMP;
   }
 
   @Override

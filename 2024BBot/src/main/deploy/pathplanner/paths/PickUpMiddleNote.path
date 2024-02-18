@@ -1,0 +1,124 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.359011265031077,
+        "y": 5.589805823486292
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.3590112650310786,
+        "y": 5.589805823486292
+      },
+      "isLocked": false,
+      "linkedName": "meterForwardEnd"
+    },
+    {
+      "anchor": {
+        "x": 3.884948624598104,
+        "y": 5.589805823486292
+      },
+      "prevControl": {
+        "x": 2.247767002656512,
+        "y": 5.531335051274091
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intakeDown"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "runIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stopIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intakeUp"
+              }
+            },
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "shooterTo"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "fire"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

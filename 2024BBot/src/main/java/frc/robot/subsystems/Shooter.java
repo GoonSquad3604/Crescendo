@@ -100,7 +100,7 @@ public class Shooter extends SubsystemBase {
 
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
-    anglePIDController.setOutputRange(-.4, .4);
+    anglePIDController.setOutputRange(-.7, .7);
     IndexPIDController.setOutputRange(-1, 1);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
@@ -233,20 +233,24 @@ public class Shooter extends SubsystemBase {
     return !sensor.get();
   }
 
-  // -0.0027X + 0.79492
+  // -0.002667*X + 0.7915
   public void shooterTo(double position) {
-    anglePIDController.setReference((position / -360) + 0.79492, ControlType.kPosition);
+    anglePIDController.setReference((position*-.002667) + 0.7915, ControlType.kPosition);
   }
 
   public void shooterTo() {
-    anglePIDController.setReference((trapAngle / -360) + 0.79492, ControlType.kPosition);
+    anglePIDController.setReference((trapAngle*-.002667) + 0.7915, ControlType.kPosition);
+  }
+
+  public void shooterToPos(double pos) {
+    anglePIDController.setReference(pos, ControlType.kPosition);
   }
 
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", -360 * (getShooterAngleClicks() - .79492));
+    SmartDashboard.putNumber("ShooterAngle",  (getShooterAngleClicks() - .7915)/-.002667);
 
     SmartDashboard.putBoolean("sensor has target: ", hasNote());
     SmartDashboard.putNumber("indexRPM", indexEncoder.getVelocity());
@@ -254,11 +258,11 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
 
     SmartDashboard.putBoolean("isInverted", angleMotor.getInverted());
-    // double newAngleP = SmartDashboard.getNumber("AnglekP", 7);
-    // if (newAngleP!=angleP){
-    //   angleP=newAngleP;
-    //   anglePIDController.setP(angleP);
-    // }
+    double newAngleP = SmartDashboard.getNumber("AnglekP", 7);
+    if (newAngleP!=angleP){
+      angleP=newAngleP;
+      anglePIDController.setP(angleP);
+    }
   leftRPM = SmartDashboard.getNumber("leftRPM", 4000);
   SmartDashboard.putNumber("leftRPM", leftRPM);
 
@@ -295,7 +299,7 @@ public class Shooter extends SubsystemBase {
   //     }
   //     SmartDashboard.putNumber("RSpinFF", kFFRight);
 
-    // SmartDashboard.putNumber("AnglekP", angleP);
+     SmartDashboard.putNumber("AnglekP", angleP);
 
     trapAngle = SmartDashboard.getNumber("trap angle", 48);
     SmartDashboard.putNumber("trap angle", trapAngle);

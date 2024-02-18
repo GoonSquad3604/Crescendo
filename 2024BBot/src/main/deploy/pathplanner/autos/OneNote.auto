@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.359011265031077,
+      "y": 5.589805823486292
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,13 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OneMeterForward"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "New Path"
+            "pathName": "PickUpMiddleNote"
           }
         }
       ]

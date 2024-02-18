@@ -58,8 +58,8 @@ public class Climber extends SubsystemBase {
     leftClimberPIDController.setD(0);
     rightClimberPIDController.setD(0);
 
-    leftClimberPIDController.setOutputRange(-.5, .5);
-    rightClimberPIDController.setOutputRange(-.5, .5);
+    leftClimberPIDController.setOutputRange(-.7, .7);
+    rightClimberPIDController.setOutputRange(-.7, .7);
 
     leftClimberMotor.setIdleMode(IdleMode.kBrake);
     rightClimberMotor.setIdleMode(IdleMode.kBrake);
@@ -80,13 +80,13 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberUp() {
-    leftClimberMotor.set(-1);
-    rightClimberMotor.set(1);
+    leftClimberMotor.set(-.4);
+    rightClimberMotor.set(.4);
   }
 
   public void climberDown() {
-    leftClimberMotor.set(1);
-    rightClimberMotor.set(-1);
+    leftClimberMotor.set(.4);
+    rightClimberMotor.set(-.4);
   }
 
   public void raiseCimber() {
@@ -95,8 +95,8 @@ public class Climber extends SubsystemBase {
   }
 
   public void lowerClimber() {
-    leftClimberPIDController.setReference(Constants.ClimberConstants.minLeftClimberHeight, ControlType.kPosition);
-    rightClimberPIDController.setReference(Constants.ClimberConstants.minRightClimberHeight, ControlType.kPosition);
+    leftClimberPIDController.setReference(Constants.ClimberConstants.leftClimbedPos, ControlType.kPosition);
+    rightClimberPIDController.setReference(Constants.ClimberConstants.rightClimbedPos, ControlType.kPosition);
   }
   
   public void climbPos() {
