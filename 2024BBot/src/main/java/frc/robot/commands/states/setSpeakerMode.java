@@ -4,7 +4,6 @@
 
 package frc.robot.commands.states;
 
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -18,10 +17,10 @@ public class SetSpeakerMode extends InstantCommand {
   Shooter s_Shooter;
   Intake s_Intake;
   StateController s_StateController;
-  
+
   public SetSpeakerMode() {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+
   }
 
   // Called when the command is initially scheduled.

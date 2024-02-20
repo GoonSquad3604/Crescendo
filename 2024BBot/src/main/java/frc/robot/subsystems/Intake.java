@@ -84,6 +84,7 @@ public class Intake extends SubsystemBase {
   public void vomit() {
     intakeMotor.set(-1);
   }
+
   public void cleam() {
     intakeMotor.set(-.5);
   }

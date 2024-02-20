@@ -84,7 +84,7 @@ public class SwerveDrive extends SubsystemBase {
 
     SwerveModuleState[] targetStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
-        setModuleStates(targetStates);
+    setModuleStates(targetStates);
   }
 
   /* Used by SwerveControllerCommand in Auto */

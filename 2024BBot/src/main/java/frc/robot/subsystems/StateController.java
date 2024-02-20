@@ -13,7 +13,7 @@ public class StateController extends SubsystemBase {
   /** Creates a new StateController. */
   public static StateController _instance;
 
-  //private Vision m_Vision;
+  // private Vision m_Vision;
   private RobotMode m_Mode;
   private double leftShooterSpeed;
   private double rightShooterSpeed;
@@ -24,7 +24,7 @@ public class StateController extends SubsystemBase {
   private boolean intakeEnabled;
 
   public StateController() {
-    //m_Vision = Vision.getInstance();
+    // m_Vision = Vision.getInstance();
     setHome();
   }
 
@@ -62,14 +62,15 @@ public class StateController extends SubsystemBase {
     leftShooterSpeed = Constants.ShooterConstants.leftShooterTrapRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterTrapRPM;
   }
+
   public void setAmp() {
     m_Mode = RobotMode.AMP;
     indexSpeed = Constants.ShooterConstants.indexAmpSpeed;
     shooterAngle = Constants.ShooterConstants.shooterAmp;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterAmpRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterAmpRPM;
-
   }
+
   public void setSpeaker() {
     m_Mode = RobotMode.SPEAKER;
     indexSpeed = Constants.ShooterConstants.indexSpeakerSpeed;
@@ -77,8 +78,7 @@ public class StateController extends SubsystemBase {
     leftShooterSpeed = Constants.ShooterConstants.leftShooterSpeakerRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterSpeakerRPM;
 
-
-    //indexSpeed = m_Vision.getShooterSpeed() * 1.35;
+    // indexSpeed = m_Vision.getShooterSpeed() * 1.35;
     // leftShooterSpeed = m_Vision.getShooterSpeed();
     // rightShooterSpeed = m_Vision.getShooterSpeed();
     // shooterAngle = m_Vision.getShooterAngle();
@@ -107,9 +107,11 @@ public class StateController extends SubsystemBase {
   public boolean isHomeMode() {
     return m_Mode == RobotMode.HOME;
   }
+
   public boolean isClimberMode() {
     return m_Mode == RobotMode.CLIMBER;
   }
+
   public boolean isAmpMode() {
     return m_Mode == RobotMode.AMP;
   }

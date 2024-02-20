@@ -166,8 +166,8 @@ public final class Constants {
     public static final int leftShooterTrapRPM = 3300;
     public static final int rightShooterTrapRPM = 4200;
 
-    public static final int indexSpeakerRPM  = 6000;
-    public static final double indexSpeakerSpeed  = 1;
+    public static final int indexSpeakerRPM = 6000;
+    public static final double indexSpeakerSpeed = 1;
 
     public static final int indexTrapRPM = 6000;
     public static final double indexTrapSpeed = 1;
@@ -178,9 +178,9 @@ public final class Constants {
 
     // Shooter Positions
     public static final double shooterSpeaker = 60;
-    public static final double shooterAmp = 64; //.61656273
+    public static final double shooterAmp = 64; // .61656273
     public static final double shooterAmpPos = .6165627;
-    public static final double shooterTrap = 55.5; //.639
+    public static final double shooterTrap = 55.5; // .639
     public static final double shooterHome = 60;
     public static final double shooterTravel = 0;
 
@@ -223,8 +223,8 @@ public final class Constants {
     public static final double rightClimbedPos = 10;
     public static final double leftClimbedPos = -20;
 
-    public static final double maxRightClimberHeight = 281;
-    public static final double maxLeftClimberHeight = -300;
+    public static final double maxRightClimberHeight = 225;
+    public static final double maxLeftClimberHeight = -218;
 
     public static final double minRightClimberHeight = 2;
     public static final double minLeftClimberHeight = -2;
