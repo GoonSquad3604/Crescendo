@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -50,7 +51,7 @@ public class RobotContainer {
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  private final Vision s_Vision = Vision.getInstance();
+//   private final Vision s_Vision = Vision.getInstance();
 
   public RobotContainer() {
     int x = DriverStation.getAlliance().get().toString().equalsIgnoreCase("red") ? -1 : 1;
@@ -64,21 +65,22 @@ public class RobotContainer {
             () -> driver.getLeftTriggerAxis(),
             robotCentric));
 
-    NamedCommands.registerCommand("runIntake", new InstantCommand(() -> s_Intake.runIntake()));
-
+    NamedCommands.registerCommand("runIntake", new SequentialCommandGroup(new InstantCommand(() -> s_Intake.runIntake(), s_Intake),new FeedUntillSensor()));
+    NamedCommands.registerCommand("stopShooter", new InstantCommand(()-> s_Shooter.stopShooter(),s_Shooter));
     NamedCommands.registerCommand(
         "intakeDown",
         new InstantCommand(
             () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake));
     NamedCommands.registerCommand(
         "intakeUp",
-        new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake));
-    NamedCommands.registerCommand("shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(35)));
-    NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 5000), s_Shooter));
+        new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
+    NamedCommands.registerCommand("shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(35),s_Shooter));
+    NamedCommands.registerCommand( "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 6000), s_Shooter));
+//    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
-
+    NamedCommands.registerCommand("runIndex", new InstantCommand(()-> s_Shooter.setIndexPower(.4)));
+    NamedCommands.registerCommand("stopIndex", new InstantCommand(() -> s_Shooter.indexStop()));
     configureBindings();
 
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -243,11 +245,11 @@ public class RobotContainer {
     // operator3.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
     // operator3.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    driverY.onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    driverY.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driverY.onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
+    driverY.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    driverX.onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    driverX.onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driverX.onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driverX.onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
     // operator3.onTrue(new InstantCommand(() -> s_Shooter.setIndexRPMLow(), s_Shooter));
     // operator3.onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
