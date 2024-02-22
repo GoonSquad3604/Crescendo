@@ -1,16 +1,6 @@
 package frc.robot;
 
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 
 public final class Constants {
 
@@ -18,8 +8,6 @@ public final class Constants {
     public static final double stickDeadband = .1; // drive stick deadband
     public static final String CANIVORE_CANBUS = "drivetrain";
   }
-
- 
 
   public static final class ShooterConstants {
     public static final int leftID = 14;
