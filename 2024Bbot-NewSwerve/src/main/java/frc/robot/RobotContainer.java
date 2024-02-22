@@ -64,7 +64,8 @@ public class RobotContainer {
     Trigger indexTrigger = new Trigger(s_Shooter::hasNote);
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
     Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
-
+    driver.rightTrigger().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(-driver.getLeftY() * MaxSpeed*.25) .withVelocityY(-driver.getLeftX() * MaxSpeed*.25)
+            .withRotationalRate(-driver.getRightX() * MaxAngularRate*.5)));
     driver.leftTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
     driver.b().whileTrue(drivetrain
         .applyRequest(() -> point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
@@ -144,8 +145,8 @@ public class RobotContainer {
                   new InstantCommand(() -> s_Shooter.indexStop())));
 
     buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
-    buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
-    buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
+    //buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
+    //buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
     buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.stopShooter()));
     buttonBox.button(10).and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
 
@@ -185,7 +186,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "intakeUp",
         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
-    NamedCommands.registerCommand("shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(35),s_Shooter));
+    NamedCommands.registerCommand("shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(25),s_Shooter));
     NamedCommands.registerCommand( "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 6000), s_Shooter));
 //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));

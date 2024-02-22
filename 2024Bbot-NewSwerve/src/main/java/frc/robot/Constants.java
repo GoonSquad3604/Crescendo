@@ -45,7 +45,7 @@ public final class Constants {
 
     public static final int indexAmpRPM = 800;
 
-    public static final double indexAmpSpeed = .4;
+    public static final double indexAmpSpeed = .3;
 
     // Shooter Positions
     public static final double shooterSpeaker = 60;
