@@ -33,11 +33,11 @@ public final class Constants {
 
     public static final int indexAmpRPM = 800;
 
-    public static final double indexAmpSpeed = .3;
+    public static final double indexAmpSpeed = 1;
 
     // Shooter Positions
     public static final double shooterSpeaker = 60;
-    public static final double shooterAmp = 64; // .61656273
+    public static final double shooterAmp = 67; // .61656273
     public static final double shooterAmpPos = .6165627;
     public static final double shooterTrap = 55.5; // .639
     public static final double shooterHome = 60;
@@ -46,6 +46,7 @@ public final class Constants {
     public static final double shooterMax = 58.6;
 
     public static final double shooterOffset = .4505;
+
 
     // PIDS
     public static final double shooterkP = 0.0005;
@@ -61,7 +62,7 @@ public final class Constants {
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
-    public static final double indexkP = 0.0005;
+    public static final double indexkP = 0.00025;
     public static final double indexkI = 0.0;
     public static final double indexkD = 0.0;
     public static final double indexkF = 0.00016;

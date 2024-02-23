@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class ShootAmp extends Command {
@@ -42,24 +43,34 @@ public class ShootAmp extends Command {
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
+    s_Shooter.setIndexPower(.3);
+    s_Shooter.setShooterRPM(
+        Constants.ShooterConstants.leftShooterAmpRPM,
+        Constants.ShooterConstants.rightShooterAmpRPM);
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
+    if (s_Shooter.hasNote()) {
+      s_Shooter.shooterTo(67);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     // stop index and shooter
+    s_Shooter.stopShooter();
+    s_Shooter.indexStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     // should finish when timer is like 1 sec.
-    return false;
+    return timer.get() == 1;
   }
 }

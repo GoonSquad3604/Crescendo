@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase {
     // anglePIDController.setI(Constants.ShooterConstants.anglekI);
     // anglePIDController.setD(Constants.ShooterConstants.anglekD);
 
-    anglePIDController.setP(5);
+    anglePIDController.setP(7);
     anglePIDController.setI(angleI);
     anglePIDController.setD(angleD);
 
@@ -100,7 +100,7 @@ public class Shooter extends SubsystemBase {
 
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
-    anglePIDController.setOutputRange(-.7, .7);
+    anglePIDController.setOutputRange(-1, 1);
     IndexPIDController.setOutputRange(-1, 1);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
@@ -190,31 +190,7 @@ public class Shooter extends SubsystemBase {
   }
 
   // Indexer methods
-  public void setIndexRPMHigh() {
-    double kP = .0004;
-    double kFF = .00016;
-
-    if (IndexPIDController.getP() != kP) {
-      IndexPIDController.setP(kP);
-    }
-    if (IndexPIDController.getFF() != kFF) {
-      IndexPIDController.setFF(kFF);
-    }
-    IndexPIDController.setReference(-IndexRPM, ControlType.kVelocity);
-  }
-
-  public void setIndexRPMLow() {
-    double kP = .00025;
-    double kFF = .00016;
-
-    if (IndexPIDController.getP() != kP) {
-      IndexPIDController.setP(kP);
-    }
-    if (IndexPIDController.getFF() != kFF) {
-      IndexPIDController.setFF(kFF);
-    }
-    IndexPIDController.setReference(-1600, ControlType.kVelocity);
-  }
+  
 
   public void setIndexRPM(double RPM) {
     IndexPIDController.setReference(RPM, ControlType.kVelocity);
@@ -298,7 +274,6 @@ public class Shooter extends SubsystemBase {
     //     SmartDashboard.putNumber("RSpinFF", kFFRight);
 
     SmartDashboard.putNumber("AnglekP", angleP);
-
     trapAngle = SmartDashboard.getNumber("trap angle", 48);
     SmartDashboard.putNumber("trap angle", trapAngle);
     SmartDashboard.putNumber("aNGLe dest", trapAngle);

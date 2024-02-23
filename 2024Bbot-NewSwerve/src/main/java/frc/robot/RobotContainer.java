@@ -30,6 +30,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -45,6 +46,7 @@ public class RobotContainer {
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
+  //private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -212,11 +214,11 @@ public class RobotContainer {
     buttonBox.button(11).onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     buttonBox
         .button(12)
-        .and(ampTrigger.negate())
+        
         .onTrue(
-            new InstantCommand(() -> s_Shooter.setIndexPower(s_StateController.getIndexSpeed())));
+            new InstantCommand(() -> s_Shooter.setIndexRPM(2000)));
 
-    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+   // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
@@ -234,7 +236,9 @@ public class RobotContainer {
 
     driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    driver.x().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(12)));
+    driver.x().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(45)));
+    driver.start().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(12)));
+
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
@@ -245,7 +249,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "runIntake",
         new SequentialCommandGroup(
-            new InstantCommand(() -> s_Intake.runIntake(), s_Intake), new FeedUntillSensor()));
+            new InstantCommand(() -> s_Intake.runIntake(), s_Intake), new FeedUntillSensor(), new RepositionNote()));
     NamedCommands.registerCommand(
         "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
     NamedCommands.registerCommand(

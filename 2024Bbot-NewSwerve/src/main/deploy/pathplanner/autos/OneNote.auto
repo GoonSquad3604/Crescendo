@@ -36,6 +36,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "stopIndex"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopShooter"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "middleTwoNote"
@@ -51,6 +63,12 @@
           "type": "named",
           "data": {
             "name": "shooterTo"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "revShooter"
           }
         },
         {
@@ -72,9 +90,21 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "stopShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIndex"
           }
         }
       ]
