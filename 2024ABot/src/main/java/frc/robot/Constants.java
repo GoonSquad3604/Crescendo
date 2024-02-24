@@ -10,8 +10,8 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int leftID = 14;
-    public static final int rightID = 15;
+    public static final int leftID = 15;
+    public static final int rightID = 14;
     public static final int indexID = 4;
     public static final int angleID = 5;
 

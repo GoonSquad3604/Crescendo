@@ -91,12 +91,12 @@ public class Intake extends SubsystemBase {
 
   // raises the Hinge into the Intake
   public void raiseHinge() {
-    hingeMotor.set(.4);
+    hingeMotor.set(-.4);
   }
 
   // lowers the Hinge out of the Intake
   public void lowerHinge() {
-    hingeMotor.set(-.4);
+    hingeMotor.set(.4);
   }
 
   public void stopHinge() {

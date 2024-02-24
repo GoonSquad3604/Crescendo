@@ -106,7 +106,8 @@ public class Shooter extends SubsystemBase {
     angleMotor.setIdleMode(IdleMode.kBrake);
 
     // Inverts left shooter motor
-    leftShooterMotor.setInverted(true);
+    leftShooterMotor.setInverted(false);
+    indexMotor.setInverted(true);
     angleMotor.setInverted(false);
   }
 
@@ -119,7 +120,7 @@ public class Shooter extends SubsystemBase {
 
   public void setPower(double speed) {
     // Sets motor speed
-    leftShooterMotor.set(speed);
+    leftShooterMotor.set(-speed);
     rightShooterMotor.set(speed);
   }
 
@@ -196,7 +197,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setIndexPower(double speed) {
-    indexMotor.set(speed);
+    indexMotor.set(-speed);
   }
 
   public void indexStop() {

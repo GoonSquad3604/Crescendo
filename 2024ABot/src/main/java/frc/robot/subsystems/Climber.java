@@ -61,6 +61,7 @@ public class Climber extends SubsystemBase {
     leftClimberMotor.setIdleMode(IdleMode.kBrake);
     rightClimberMotor.setIdleMode(IdleMode.kBrake);
 
+    
     zeroEncoders();
   }
 
@@ -77,12 +78,12 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberUp() {
-    leftClimberMotor.set(-.4);
+    leftClimberMotor.set(.4);
     rightClimberMotor.set(.4);
   }
 
   public void climberDown() {
-    leftClimberMotor.set(.4);
+    leftClimberMotor.set(-.4);
     rightClimberMotor.set(-.4);
   }
 

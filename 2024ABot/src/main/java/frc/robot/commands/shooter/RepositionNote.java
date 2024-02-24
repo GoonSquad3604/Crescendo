@@ -21,8 +21,7 @@ public class RepositionNote extends Command {
   @Override
   public void initialize() {
     s_Shooter.setIndexPower(-0.1);
-    s_Shooter.setShooterRPM(-100,-100);
-    
+    s_Shooter.setShooterRPM(-100, -100);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
