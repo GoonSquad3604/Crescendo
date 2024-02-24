@@ -95,212 +95,214 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-buttonBox.button(1).onTrue(new InstantCommand(() ->s_Intake.raiseHinge()));
-buttonBox.button(1).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-buttonBox.button(2).onTrue(new InstantCommand(() ->s_Intake.lowerHinge()));
-buttonBox.button(2).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-buttonBox.button(3).onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-buttonBox.button(3).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+// buttonBox.button(1).onTrue(new InstantCommand(() ->s_Intake.raiseHinge()));
+// buttonBox.button(1).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+// buttonBox.button(2).onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+// buttonBox.button(2).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+// buttonBox.button(3).onTrue(new InstantCommand(() -> s_Intake.runIntake()));
+// buttonBox.button(3).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
-buttonBox.button(4).onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
-buttonBox.button(4).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-buttonBox.button(5).onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
-buttonBox.button(5).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-buttonBox.button(6).onTrue(new InstantCommand(() -> s_Shooter.setPower(.2)));
-buttonBox.button(6).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-buttonBox.button(7).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.3)));
-buttonBox.button(7).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+// buttonBox.button(4).onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
+// buttonBox.button(4).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+// buttonBox.button(5).onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
+// buttonBox.button(5).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+// buttonBox.button(6).onTrue(new InstantCommand(() -> s_Shooter.setPower(.2)));
+// buttonBox.button(6).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+// buttonBox.button(7).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.3)));
+// buttonBox.button(7).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
-buttonBox.button(8).onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-buttonBox.button(8).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+// buttonBox.button(8).onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+// buttonBox.button(8).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.stopClimber()));
+// buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+// buttonBox.button(9).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
 
-//     buttonBox
-//         .button(1)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-//                 new InstantCommand(() -> s_StateController.setTravel(), s_StateController)));
-//     buttonBox
-//         .button(2)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_StateController.setSpeaker(), s_StateController),
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-//                 new InstantCommand(
-//                     () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker))));
-//     buttonBox
-//         .button(3)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_StateController.setAmp(), s_StateController),
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-//                 new InstantCommand(
-//                     () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp))));
-//     buttonBox
-//         .button(4)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-//                 new InstantCommand(
-//                     () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterTrap))));
+    buttonBox
+        .button(1)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+                new InstantCommand(() -> s_StateController.setTravel(), s_StateController)));
+    buttonBox
+        .button(2)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_StateController.setSpeaker(), s_StateController),
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+                new InstantCommand(
+                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker))));
+    buttonBox
+        .button(3)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_StateController.setAmp(), s_StateController),
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+                new InstantCommand(
+                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp))));
+    buttonBox
+        .button(4)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
+                new InstantCommand(
+                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterTrap))));
 
-//     buttonBox
-//         .button(5)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_StateController.setClimber(), s_StateController),
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
+    buttonBox
+        .button(5)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_StateController.setClimber(), s_StateController),
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
 
-//     buttonBox
-//         .button(6)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(
-//                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake),
-//                 new SequentialCommandGroup(
-//                     new InstantCommand(() -> s_StateController.setHome(), s_StateController),
-//                     new InstantCommand(
-//                         () -> s_Shooter.shooterTo(s_StateController.getAngle()), s_Shooter))));
+    buttonBox
+        .button(6)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(
+                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake),
+                new SequentialCommandGroup(
+                    new InstantCommand(() -> s_StateController.setHome(), s_StateController),
+                    new InstantCommand(
+                        () -> s_Shooter.shooterTo(s_StateController.getAngle()), s_Shooter))));
 
-//     buttonBox
-//         .button(7)
-//         .and(homeTrigger)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Intake.runIntake()),
-//                 new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
+    buttonBox
+        .button(7)
+        .and(homeTrigger)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Intake.runIntake()),
+                new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
 
-//     buttonBox
-//         .button(7)
-//         .and(indexTrigger)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Intake.stopIntake()),
-//                 new InstantCommand(() -> s_Shooter.stopShooter())));
+    buttonBox
+        .button(7)
+        .and(indexTrigger)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Intake.stopIntake()),
+                new InstantCommand(() -> s_Shooter.stopShooter())));
 
-//     buttonBox
-//         .button(7)
-//         .onFalse(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Intake.stopIntake()),
-//                 new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter)));
+    buttonBox
+        .button(7)
+        .onFalse(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Intake.stopIntake()),
+                new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter)));
 
-//     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Intake.vomit()));
-//     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.3)));
-//     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-//     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
-//     buttonBox
-//         .button(9)
-//         .onTrue(
-//             new InstantCommand(
-//                 () ->
-//                     s_Shooter.setShooterRPM(
-//                         s_StateController.getLeftShooterSpeed(),
-//                         s_StateController.getRightShooterSpeed()),
-//                 s_Shooter));
-//     buttonBox
-//         .button(9)
-//         .and(climberTrigger)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-//                 new InstantCommand(() -> s_Shooter.indexStop())));
+    buttonBox.button(8).onTrue(new InstantCommand(() -> s_Intake.vomit()));
+    buttonBox.button(8).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.3)));
+    buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    buttonBox.button(8).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    buttonBox
+        .button(9)
+        .onTrue(
+            new InstantCommand(
+                () ->
+                    s_Shooter.setShooterRPM(
+                        s_StateController.getLeftShooterSpeed(),
+                        s_StateController.getRightShooterSpeed()),
+                s_Shooter));
+    buttonBox
+        .button(9)
+        .and(climberTrigger)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
+                new InstantCommand(() -> s_Shooter.indexStop())));
 
-//     buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
-//     // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
-//     // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
-//     buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-//     buttonBox
-//         .button(10)
-//         .and(climberTrigger)
-//         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    buttonBox.button(10).and(speakerTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
+    // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
+    buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+    buttonBox
+        .button(10)
+        .and(climberTrigger)
+        .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
 
-//     buttonBox
-//         .button(11)
-//         .and(climberTrigger)
-//         .onTrue(new InstantCommand(() -> s_Shooter.stopAngle(), s_Shooter));
-//     buttonBox
-//         .button(11)
-//         .and(climberTrigger)
-//         .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-//     buttonBox
-//         .button(11)
-//         .and(speakerTrigger)
-//         .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
-//     buttonBox.button(12).onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(2000)));
+    buttonBox
+        .button(11)
+        .and(climberTrigger)
+        .onTrue(new InstantCommand(() -> s_Shooter.stopAngle(), s_Shooter));
+    buttonBox
+        .button(11)
+        .and(climberTrigger)
+        .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    buttonBox
+        .button(11)
+        .and(speakerTrigger)
+        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+    buttonBox.button(12).onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(2000)));
 
-//     // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
-//     buttonBox
-//         .button(12)
-//         .and(climberTrigger)
-//         .onTrue(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-//                 new InstantCommand(() -> s_Shooter.indexStop())));
-//     buttonBox
-//         .button(12)
-//         .onFalse(
-//             new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-//                 new InstantCommand(() -> s_Shooter.indexStop())));
+    buttonBox
+        .button(12)
+        .and(climberTrigger)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
+                new InstantCommand(() -> s_Shooter.indexStop())));
+    buttonBox
+        .button(12)
+        .onFalse(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
+                new InstantCommand(() -> s_Shooter.indexStop())));
 
-//     driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
-//     driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-//     driver.x().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(45)));
-//     driver.start().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(12)));
+    driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
+    driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    driver.x().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    driver.x().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driver.start().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    driver.start().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-//     if (Utils.isSimulation()) {
-//       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-//     }
-//     drivetrain.registerTelemetry(logger::telemeterize);
+    if (Utils.isSimulation()) {
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+    }
+    drivetrain.registerTelemetry(logger::telemeterize);
   }
 
   public RobotContainer() {
-//     NamedCommands.registerCommand(
-//         "runIntake",
-//         new SequentialCommandGroup(
-//             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
-//             new FeedUntillSensor(),
-//             new RepositionNote()));
-//     NamedCommands.registerCommand(
-//         "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "intakeDown",
-//         new InstantCommand(
-//             () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake));
-//     NamedCommands.registerCommand(
-//         "intakeUp",
-//         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
-//     NamedCommands.registerCommand(
-//         "shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 6000), s_Shooter));
-//     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
-//     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));
-//     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
-//     NamedCommands.registerCommand(
-//         "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(.4)));
-//     NamedCommands.registerCommand(
-//         "stopIndex", new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(60), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
-//     NamedCommands.registerCommand(
-//         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(3500, 4000), s_Shooter));
+    NamedCommands.registerCommand(
+        "runIntake",
+        new SequentialCommandGroup(
+            new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
+            new FeedUntillSensor(),
+            new RepositionNote()));
+    NamedCommands.registerCommand(
+        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
+    NamedCommands.registerCommand(
+        "intakeDown",
+        new InstantCommand(
+            () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake));
+    NamedCommands.registerCommand(
+        "intakeUp",
+        new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
+    NamedCommands.registerCommand(
+        "shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
+    NamedCommands.registerCommand(
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 6000), s_Shooter));
+    //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
+    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));
+    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
+    NamedCommands.registerCommand(
+        "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(.4)));
+    NamedCommands.registerCommand(
+        "stopIndex", new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(60), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
+    NamedCommands.registerCommand(
+        "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(3500, 4000), s_Shooter));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
