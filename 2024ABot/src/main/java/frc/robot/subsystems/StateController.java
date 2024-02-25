@@ -57,7 +57,7 @@ public class StateController extends SubsystemBase {
 
   public void setTrap() {
     m_Mode = RobotMode.TRAP;
-    indexSpeed = Constants.ShooterConstants.indexTrapSpeed;
+    indexSpeed = Constants.ShooterConstants.indexTrapRPM;
     shooterAngle = Constants.ShooterConstants.shooterTrap;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterTrapRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterTrapRPM;
@@ -65,7 +65,7 @@ public class StateController extends SubsystemBase {
 
   public void setAmp() {
     m_Mode = RobotMode.AMP;
-    indexSpeed = Constants.ShooterConstants.indexAmpSpeed;
+    indexSpeed = Constants.ShooterConstants.indexAmpRPM;
     shooterAngle = Constants.ShooterConstants.shooterAmp;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterAmpRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterAmpRPM;
@@ -73,7 +73,7 @@ public class StateController extends SubsystemBase {
 
   public void setSpeaker() {
     m_Mode = RobotMode.SPEAKER;
-    indexSpeed = Constants.ShooterConstants.indexSpeakerSpeed;
+    indexSpeed = Constants.ShooterConstants.indexSpeakerRPM;
     shooterAngle = Constants.ShooterConstants.shooterSpeaker;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterSpeakerRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterSpeakerRPM;

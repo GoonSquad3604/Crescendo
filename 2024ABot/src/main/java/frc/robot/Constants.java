@@ -16,22 +16,22 @@ public final class Constants {
     public static final int angleID = 5;
 
     // RPMS
-    public static final int leftShooterSpeakerRPM = 4000;
+    public static final int leftShooterSpeakerRPM = -4000;
     public static final int rightShooterSpeakerRPM = 6000;
 
-    public static final int leftShooterAmpRPM = 300;
+    public static final int leftShooterAmpRPM = -300;
     public static final int rightShooterAmpRPM = 300;
 
-    public static final int leftShooterTrapRPM = 3300;
+    public static final int leftShooterTrapRPM = -3300;
     public static final int rightShooterTrapRPM = 4200;
 
-    public static final int indexSpeakerRPM = 6000;
+    public static final int indexSpeakerRPM = -6000;
     public static final double indexSpeakerSpeed = 1;
 
-    public static final int indexTrapRPM = 6000;
+    public static final int indexTrapRPM = -6000;
     public static final double indexTrapSpeed = 1;
 
-    public static final int indexAmpRPM = 800;
+    public static final int indexAmpRPM = -800;
 
     public static final double indexAmpSpeed = 1;
 

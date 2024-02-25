@@ -81,8 +81,8 @@ public class RobotContainer {
             drivetrain.applyRequest(
                 () ->
                     drive
-                        .withVelocityX(-driver.getLeftY() * MaxSpeed * .25)
-                        .withVelocityY(-driver.getLeftX() * MaxSpeed * .25)
+                        .withVelocityX(-driver.getLeftY() * MaxSpeed * .1)
+                        .withVelocityY(-driver.getLeftX() * MaxSpeed * .1)
                         .withRotationalRate(-driver.getRightX() * MaxAngularRate * .5)));
     driver.leftTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
     driver
@@ -237,7 +237,7 @@ public class RobotContainer {
         .button(11)
         .and(speakerTrigger)
         .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
-    buttonBox.button(12).onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(2000)));
+    buttonBox.button(12).onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
 
     // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
