@@ -37,13 +37,12 @@ public final class Constants {
 
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 67; 
-    public static final double shooterTrap = 55.5; 
+    public static final double shooterAmp = 67;
+    public static final double shooterTrap = 55.5;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 65.5;
 
-    public static final double shooterMax = 68.8; //68.8 degrees
-    
+    public static final double shooterMax = 68.8; // 68.8 degrees
 
     // PIDS
     public static final double shooterkP = 0.0005;
@@ -96,7 +95,6 @@ public final class Constants {
     public static final double intakekI = 0.0;
     public static final double intakekD = 0.0;
 
-  
     public static final double hingekP = 5.0;
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;

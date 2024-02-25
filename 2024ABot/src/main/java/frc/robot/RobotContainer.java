@@ -29,7 +29,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
-import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -45,7 +44,7 @@ public class RobotContainer {
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-//   private final Vision s_Vision = Vision.getInstance();
+  //   private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -95,28 +94,27 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-// buttonBox.button(1).onTrue(new InstantCommand(() ->s_Intake.raiseHinge()));
-// buttonBox.button(1).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-// buttonBox.button(2).onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
-// buttonBox.button(2).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-// buttonBox.button(3).onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-// buttonBox.button(3).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    // buttonBox.button(1).onTrue(new InstantCommand(() ->s_Intake.raiseHinge()));
+    // buttonBox.button(1).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+    // buttonBox.button(2).onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    // buttonBox.button(2).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+    // buttonBox.button(3).onTrue(new InstantCommand(() -> s_Intake.runIntake()));
+    // buttonBox.button(3).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
-// buttonBox.button(4).onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
-// buttonBox.button(4).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-// buttonBox.button(5).onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
-// buttonBox.button(5).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-// buttonBox.button(6).onTrue(new InstantCommand(() -> s_Shooter.setPower(.2)));
-// buttonBox.button(6).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-// buttonBox.button(7).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.3)));
-// buttonBox.button(7).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    // buttonBox.button(4).onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
+    // buttonBox.button(4).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+    // buttonBox.button(5).onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
+    // buttonBox.button(5).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+    // buttonBox.button(6).onTrue(new InstantCommand(() -> s_Shooter.setPower(.2)));
+    // buttonBox.button(6).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+    // buttonBox.button(7).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.3)));
+    // buttonBox.button(7).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
 
-// buttonBox.button(8).onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-// buttonBox.button(8).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    // buttonBox.button(8).onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    // buttonBox.button(8).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-// buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-// buttonBox.button(9).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-
+    // buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    // buttonBox.button(9).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
     buttonBox
         .button(1)
@@ -216,7 +214,10 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Shooter.indexStop())));
 
-    buttonBox.button(10).and(speakerTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    buttonBox
+        .button(10)
+        .and(speakerTrigger)
+        .onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
     // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
     buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
@@ -237,7 +238,9 @@ public class RobotContainer {
         .button(11)
         .and(speakerTrigger)
         .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
-    buttonBox.button(12).onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
+    buttonBox
+        .button(12)
+        .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
 
     // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
