@@ -287,28 +287,28 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
     NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(4500, 6000), s_Shooter));
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
-    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(6000)));
+    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(-6000)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
     NamedCommands.registerCommand(
-        "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(.4)));
+        "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(-.4)));
     NamedCommands.registerCommand(
         "stopIndex", new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(60), s_Shooter));
+        "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(65), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
     NamedCommands.registerCommand(
-        "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(3500, 4000), s_Shooter));
+        "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return autoChooser.getSelected();
   }
 }
