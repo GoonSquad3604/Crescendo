@@ -40,7 +40,7 @@ public final class Constants {
     public static final double shooterAmp = 67;
     public static final double shooterTrap = 55.5;
     public static final double shooterHome = 65.5;
-    public static final double shooterTravel = 65.5;
+    public static final double shooterTravel = 35;
 
     public static final double shooterMax = 68.8; // 68.8 degrees
 

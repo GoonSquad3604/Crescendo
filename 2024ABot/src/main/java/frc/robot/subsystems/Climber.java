@@ -116,5 +116,6 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
     SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
+    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition()<=110));
   }
 }

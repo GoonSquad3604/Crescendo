@@ -122,7 +122,8 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(
                     () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-                new InstantCommand(() -> s_StateController.setTravel(), s_StateController)));
+                new InstantCommand(() -> s_StateController.setTravel(), s_StateController),
+                new InstantCommand(()-> s_Shooter.shooterTo(s_StateController.getAngle()),s_Shooter)));
     buttonBox
         .button(2)
         .onTrue(
@@ -237,7 +238,7 @@ public class RobotContainer {
     buttonBox
         .button(11)
         .and(speakerTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(33)));
     buttonBox
         .button(12)
         .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
@@ -264,7 +265,17 @@ public class RobotContainer {
     driver.x().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     driver.start().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     driver.start().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-
+    driver.y().and(indexTrigger.negate()).onTrue(
+        new ParallelCommandGroup(
+            new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
+            new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
+    );
+    driver.y().and(indexTrigger.negate()).onFalse(
+        new ParallelCommandGroup(
+            new InstantCommand(()-> s_Shooter.stopShooter()),
+            new InstantCommand(() ->s_Shooter.indexStop())
+        )
+    );
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
