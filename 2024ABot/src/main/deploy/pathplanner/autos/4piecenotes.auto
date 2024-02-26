@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "shooterSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "revShooter"
           }
         },
@@ -251,7 +257,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo2"
+            "name": "shooterTo3"
           }
         },
         {

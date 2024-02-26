@@ -77,13 +77,13 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberUp() {
-    leftClimberMotor.set(.1);
-    rightClimberMotor.set(.1);
+    leftClimberMotor.set(.4);
+    rightClimberMotor.set(.4);
   }
 
   public void climberDown() {
-    leftClimberMotor.set(-.1);
-    rightClimberMotor.set(-.1);
+    leftClimberMotor.set(-.4);
+    rightClimberMotor.set(-.4);
   }
 
   public void raiseCimber() {
@@ -116,6 +116,6 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
     SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
-    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition()<=110));
+    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition()<=100));
   }
 }

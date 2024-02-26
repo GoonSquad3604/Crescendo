@@ -312,11 +312,15 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(65), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
+        "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(32), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
     NamedCommands.registerCommand(
         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(56), s_Shooter));
+        NamedCommands.registerCommand(
+        "shooterTo3", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
