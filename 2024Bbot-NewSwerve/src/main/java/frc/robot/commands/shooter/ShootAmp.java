@@ -55,7 +55,7 @@ public class ShootAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     if (s_Shooter.hasNote()) {
-      s_Shooter.shooterTo(67);
+      s_Shooter.shooterTo(43.5);
     }
   }
 

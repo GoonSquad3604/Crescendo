@@ -29,6 +29,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.StateController;
 import frc.robot.subsystems.Vision;
 
@@ -43,6 +44,7 @@ public class RobotContainer {
   private final CommandJoystick buttonBox = new CommandJoystick(1);
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final Shooter s_Shooter = Shooter.getInstance();
+  private final Flipper s_Flipper = Flipper.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
@@ -194,31 +196,41 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Shooter.indexStop())));
 
-    buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
-    // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
-    // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
-    buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-    buttonBox
-        .button(10)
-        .and(climberTrigger)
-        .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    // // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
+    // // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
+    // buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+    // buttonBox
+    //     .button(10)
+    //     .and(climberTrigger)
+    //     .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
 
-    buttonBox
-        .button(11)
-        .and(climberTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.stopAngle(), s_Shooter));
-    buttonBox
-        .button(11)
-        .and(climberTrigger)
-        .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-    buttonBox.button(11).onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+    // buttonBox
+    //     .button(11)
+    //     .and(climberTrigger)
+    //     .onTrue(new InstantCommand(() -> s_Shooter.stopAngle(), s_Shooter));
+    // buttonBox
+    //     .button(11)
+    //     .and(climberTrigger)
+    //     .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    //buttonBox.button(11).onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+    buttonBox.button(10).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
+    // buttonBox.button(10).onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
+    //buttonBox.button(10).onFalse(new InstantCommand(() -> s_Flipper.runFlipperBackward()));
+    buttonBox.button(11).onTrue(new InstantCommand(() ->s_Flipper.setFlipperDown()));
+   //buttonBox.button(11).onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
+
+        //buttonBox.button(11).onFalse(new InstantCommand(() ->s_Flipper.runFlipper()));
+
+    // buttonBox.button(12).onTrue(new InstantCommand(()-> s_Flipper.runFlipper()));
+    // buttonBox.button(12).onFalse(new InstantCommand(()-> s_Flipper.stopFlipper()));
     buttonBox
         .button(12)
         
         .onTrue(
-            new InstantCommand(() -> s_Shooter.setIndexRPM(2000)));
+            new InstantCommand(() -> s_Shooter.setIndexRPM(1000)));
 
-   // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+   buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
