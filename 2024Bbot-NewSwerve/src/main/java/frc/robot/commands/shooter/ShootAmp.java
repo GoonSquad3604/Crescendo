@@ -7,10 +7,11 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Shooter;
 
 public class ShootAmp extends Command {
-
+  private Flipper s_Flipper;
   private Shooter s_Shooter;
   private Timer timer;
 
@@ -30,7 +31,7 @@ public class ShootAmp extends Command {
   */
 
   public ShootAmp() {
-
+    s_Flipper = Flipper.getInstance();
     s_Shooter = Shooter.getInstance();
     timer = new Timer();
     addRequirements(s_Shooter);
@@ -39,11 +40,11 @@ public class ShootAmp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+  
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
-    s_Shooter.setIndexPower(.3);
+    s_Shooter.setIndexPower(.2);
     s_Shooter.setShooterRPM(
         Constants.ShooterConstants.leftShooterAmpRPM,
         Constants.ShooterConstants.rightShooterAmpRPM);
@@ -55,7 +56,8 @@ public class ShootAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     if (s_Shooter.hasNote()) {
-      s_Shooter.shooterTo(67);
+      timer.delay(.1);
+      s_Flipper.setFlipperUp();
     }
   }
 

@@ -150,11 +150,20 @@ public class Shooter extends SubsystemBase {
       leftShooterPIDController.setFF(kFF);
       rightShooterPIDController.setFF(kFF);
     }
-    leftShooterPIDController.setReference(0, ControlType.kVelocity);
-    rightShooterPIDController.setReference(1000, ControlType.kVelocity);
+    leftShooterPIDController.setReference(180, ControlType.kVelocity);
+    rightShooterPIDController.setReference(180, ControlType.kVelocity);
   }
 
   public void setShooterRPM(double leftRPM, double rightRPM) {
+    if (leftShooterPIDController.getP() != .0005) {
+      leftShooterPIDController.setP(.0005);
+      rightShooterPIDController.setP(.0005);
+    }
+
+    if (leftShooterPIDController.getFF() != .00016) {
+      leftShooterPIDController.setFF(.00016);
+      rightShooterPIDController.setFF(.00016);
+    }
     leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
     rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
   }
@@ -243,35 +252,35 @@ public class Shooter extends SubsystemBase {
     rightRPM = SmartDashboard.getNumber("rightRPM", 6500);
     SmartDashboard.putNumber("rightRPM", rightRPM);
 
-    // double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
-    //     if(newLeftSpinP!=kPLeft){
-    //       kPLeft=newLeftSpinP;
-    //       leftShooterPIDController.setP(kPLeft);
-    //     }
-    //     SmartDashboard.putNumber("LSpinP", kPLeft);
+    double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
+        if(newLeftSpinP!=kPLeft){
+          kPLeft=newLeftSpinP;
+          leftShooterPIDController.setP(kPLeft);
+        }
+        SmartDashboard.putNumber("LSpinP", kPLeft);
 
-    //  double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
-    //     if(newLeftSpinFF!=kFFLeft){
-    //       kFFLeft=newLeftSpinFF;
-    //       leftShooterPIDController.setFF(kFFLeft);
+     double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
+        if(newLeftSpinFF!=kFFLeft){
+          kFFLeft=newLeftSpinFF;
+          leftShooterPIDController.setFF(kFFLeft);
 
-    //     }
-    //     SmartDashboard.putNumber("LSpinFF", kFFLeft);
+        }
+        SmartDashboard.putNumber("LSpinFF", kFFLeft);
 
-    //    double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
-    //     if(newRightSpinP!=kPRight){
-    //       kPRight=newRightSpinP;
-    //       rightShooterPIDController.setP(kPRight);
-    //     }
-    //     SmartDashboard.putNumber("RSpinP", kPRight);
+       double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
+        if(newRightSpinP!=kPRight){
+          kPRight=newRightSpinP;
+          rightShooterPIDController.setP(kPRight);
+        }
+        SmartDashboard.putNumber("RSpinP", kPRight);
 
-    //  double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
-    //     if(newRightSpinFF!=kFFRight){
-    //       kFFRight=newRightSpinFF;
-    //       rightShooterPIDController.setFF(kFFRight);
+     double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
+        if(newRightSpinFF!=kFFRight){
+          kFFRight=newRightSpinFF;
+          rightShooterPIDController.setFF(kFFRight);
 
-    //     }
-    //     SmartDashboard.putNumber("RSpinFF", kFFRight);
+        }
+        SmartDashboard.putNumber("RSpinFF", kFFRight);
 
     SmartDashboard.putNumber("AnglekP", angleP);
     trapAngle = SmartDashboard.getNumber("trap angle", 48);
