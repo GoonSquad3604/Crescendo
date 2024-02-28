@@ -4,17 +4,27 @@
 
 package frc.robot.commands.shooter;
 
+import com.pathplanner.lib.path.PathPlannerTrajectory.State;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.commands.stateController.TravelMode;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.StateController;
 
 public class RepositionNote extends Command {
 
   Shooter s_Shooter;
+  Intake s_Intake;
+  StateController s_StateController;
 
   /** Creates a new RepositionNote. */
   public RepositionNote() {
+    s_Intake = Intake.getInstance();
     s_Shooter = Shooter.getInstance();
-    addRequirements(s_Shooter);
+    s_StateController = StateController.getInstance();
+    addRequirements(s_Shooter, s_Intake, s_StateController);
   }
 
   // Called when the command is initially scheduled.
@@ -32,6 +42,11 @@ public class RepositionNote extends Command {
   @Override
   public void end(boolean interrupted) {
     s_Shooter.indexStop();
+    
+    s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+    s_StateController.setTravel();
+    s_Shooter.shooterTo(s_StateController.getAngle());
+    
   }
 
   // Returns true when the command should end.

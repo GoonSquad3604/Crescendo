@@ -21,8 +21,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.intake.Feed;
+import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionNote;
+import frc.robot.commands.stateController.AmpMode;
+import frc.robot.commands.stateController.ClimberMode;
+import frc.robot.commands.stateController.SpeakerMode;
+import frc.robot.commands.stateController.TrapMode;
+import frc.robot.commands.stateController.TravelMode;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -69,7 +76,7 @@ public class RobotContainer {
                         -driver.getRightX()
                             * MaxAngularRate) // Drive counterclockwise with negative X (left)
             ));
-    Trigger homeTrigger = new Trigger(s_StateController::isHomeMode);
+    Trigger intakeTrigger = new Trigger(s_StateController::isIntakeMode);
     Trigger indexTrigger = new Trigger(s_Shooter::hasNote);
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
     Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
@@ -94,98 +101,26 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-    // buttonBox.button(1).onTrue(new InstantCommand(() ->s_Intake.raiseHinge()));
-    // buttonBox.button(1).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-    // buttonBox.button(2).onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
-    // buttonBox.button(2).onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-    // buttonBox.button(3).onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-    // buttonBox.button(3).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    
 
-    // buttonBox.button(4).onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
-    // buttonBox.button(4).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-    // buttonBox.button(5).onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
-    // buttonBox.button(5).onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
-    // buttonBox.button(6).onTrue(new InstantCommand(() -> s_Shooter.setPower(.2)));
-    // buttonBox.button(6).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-    // buttonBox.button(7).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.3)));
-    // buttonBox.button(7).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    
+    buttonBox.button(1).onTrue(new TravelMode());
+    buttonBox.button(2).onTrue(new SpeakerMode());
+    buttonBox.button(3).onTrue(new AmpMode());
+    buttonBox.button(4).onTrue(new TrapMode());
+    buttonBox.button(5).onTrue(new ClimberMode());
 
-    // buttonBox.button(8).onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    // buttonBox.button(8).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    buttonBox.button(6).onTrue(new SetIntakeDown());
 
-    // buttonBox.button(9).onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    // buttonBox.button(9).onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
 
-    buttonBox
-        .button(1)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-                new InstantCommand(() -> s_StateController.setTravel(), s_StateController),
-                new InstantCommand(()-> s_Shooter.shooterTo(s_StateController.getAngle()),s_Shooter)));
-    buttonBox
-        .button(2)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_StateController.setSpeaker(), s_StateController),
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-                new InstantCommand(
-                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker))));
-    buttonBox
-        .button(3)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_StateController.setAmp(), s_StateController),
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-                new InstantCommand(
-                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp))));
-    buttonBox
-        .button(4)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_StateController.setTrap(), s_StateController),
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake),
-                new InstantCommand(
-                    () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterTrap))));
-
-    buttonBox
-        .button(5)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_StateController.setClimber(), s_StateController),
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp), s_Intake)));
-
-    buttonBox
-        .button(6)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(
-                    () -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown), s_Intake),
-                new SequentialCommandGroup(
-                    new InstantCommand(() -> s_StateController.setHome(), s_StateController),
-                    new InstantCommand(
-                        () -> s_Shooter.shooterTo(s_StateController.getAngle()), s_Shooter))));
-
-    buttonBox
-        .button(7)
-        .and(homeTrigger)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Intake.runIntake()),
-                new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
-
-    buttonBox
-        .button(7)
-        .and(indexTrigger)
-        .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Intake.stopIntake()),
-                new InstantCommand(() -> s_Shooter.stopShooter())));
+    // buttonBox
+    //     .button(7)
+    //     .and(indexTrigger)
+    //     .onTrue(
+    //         new ParallelCommandGroup(
+    //             new InstantCommand(() -> s_Intake.stopIntake()),
+    //             new InstantCommand(() -> s_Shooter.stopShooter())));
 
     buttonBox
         .button(7)
@@ -200,6 +135,7 @@ public class RobotContainer {
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
     buttonBox
         .button(9)
+        .and(ampTrigger.negate())
         .onTrue(
             new InstantCommand(
                 () ->
@@ -207,18 +143,13 @@ public class RobotContainer {
                         s_StateController.getLeftShooterSpeed(),
                         s_StateController.getRightShooterSpeed()),
                 s_Shooter));
-    buttonBox
-        .button(9)
-        .and(climberTrigger)
-        .onTrue(
+    buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
+    buttonBox.button(9).and(climberTrigger).onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Shooter.indexStop())));
 
-    buttonBox
-        .button(10)
-        .and(speakerTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    buttonBox.button(10).and(speakerTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
     // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
     buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));

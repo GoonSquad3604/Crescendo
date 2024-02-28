@@ -4,8 +4,6 @@
 
 package frc.robot.commands.stateController;
 
-import com.pathplanner.lib.path.PathPlannerTrajectory.State;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -15,11 +13,11 @@ import frc.robot.subsystems.StateController;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TravelMode extends InstantCommand {
+public class SpeakerMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
-  public TravelMode() {
+  public SpeakerMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
@@ -31,7 +29,7 @@ public class TravelMode extends InstantCommand {
   @Override
   public void initialize() {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
-    m_StateController.setTravel();
+    m_StateController.setSpeaker();
     m_Shooter.shooterTo(m_StateController.getAngle());
   }
 }

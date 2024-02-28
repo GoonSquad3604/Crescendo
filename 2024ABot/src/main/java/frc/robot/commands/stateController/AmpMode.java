@@ -5,16 +5,33 @@
 package frc.robot.commands.stateController;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
+import frc.robot.commands.shooter.RepositionForAmp;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.StateController;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AmpMode extends InstantCommand {
+  StateController m_StateController;
+  Intake m_Intake;
+  Shooter m_Shooter;
   public AmpMode() {
+     m_StateController = StateController.getInstance();
+     m_Intake = Intake.getInstance();
+     m_Shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_Intake, m_Shooter, m_StateController);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_StateController.setAmp();
+    m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+    m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
+    new RepositionForAmp();
+  }
 }

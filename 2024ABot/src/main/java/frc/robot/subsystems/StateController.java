@@ -25,7 +25,7 @@ public class StateController extends SubsystemBase {
 
   public StateController() {
     // m_Vision = Vision.getInstance();
-    setHome();
+    setTravel();
   }
 
   public static StateController getInstance() {
@@ -36,8 +36,8 @@ public class StateController extends SubsystemBase {
     return _instance;
   }
 
-  public void setHome() {
-    m_Mode = RobotMode.HOME;
+  public void setIntake() {
+    m_Mode = RobotMode.INTAKE;
     shooterAngle = Constants.ShooterConstants.shooterHome;
     leftShooterSpeed = 0;
     rightShooterSpeed = 0;
@@ -104,8 +104,8 @@ public class StateController extends SubsystemBase {
     return rightShooterSpeed;
   }
 
-  public boolean isHomeMode() {
-    return m_Mode == RobotMode.HOME;
+  public boolean isIntakeMode() {
+    return m_Mode == RobotMode.INTAKE;
   }
 
   public boolean isClimberMode() {
