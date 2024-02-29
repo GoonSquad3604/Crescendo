@@ -114,13 +114,13 @@ public class RobotContainer {
 
     buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
 
-    // buttonBox
-    //     .button(7)
-    //     .and(indexTrigger)
-    //     .onTrue(
-    //         new ParallelCommandGroup(
-    //             new InstantCommand(() -> s_Intake.stopIntake()),
-    //             new InstantCommand(() -> s_Shooter.stopShooter())));
+    buttonBox
+        .button(7)
+        .and(indexTrigger)
+        .onTrue(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Intake.stopIntake()),
+                new InstantCommand(() -> s_Shooter.stopShooter())));
 
     buttonBox
         .button(7)
@@ -150,8 +150,6 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.indexStop())));
 
     buttonBox.button(10).and(speakerTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
-    // buttonBox.button(10).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.2)));
-    // buttonBox.button(10).onFalse(new InstantCommand(()-> s_Shooter.indexStop()));
     buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
     buttonBox
         .button(10)
