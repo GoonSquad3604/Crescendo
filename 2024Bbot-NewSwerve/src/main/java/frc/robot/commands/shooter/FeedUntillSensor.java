@@ -17,7 +17,6 @@ public class FeedUntillSensor extends Command {
     addRequirements(s_Shooter);
   }
 
-  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {

@@ -199,7 +199,6 @@ public class Shooter extends SubsystemBase {
   }
 
   // Indexer methods
-  
 
   public void setIndexRPM(double RPM) {
     IndexPIDController.setReference(RPM, ControlType.kVelocity);
@@ -253,34 +252,32 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("rightRPM", rightRPM);
 
     double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
-        if(newLeftSpinP!=kPLeft){
-          kPLeft=newLeftSpinP;
-          leftShooterPIDController.setP(kPLeft);
-        }
-        SmartDashboard.putNumber("LSpinP", kPLeft);
+    if (newLeftSpinP != kPLeft) {
+      kPLeft = newLeftSpinP;
+      leftShooterPIDController.setP(kPLeft);
+    }
+    SmartDashboard.putNumber("LSpinP", kPLeft);
 
-     double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
-        if(newLeftSpinFF!=kFFLeft){
-          kFFLeft=newLeftSpinFF;
-          leftShooterPIDController.setFF(kFFLeft);
+    double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
+    if (newLeftSpinFF != kFFLeft) {
+      kFFLeft = newLeftSpinFF;
+      leftShooterPIDController.setFF(kFFLeft);
+    }
+    SmartDashboard.putNumber("LSpinFF", kFFLeft);
 
-        }
-        SmartDashboard.putNumber("LSpinFF", kFFLeft);
+    double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
+    if (newRightSpinP != kPRight) {
+      kPRight = newRightSpinP;
+      rightShooterPIDController.setP(kPRight);
+    }
+    SmartDashboard.putNumber("RSpinP", kPRight);
 
-       double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
-        if(newRightSpinP!=kPRight){
-          kPRight=newRightSpinP;
-          rightShooterPIDController.setP(kPRight);
-        }
-        SmartDashboard.putNumber("RSpinP", kPRight);
-
-     double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
-        if(newRightSpinFF!=kFFRight){
-          kFFRight=newRightSpinFF;
-          rightShooterPIDController.setFF(kFFRight);
-
-        }
-        SmartDashboard.putNumber("RSpinFF", kFFRight);
+    double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
+    if (newRightSpinFF != kFFRight) {
+      kFFRight = newRightSpinFF;
+      rightShooterPIDController.setFF(kFFRight);
+    }
+    SmartDashboard.putNumber("RSpinFF", kFFRight);
 
     SmartDashboard.putNumber("AnglekP", angleP);
     trapAngle = SmartDashboard.getNumber("trap angle", 48);

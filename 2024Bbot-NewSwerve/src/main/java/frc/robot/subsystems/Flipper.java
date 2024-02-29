@@ -5,12 +5,11 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,31 +25,30 @@ public class Flipper extends SubsystemBase {
   /** Creates a new Flipper. */
   public Flipper() {
 
-  flipperMotor = new CANSparkMax(Constants.FlipperConstants.flipperID, MotorType.kBrushless);
+    flipperMotor = new CANSparkMax(Constants.FlipperConstants.flipperID, MotorType.kBrushless);
     flipperMotor.restoreFactoryDefaults();
 
-  angleEncoder = flipperMotor.getAbsoluteEncoder(Type.kDutyCycle);
-  flipperPIDController = flipperMotor.getPIDController();
-  flipperPIDController.setFeedbackDevice(angleEncoder);
+    angleEncoder = flipperMotor.getAbsoluteEncoder(Type.kDutyCycle);
+    flipperPIDController = flipperMotor.getPIDController();
+    flipperPIDController.setFeedbackDevice(angleEncoder);
 
-  flipperPIDController.setP(1);
-  flipperPIDController.setI(0);
-  flipperPIDController.setD(0);
+    flipperPIDController.setP(1.5);
+    flipperPIDController.setI(0);
+    flipperPIDController.setD(0);
 
-  flipperPIDController.setOutputRange(-1, 1);
-
+    flipperPIDController.setOutputRange(-.1, .4);
   }
 
   // public void runFlipper() {
   //   flipperMotor.set(0.1);
 
   // }
-  public void setFlipperUp(){
-    flipperPIDController.setReference(.68, ControlType.kPosition);
+  public void setFlipperUp() {
+    flipperPIDController.setReference(.54, ControlType.kPosition);
   }
 
-  public void setFlipperDown(){
-    flipperPIDController.setReference(.35, ControlType.kPosition);
+  public void setFlipperDown() {
+    flipperPIDController.setReference(.187, ControlType.kPosition);
   }
 
   // public void runFlipperBackward() {
@@ -71,35 +69,34 @@ public class Flipper extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("appliedOutput" ,flipperMotor.getAppliedOutput());
+    SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
     double newFlipperkD = SmartDashboard.getNumber("FlipperkD", 0);
-      if(newFlipperkD!=flipperD){
-        flipperD=newFlipperkD;
-        flipperPIDController.setD(flipperD);
-      }
-      SmartDashboard.putNumber("FlipperkD", flipperD);
+    if (newFlipperkD != flipperD) {
+      flipperD = newFlipperkD;
+      flipperPIDController.setD(flipperD);
+    }
+    SmartDashboard.putNumber("FlipperkD", flipperD);
 
-     double newFlipperI = SmartDashboard.getNumber("FlipperkI", 0);
-      if(newFlipperI!=flipperI){
-        flipperI=newFlipperI;
-        flipperPIDController.setI(flipperI);
-      }
-      SmartDashboard.putNumber("FlipperkI", flipperI);
+    double newFlipperI = SmartDashboard.getNumber("FlipperkI", 0);
+    if (newFlipperI != flipperI) {
+      flipperI = newFlipperI;
+      flipperPIDController.setI(flipperI);
+    }
+    SmartDashboard.putNumber("FlipperkI", flipperI);
 
-     double newFlipperP = SmartDashboard.getNumber("FlipperkP", 1);
-      if(newFlipperP!=flipperP){
-        flipperP=newFlipperP;
-        flipperPIDController.setP(flipperP);
-      }
-      SmartDashboard.putNumber("FlipperkP", flipperP);
+    //  double newFlipperP = SmartDashboard.getNumber("FlipperkP", 1);
+    //   if(newFlipperP!=flipperP){
+    //     flipperP=newFlipperP;
+    //     flipperPIDController.setP(flipperP);
+    //   }
+    //   SmartDashboard.putNumber("FlipperkP", flipperP);
 
-      SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
+    SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
 
-
-      double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
-      if(newSetFlipper!=setFlipper){
-        setFlipper=newSetFlipper;
-      }
-      SmartDashboard.putNumber("setFlipper", setFlipper);
+    double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
+    if (newSetFlipper != setFlipper) {
+      setFlipper = newSetFlipper;
+    }
+    SmartDashboard.putNumber("setFlipper", setFlipper);
   }
 }

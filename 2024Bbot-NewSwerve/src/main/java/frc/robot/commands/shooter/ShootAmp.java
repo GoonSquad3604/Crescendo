@@ -40,14 +40,15 @@ public class ShootAmp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  
+
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
-    s_Shooter.setIndexPower(.2);
+    s_Shooter.setIndexPower(.1);
     s_Shooter.setShooterRPM(
         Constants.ShooterConstants.leftShooterAmpRPM,
         Constants.ShooterConstants.rightShooterAmpRPM);
+
     timer.start();
   }
 
@@ -56,8 +57,15 @@ public class ShootAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     if (s_Shooter.hasNote()) {
-      timer.delay(.1);
+      s_Shooter.setIndexPower(.1);
+      s_Shooter.setShooterRPM(0, 0);
+      timer.delay(1);
       s_Flipper.setFlipperUp();
+
+      s_Shooter.setShooterRPM(
+          Constants.ShooterConstants.leftShooterAmpRPM,
+          Constants.ShooterConstants.rightShooterAmpRPM);
+      s_Shooter.setIndexPower(.1);
     }
   }
 

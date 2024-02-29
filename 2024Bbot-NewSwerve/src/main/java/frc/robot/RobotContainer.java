@@ -22,17 +22,17 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.RepositionForAmp;
+import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionNote;
 import frc.robot.commands.shooter.ShootAmp;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.StateController;
-import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -49,7 +49,7 @@ public class RobotContainer {
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  //private final Vision s_Vision = Vision.getInstance();
+  // private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -78,9 +78,7 @@ public class RobotContainer {
     Trigger indexTrigger = new Trigger(s_Shooter::hasNote);
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
     Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
-    driver
-        .rightTrigger()
-        .whileTrue(
+    driver.rightTrigger().whileTrue(
             drivetrain.applyRequest(
                 () ->
                     drive
@@ -189,11 +187,14 @@ public class RobotContainer {
     //                     s_StateController.getLeftShooterSpeed(),
     //                     s_StateController.getRightShooterSpeed()),
     //             s_Shooter));
-    buttonBox.button(9).and(ampTrigger).onTrue(
-                        new InstantCommand(() ->s_Shooter.setPower(.05))
+    buttonBox
+        .button(9)
+        .and(ampTrigger)
+        .onTrue(
+            new InstantCommand(() -> s_Shooter.setPower(.05))
 
-        // new InstantCommand(() ->s_Shooter.setShooterRPMAMP())
-    );
+            // new InstantCommand(() ->s_Shooter.setShooterRPMAMP())
+            );
     buttonBox
         .button(9)
         .and(climberTrigger)
@@ -219,24 +220,23 @@ public class RobotContainer {
     //     .button(11)
     //     .and(climberTrigger)
     //     .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-    //buttonBox.button(11).onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
+    // buttonBox.button(11).onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     buttonBox.button(10).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
     // buttonBox.button(10).onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // buttonBox.button(10).onFalse(new InstantCommand(() -> s_Flipper.runFlipperBackward()));
-    buttonBox.button(11).onTrue(new InstantCommand(() ->s_Flipper.setFlipperDown()));
-   //buttonBox.button(11).onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
+    buttonBox.button(11).onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    // buttonBox.button(11).onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
 
-        //buttonBox.button(11).onFalse(new InstantCommand(() ->s_Flipper.runFlipper()));
+    // buttonBox.button(11).onFalse(new InstantCommand(() ->s_Flipper.runFlipper()));
 
     // buttonBox.button(12).onTrue(new InstantCommand(()-> s_Flipper.runFlipper()));
     // buttonBox.button(12).onFalse(new InstantCommand(()-> s_Flipper.stopFlipper()));
     buttonBox
         .button(12)
         .and(ampTrigger.negate())
-        .onTrue(
-            new InstantCommand(() -> s_Shooter.setIndexRPM(4000)));
+        .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(4000)));
 
-   buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
@@ -251,7 +251,8 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Shooter.indexStop()),
-                new InstantCommand(()-> s_Flipper.setFlipperDown())));
+                new InstantCommand(() -> s_Flipper.setFlipperDown()),
+                new AfterShot()));
 
     driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
@@ -268,7 +269,9 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "runIntake",
         new SequentialCommandGroup(
-            new InstantCommand(() -> s_Intake.runIntake(), s_Intake), new FeedUntillSensor(), new RepositionNote()));
+            new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
+            new FeedUntillSensor(),
+            new RepositionNote()));
     NamedCommands.registerCommand(
         "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
     NamedCommands.registerCommand(
@@ -287,11 +290,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
     NamedCommands.registerCommand(
         "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(.4)));
-    NamedCommands.registerCommand("stopIndex", new InstantCommand(() -> s_Shooter.indexStop(),s_Shooter));
-    NamedCommands.registerCommand("shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(60),s_Shooter));
+    NamedCommands.registerCommand(
+        "stopIndex", new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(60), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
-        NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
