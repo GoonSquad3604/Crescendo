@@ -23,7 +23,7 @@ public class Feed extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(
-        () -> m_Intake.runIntake(), m_Intake), 
+        () -> m_Intake.runIntake()), 
         new SequentialCommandGroup(
           new FeedUntillSensor(), 
           new RepositionNote()));

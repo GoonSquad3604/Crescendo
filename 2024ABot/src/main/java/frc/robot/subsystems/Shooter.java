@@ -136,7 +136,7 @@ public class Shooter extends SubsystemBase {
     //   rightShooterPIDController.setFF(kFF);
     // }
 
-    leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
+    leftShooterPIDController.setReference(-leftRPM, ControlType.kVelocity);
     rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
   }
 

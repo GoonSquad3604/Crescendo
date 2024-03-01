@@ -34,16 +34,22 @@ public class Climber extends SubsystemBase {
 
     leftClimberMotor =
         new CANSparkFlex(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
-    leftClimberEncoder = leftClimberMotor.getEncoder();
-    leftClimberPIDController = leftClimberMotor.getPIDController();
+    
 
     rightClimberMotor =
         new CANSparkFlex(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
+
+   leftClimberMotor.restoreFactoryDefaults();
+    rightClimberMotor.restoreFactoryDefaults();
+
+    leftClimberEncoder = leftClimberMotor.getEncoder();
+    leftClimberPIDController = leftClimberMotor.getPIDController();
     rightClimberEncoder = rightClimberMotor.getEncoder();
     rightClimberPIDController = rightClimberMotor.getPIDController();
+    rightClimberPIDController.setFeedbackDevice(rightClimberEncoder);
+    leftClimberPIDController.setFeedbackDevice(leftClimberEncoder);
 
-    leftClimberMotor.restoreFactoryDefaults();
-    rightClimberMotor.restoreFactoryDefaults();
+    
 
     // PIDs
     leftClimberPIDController.setP(.5);
@@ -55,8 +61,8 @@ public class Climber extends SubsystemBase {
     leftClimberPIDController.setD(0);
     rightClimberPIDController.setD(0);
 
-    leftClimberPIDController.setOutputRange(-.2, .2);
-    rightClimberPIDController.setOutputRange(-.2, .2);
+    leftClimberPIDController.setOutputRange(-.6, .6);
+    rightClimberPIDController.setOutputRange(-.6, .6);
 
     leftClimberMotor.setIdleMode(IdleMode.kBrake);
     rightClimberMotor.setIdleMode(IdleMode.kBrake);

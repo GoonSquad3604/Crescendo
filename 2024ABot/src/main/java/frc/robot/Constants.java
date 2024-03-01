@@ -76,11 +76,11 @@ public final class Constants {
     public static final int rightClimbkI = 0;
     public static final int rightClimbkD = 0;
 
-    public static final double rightClimbedPos = 5;
-    public static final double leftClimbedPos = 5;
+    public static final double rightClimbedPos = 2;
+    public static final double leftClimbedPos = 2;
 
-    public static final double maxRightClimberHeight = 116.298;
-    public static final double maxLeftClimberHeight = 113.519;
+    public static final double maxRightClimberHeight = 100;
+    public static final double maxLeftClimberHeight = 100;
 
     public static final double minRightClimberHeight = 2;
     public static final double minLeftClimberHeight = 2;
@@ -103,6 +103,9 @@ public final class Constants {
     public static final double hingeUp = .3697;
 
     public static final int intakeRPM = 2000;
+  }
+  public static final class FlipperConstants {
+    public static final int flipperID = 10;
   }
 
   public static final

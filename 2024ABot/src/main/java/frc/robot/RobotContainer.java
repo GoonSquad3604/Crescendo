@@ -23,8 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.intake.Feed;
 import frc.robot.commands.intake.SetIntakeDown;
+import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionNote;
+import frc.robot.commands.shooter.ShootAmp;
 import frc.robot.commands.stateController.AmpMode;
 import frc.robot.commands.stateController.ClimberMode;
 import frc.robot.commands.stateController.SpeakerMode;
@@ -167,12 +169,12 @@ public class RobotContainer {
     buttonBox
         .button(11)
         .and(speakerTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(33)));
+        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     buttonBox
-        .button(12)
+        .button(12).and(ampTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
 
-    // buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
@@ -185,20 +187,22 @@ public class RobotContainer {
         .button(12)
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-                new InstantCommand(() -> s_Shooter.indexStop())));
-
-    driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
-    driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Shooter.indexStop()),
+                new AfterShot()));
+    driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    // driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
+    // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     driver.x().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
     driver.x().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     driver.start().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     driver.start().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    driver.y().and(indexTrigger.negate()).onTrue(
-        new ParallelCommandGroup(
-            new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
-            new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
-    );
+    // driver.y().and(indexTrigger.negate()).onTrue(
+    //     new ParallelCommandGroup(
+    //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
+    //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
+    // );
     driver.y().and(indexTrigger.negate()).onFalse(
         new ParallelCommandGroup(
             new InstantCommand(()-> s_Shooter.stopShooter()),

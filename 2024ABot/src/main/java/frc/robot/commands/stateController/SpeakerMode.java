@@ -31,5 +31,6 @@ public class SpeakerMode extends InstantCommand {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_StateController.setSpeaker();
     m_Shooter.shooterTo(m_StateController.getAngle());
+    m_Shooter.setShooterRPM(m_StateController.getLeftShooterSpeed(),m_StateController.getRightShooterSpeed());
   }
 }
