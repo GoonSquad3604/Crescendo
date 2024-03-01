@@ -104,6 +104,7 @@ public final class Constants {
 
     public static final int intakeRPM = 2000;
   }
+
   public static final class FlipperConstants {
     public static final int flipperID = 10;
   }

@@ -14,6 +14,7 @@ import frc.robot.subsystems.Shooter;
 public class clear extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
+
   public clear() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();

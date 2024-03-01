@@ -4,8 +4,6 @@
 
 package frc.robot.commands.stateController;
 
-import com.pathplanner.lib.path.PathPlannerTrajectory.State;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -19,6 +17,7 @@ public class TravelMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
+
   public TravelMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();

@@ -4,7 +4,6 @@
 
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -18,7 +17,7 @@ public class SetIntakeDown extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
-  
+
   public SetIntakeDown() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
@@ -34,6 +33,5 @@ public class SetIntakeDown extends InstantCommand {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeDown);
     m_StateController.setIntake();
     m_Shooter.shooterTo(m_StateController.getAngle());
-
   }
 }

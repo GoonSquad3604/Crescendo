@@ -15,6 +15,7 @@ import frc.robot.subsystems.StateController;
 public class ClimberMode extends InstantCommand {
   StateController m_StateController;
   Intake m_Intake;
+
   public ClimberMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_StateController = StateController.getInstance();

@@ -103,9 +103,7 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-    
 
-    
     buttonBox.button(1).onTrue(new TravelMode());
     buttonBox.button(2).onTrue(new SpeakerMode());
     buttonBox.button(3).onTrue(new AmpMode());
@@ -146,12 +144,18 @@ public class RobotContainer {
                         s_StateController.getRightShooterSpeed()),
                 s_Shooter));
     buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
-    buttonBox.button(9).and(climberTrigger).onTrue(
+    buttonBox
+        .button(9)
+        .and(climberTrigger)
+        .onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Shooter.indexStop())));
 
-    buttonBox.button(10).and(speakerTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
+    buttonBox
+        .button(10)
+        .and(speakerTrigger)
+        .onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
     buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
     buttonBox
         .button(10)
@@ -171,7 +175,8 @@ public class RobotContainer {
         .and(speakerTrigger)
         .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     buttonBox
-        .button(12).and(ampTrigger.negate())
+        .button(12)
+        .and(ampTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
 
     buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
@@ -203,12 +208,13 @@ public class RobotContainer {
     //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
     //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
     // );
-    driver.y().and(indexTrigger.negate()).onFalse(
-        new ParallelCommandGroup(
-            new InstantCommand(()-> s_Shooter.stopShooter()),
-            new InstantCommand(() ->s_Shooter.indexStop())
-        )
-    );
+    driver
+        .y()
+        .and(indexTrigger.negate())
+        .onFalse(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Shooter.indexStop())));
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
@@ -252,7 +258,7 @@ public class RobotContainer {
         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
     NamedCommands.registerCommand(
         "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(56), s_Shooter));
-        NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "shooterTo3", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

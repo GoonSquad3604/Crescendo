@@ -34,12 +34,11 @@ public class Climber extends SubsystemBase {
 
     leftClimberMotor =
         new CANSparkFlex(Constants.ClimberConstants.leftClimbID, MotorType.kBrushless);
-    
 
     rightClimberMotor =
         new CANSparkFlex(Constants.ClimberConstants.rightClimbID, MotorType.kBrushless);
 
-   leftClimberMotor.restoreFactoryDefaults();
+    leftClimberMotor.restoreFactoryDefaults();
     rightClimberMotor.restoreFactoryDefaults();
 
     leftClimberEncoder = leftClimberMotor.getEncoder();
@@ -48,8 +47,6 @@ public class Climber extends SubsystemBase {
     rightClimberPIDController = rightClimberMotor.getPIDController();
     rightClimberPIDController.setFeedbackDevice(rightClimberEncoder);
     leftClimberPIDController.setFeedbackDevice(leftClimberEncoder);
-
-    
 
     // PIDs
     leftClimberPIDController.setP(.5);
@@ -122,6 +119,6 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
     SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
-    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition()<=100));
+    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition() <= 100));
   }
 }

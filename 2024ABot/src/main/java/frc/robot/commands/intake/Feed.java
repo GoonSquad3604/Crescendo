@@ -16,16 +16,14 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Feed extends ParallelCommandGroup {
   Intake m_Intake;
+
   /** Creates a new Feed. */
   public Feed() {
     m_Intake = Intake.getInstance();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(
-        () -> m_Intake.runIntake()), 
-        new SequentialCommandGroup(
-          new FeedUntillSensor(), 
-          new RepositionNote()));
+        new InstantCommand(() -> m_Intake.runIntake()),
+        new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()));
   }
 }

@@ -14,9 +14,10 @@ import frc.robot.subsystems.StateController;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TrapMode extends InstantCommand {
-   Intake m_Intake;
+  Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
+
   public TrapMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();

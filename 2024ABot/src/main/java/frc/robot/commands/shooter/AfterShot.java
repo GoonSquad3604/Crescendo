@@ -17,7 +17,6 @@ public class AfterShot extends InstantCommand {
   StateController m_StateContoller;
   private Timer timer;
 
-  
   public AfterShot() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Shooter = Shooter.getInstance();
