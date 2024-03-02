@@ -40,7 +40,7 @@ public final class Constants {
     public static final double shooterAmp = 55;
     public static final double shooterTrap = 55.5;
     public static final double shooterHome = 65.5;
-    public static final double shooterTravel = 35;
+    public static final double shooterTravel = 12;
 
     public static final double shooterMax = 68.8; // 68.8 degrees
 
@@ -101,10 +101,11 @@ public final class Constants {
 
     public static final double hingeDown = .6253;
     public static final double hingeUp = .3697;
+    public static final double hingeStart = .2752;
 
     public static final int intakeRPM = 2000;
   }
-  
+
   public static final class FlipperConstants {
     public static final int flipperID = 10;
   }

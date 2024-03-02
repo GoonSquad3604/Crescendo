@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -27,5 +28,6 @@ public class clear extends InstantCommand {
     m_Intake.stopIntake();
     m_Shooter.stopShooter();
     m_Shooter.indexStop();
+    m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
   }
 }

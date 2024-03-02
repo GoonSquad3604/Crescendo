@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.359011265031077,
-      "y": 5.589805823486292
+      "x": 1.2991794154609702,
+      "y": 5.586611458258547
     },
     "rotation": 0
   },
@@ -32,7 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.75
           }
         },
         {
@@ -74,13 +74,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shooterTo"
+            "name": "shooterTo27"
           }
         },
         {

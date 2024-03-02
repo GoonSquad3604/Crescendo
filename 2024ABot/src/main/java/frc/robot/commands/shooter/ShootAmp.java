@@ -34,7 +34,7 @@ public class ShootAmp extends Command {
     s_Flipper = Flipper.getInstance();
     s_Shooter = Shooter.getInstance();
     timer = new Timer();
-    addRequirements(s_Shooter,s_Flipper);
+    addRequirements(s_Shooter, s_Flipper);
   }
 
   // Called when the command is initially scheduled.

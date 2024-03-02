@@ -78,7 +78,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "pickUpCloseNote"
+                  "pathName": "FarPickUpCloseNote"
                 }
               },
               {

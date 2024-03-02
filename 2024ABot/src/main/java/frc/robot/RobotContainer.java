@@ -27,20 +27,22 @@ import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionForAmp;
 import frc.robot.commands.shooter.RepositionNote;
+import frc.robot.commands.shooter.RepositionNoteAuto;
 import frc.robot.commands.shooter.ShootAmp;
 import frc.robot.commands.stateController.AmpMode;
 import frc.robot.commands.stateController.ClimberMode;
 import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
+import frc.robot.commands.vision.Aim;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Flipper;
-
 import frc.robot.subsystems.StateController;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -49,6 +51,8 @@ public class RobotContainer {
       1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
+  private final CommandXboxController pit = new CommandXboxController(2); // My joystick
+
   private final CommandXboxController driver = new CommandXboxController(0); // My joystick
   private final CommandJoystick buttonBox = new CommandJoystick(1);
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
@@ -58,7 +62,7 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
 
   private final StateController s_StateController = StateController.getInstance();
-  //   private final Vision s_Vision = Vision.getInstance();
+  private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -69,14 +73,17 @@ public class RobotContainer {
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
   private final SendableChooser<Command> autoChooser;
-//   SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
+  //   SlewRateLimiter filter = new SlewRateLimiter(2);
+  //   SlewRateLimiter filter1 = new SlewRateLimiter(2);
+
+  //   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(
             () ->
                 drive
-                    .withVelocityX(
-                    -driver.getLeftY() * MaxSpeed) // Drive forward with
+                    .withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with
                     // negative Y (forward)
                     .withVelocityY(
                         -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
@@ -109,7 +116,8 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-
+    pit.a().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
+    pit.a().onTrue(new InstantCommand(()-> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
     buttonBox.button(2).onTrue(new SpeakerMode());
     buttonBox.button(3).onTrue(new AmpMode());
@@ -169,7 +177,10 @@ public class RobotContainer {
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
     buttonBox.button(10).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
-    buttonBox.button(11).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    buttonBox
+        .button(11)
+        .and(ampTrigger)
+        .onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
     buttonBox
         .button(11)
@@ -211,8 +222,12 @@ public class RobotContainer {
     // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     driver.x().onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.2)));
     driver.x().onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
-    driver.start().onTrue(new InstantCommand(() -> s_Flipper.runFlipperBackward()));
-    driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
+    //driver.start().onTrue(new Aim(drivetrain));
+    pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
+    pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
+    pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    // driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // driver.y().and(indexTrigger.negate()).onTrue(
     //     new ParallelCommandGroup(
     //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
@@ -239,7 +254,7 @@ public class RobotContainer {
         new SequentialCommandGroup(
             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
             new FeedUntillSensor(),
-            new RepositionNote()));
+            new RepositionNoteAuto()));
     NamedCommands.registerCommand(
         "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
     NamedCommands.registerCommand(
@@ -250,7 +265,7 @@ public class RobotContainer {
         "intakeUp",
         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
     NamedCommands.registerCommand(
-        "shooterTo", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
+        "shooterTo20", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
     NamedCommands.registerCommand(
         "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
@@ -263,15 +278,22 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(65), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterTo1", new InstantCommand(() -> s_Shooter.shooterTo(32), s_Shooter));
+        "shooterTo32", new InstantCommand(() -> s_Shooter.shooterTo(32), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterTo2", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
+        "shooterTo30", new InstantCommand(() -> s_Shooter.shooterTo(30), s_Shooter));
     NamedCommands.registerCommand(
         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
     NamedCommands.registerCommand(
         "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(56), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterTo3", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
+        "shooterTo27", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterTo35", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
+    NamedCommands.registerCommand(
+        "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
+            
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);

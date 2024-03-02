@@ -47,9 +47,9 @@ public class Vision extends SubsystemBase {
   Transform3d bestCameraToTarget;
   private int targetID;
 
-  private final double cameraHeight = 0.165;
-  private final double cameraAngle = Units.degreesToRadians(19.9);
-  private final double targetLowerHeight = 1.36;
+  private final double cameraHeight = 0.3048;
+  private final double cameraAngle = Units.degreesToRadians(18.8);
+  private final double targetLowerHeight = 1.3208;
   private double distance;
   static AprilTagFieldLayout aprilTagFieldLayout;
   private Rotation2d rotation;
@@ -143,12 +143,12 @@ public class Vision extends SubsystemBase {
       ty = bestTarget.getPitch();
       ta = bestTarget.getArea();
       bestCameraToTarget = bestTarget.getBestCameraToTarget();
-      Pose3d bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
-      robotPose =
-          PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
+      //Pose3d bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
+      // robotPose =
+      //     PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
 
-      xPos = robotPose.getTranslation().getX();
-      yPos = robotPose.getTranslation().getY();
+      // xPos = robotPose.getTranslation().getX();
+      // yPos = robotPose.getTranslation().getY();
 
       x = bestCameraToTarget.getX();
       y = bestCameraToTarget.getY();
@@ -167,16 +167,16 @@ public class Vision extends SubsystemBase {
     getDistance();
     // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
     // SmartDashboard.putBoolean("hastarget", hasTarget);
-    // SmartDashboard.putNumber("tx", tx);
+    SmartDashboard.putNumber("tx", tx);
     // SmartDashboard.putNumber("ty", ty);
     // SmartDashboard.putNumber("ta", ta);
     // SmartDashboard.putNumber("robotPose X: ", xPos);
     // SmartDashboard.putNumber("robotPose y: ", yPos);
 
-    // SmartDashboard.putNumber("targetID", targetID);
+    SmartDashboard.putNumber("targetID", targetID);
 
-    // SmartDashboard.putNumber("x", x);
-    // SmartDashboard.putNumber("y", y);
-    // SmartDashboard.putNumber("z", z);
+    SmartDashboard.putNumber("x", x);
+    SmartDashboard.putNumber("y", y);
+    SmartDashboard.putNumber("z", z);
   }
 }

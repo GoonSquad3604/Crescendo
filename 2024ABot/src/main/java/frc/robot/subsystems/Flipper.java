@@ -31,7 +31,7 @@ public class Flipper extends SubsystemBase {
     flipperPIDController = flipperMotor.getPIDController();
     flipperPIDController.setFeedbackDevice(angleEncoder);
 
-    flipperPIDController.setP(2.2);//geometry dash
+    flipperPIDController.setP(2.2); // geometry dash
     flipperPIDController.setI(0);
     flipperPIDController.setD(0);
 
@@ -51,14 +51,17 @@ public class Flipper extends SubsystemBase {
   }
 
   public void runFlipperBackward() {
-  flipperMotor.set(-0.1);
+    flipperMotor.set(-0.1);
   }
+
   public void stopFlipper() {
     flipperMotor.set(0);
   }
-public void panic(){
-  flipperPIDController.setReference(.1, ControlType.kPosition);
-}//aaaaaaaaaaaaaaaaa
+
+  public void panic() {
+    flipperPIDController.setReference(.1, ControlType.kPosition);
+  } // aaaaaaaaaaaaaaaaa
+
   public static Flipper getInstance() {
 
     if (_instance == null) {
