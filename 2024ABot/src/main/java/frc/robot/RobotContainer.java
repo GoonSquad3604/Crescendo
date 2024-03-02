@@ -25,6 +25,7 @@ import frc.robot.commands.intake.Feed;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.FeedUntillSensor;
+import frc.robot.commands.shooter.RepositionForAmp;
 import frc.robot.commands.shooter.RepositionNote;
 import frc.robot.commands.shooter.ShootAmp;
 import frc.robot.commands.stateController.AmpMode;
@@ -37,6 +38,8 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Flipper;
+
 import frc.robot.subsystems.StateController;
 
 public class RobotContainer {
@@ -52,6 +55,8 @@ public class RobotContainer {
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
+  private final Flipper s_Flipper = Flipper.getInstance();
+
   private final StateController s_StateController = StateController.getInstance();
   //   private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
@@ -64,13 +69,14 @@ public class RobotContainer {
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
   private final SendableChooser<Command> autoChooser;
-
+//   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(
             () ->
                 drive
-                    .withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with
+                    .withVelocityX(
+                    -driver.getLeftY() * MaxSpeed) // Drive forward with
                     // negative Y (forward)
                     .withVelocityY(
                         -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
@@ -89,8 +95,8 @@ public class RobotContainer {
             drivetrain.applyRequest(
                 () ->
                     drive
-                        .withVelocityX(-driver.getLeftY() * MaxSpeed * .1)
-                        .withVelocityY(-driver.getLeftX() * MaxSpeed * .1)
+                        .withVelocityX(-driver.getLeftY() * MaxSpeed * .2)
+                        .withVelocityY(-driver.getLeftX() * MaxSpeed * .2)
                         .withRotationalRate(-driver.getRightX() * MaxAngularRate * .5)));
     driver.leftTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
     driver
@@ -107,6 +113,7 @@ public class RobotContainer {
     buttonBox.button(1).onTrue(new TravelMode());
     buttonBox.button(2).onTrue(new SpeakerMode());
     buttonBox.button(3).onTrue(new AmpMode());
+    buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
     buttonBox.button(5).onTrue(new ClimberMode());
 
@@ -161,6 +168,8 @@ public class RobotContainer {
         .button(10)
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    buttonBox.button(10).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
+    buttonBox.button(11).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
     buttonBox
         .button(11)
@@ -194,20 +203,23 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter()),
                 new InstantCommand(() -> s_Shooter.indexStop()),
-                new AfterShot()));
+                new AfterShot(),
+                new InstantCommand(() -> s_Flipper.setFlipperDown())));
     driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
     driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
     // driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    driver.x().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    driver.x().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    driver.start().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    driver.start().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driver.x().onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.2)));
+    driver.x().onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    driver.start().onTrue(new InstantCommand(() -> s_Flipper.runFlipperBackward()));
+    driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // driver.y().and(indexTrigger.negate()).onTrue(
     //     new ParallelCommandGroup(
     //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
     //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
     // );
+    driver.povDown().onTrue(new InstantCommand(() -> s_Flipper.panic()));
+    driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
     driver
         .y()
         .and(indexTrigger.negate())

@@ -24,7 +24,6 @@ public class Flipper extends SubsystemBase {
 
   /** Creates a new Flipper. */
   public Flipper() {
-
     flipperMotor = new CANSparkMax(Constants.FlipperConstants.flipperID, MotorType.kBrushless);
     flipperMotor.restoreFactoryDefaults();
 
@@ -32,32 +31,34 @@ public class Flipper extends SubsystemBase {
     flipperPIDController = flipperMotor.getPIDController();
     flipperPIDController.setFeedbackDevice(angleEncoder);
 
-    flipperPIDController.setP(1.5);
+    flipperPIDController.setP(2.2);//geometry dash
     flipperPIDController.setI(0);
     flipperPIDController.setD(0);
 
-    flipperPIDController.setOutputRange(-.1, .4);
+    flipperPIDController.setOutputRange(-.4, .25);
   }
 
-  // public void runFlipper() {
-  //   flipperMotor.set(0.1);
+  public void runFlipper() {
+    flipperMotor.set(0.1);
+  }
 
-  // }
   public void setFlipperUp() {
-    flipperPIDController.setReference(.54, ControlType.kPosition);
+    flipperPIDController.setReference(.22, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
-    flipperPIDController.setReference(.187, ControlType.kPosition);
+    flipperPIDController.setReference(.646, ControlType.kPosition);
   }
 
-  // public void runFlipperBackward() {
-  // flipperMotor.set(-0.1);
-  // }
-  // public void stopFlipper() {
-  //   flipperMotor.set(0);
-  // }
-
+  public void runFlipperBackward() {
+  flipperMotor.set(-0.1);
+  }
+  public void stopFlipper() {
+    flipperMotor.set(0);
+  }
+public void panic(){
+  flipperPIDController.setReference(.1, ControlType.kPosition);
+}//aaaaaaaaaaaaaaaaa
   public static Flipper getInstance() {
 
     if (_instance == null) {

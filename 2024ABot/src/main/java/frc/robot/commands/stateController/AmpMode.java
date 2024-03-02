@@ -33,7 +33,7 @@ public class AmpMode extends InstantCommand {
     m_StateController.setAmp();
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
-
+    
     new RepositionForAmp();
   }
 }

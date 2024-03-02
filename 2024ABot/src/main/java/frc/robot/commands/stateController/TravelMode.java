@@ -32,5 +32,6 @@ public class TravelMode extends InstantCommand {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_StateController.setTravel();
     m_Shooter.shooterTo(m_StateController.getAngle());
+    m_Shooter.setPower(0);
   }
 }

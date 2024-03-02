@@ -34,7 +34,7 @@ public class ShootAmp extends Command {
     s_Flipper = Flipper.getInstance();
     s_Shooter = Shooter.getInstance();
     timer = new Timer();
-    addRequirements(s_Shooter);
+    addRequirements(s_Shooter,s_Flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -57,9 +57,9 @@ public class ShootAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     if (s_Shooter.hasNote()) {
-      s_Shooter.setIndexPower(.1);
+      s_Shooter.setIndexPower(.2);
       s_Shooter.setShooterRPM(0, 0);
-      timer.delay(1);
+      timer.delay(.5);
       s_Flipper.setFlipperUp();
 
       s_Shooter.setShooterRPM(
