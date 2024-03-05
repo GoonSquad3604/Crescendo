@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase {
     hingePIDController.setP(5);
     hingePIDController.setI(i);
     hingePIDController.setD(d);
-    hingePIDController.setOutputRange(-.6, .6);
+    hingePIDController.setOutputRange(-1, .9);
   }
 
   public static Intake getInstance() {
@@ -123,7 +123,7 @@ public class Intake extends SubsystemBase {
     // SmartDashboard.putNumber("Hinge FF value", Constants.HingeConstants.kFF);
     // SmartDashboard.putNumber("Raise Hinge Speed", Constants.HingeConstants.raiseHingeSpeed);
     // SmartDashboard.putNumber("Lower Hinge Speed", Constants.HingeConstants.lowerHingeSpeed);
-
+    SmartDashboard.putNumber("applied hinge output", hingeMotor.getAppliedOutput());
     SmartDashboard.putNumber("hinge position", hingeEncoder.getPosition());
   }
 }

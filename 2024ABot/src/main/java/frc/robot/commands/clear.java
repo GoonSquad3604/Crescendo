@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -15,11 +16,14 @@ import frc.robot.subsystems.Shooter;
 public class clear extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
+  Index m_Index;
+
 
   public clear() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
+    m_Index = Index.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +31,7 @@ public class clear extends InstantCommand {
   public void initialize() {
     m_Intake.stopIntake();
     m_Shooter.stopShooter();
-    m_Shooter.indexStop();
+    m_Index.indexStop();
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
   }
 }

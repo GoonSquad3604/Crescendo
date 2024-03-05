@@ -39,6 +39,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Flipper;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
@@ -48,7 +49,7 @@ public class RobotContainer {
   private double MaxSpeed =
       TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
   private double MaxAngularRate =
-      1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
+      3 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController pit = new CommandXboxController(2); // My joystick
@@ -60,7 +61,7 @@ public class RobotContainer {
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
   private final Flipper s_Flipper = Flipper.getInstance();
-
+  private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
   private final Vision s_Vision = Vision.getInstance();
   private final SwerveRequest.FieldCentric drive =
@@ -92,7 +93,7 @@ public class RobotContainer {
                             * MaxAngularRate) // Drive counterclockwise with negative X (left)
             ));
     Trigger intakeTrigger = new Trigger(s_StateController::isIntakeMode);
-    Trigger indexTrigger = new Trigger(s_Shooter::hasNote);
+    Trigger indexTrigger = new Trigger(s_Index::hasNote);
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
     Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
     Trigger speakerTrigger = new Trigger(s_StateController::isSpeakerMode);
@@ -129,6 +130,7 @@ public class RobotContainer {
 
     buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
 
+
     buttonBox
         .button(7)
         .and(indexTrigger)
@@ -142,12 +144,12 @@ public class RobotContainer {
         .onFalse(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Intake.stopIntake()),
-                new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter)));
+                new InstantCommand(() -> s_Index.indexStop(), s_Shooter)));
 
     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Intake.vomit()));
-    buttonBox.button(8).onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(-.3)));
+    buttonBox.button(8).onTrue(new InstantCommand(() -> s_Index.setIndexPower(-.3)));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    buttonBox.button(8).onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
     buttonBox
         .button(9)
         .and(ampTrigger.negate())
@@ -165,7 +167,7 @@ public class RobotContainer {
         .onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-                new InstantCommand(() -> s_Shooter.indexStop())));
+                new InstantCommand(() -> s_Index.indexStop())));
 
     buttonBox
         .button(10)
@@ -197,7 +199,7 @@ public class RobotContainer {
     buttonBox
         .button(12)
         .and(ampTrigger.negate())
-        .onTrue(new InstantCommand(() -> s_Shooter.setIndexRPM(s_StateController.getIndexSpeed())));
+        .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
 
     buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
@@ -207,23 +209,23 @@ public class RobotContainer {
         .onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
-                new InstantCommand(() -> s_Shooter.indexStop())));
+                new InstantCommand(() -> s_Index.indexStop())));
     buttonBox
         .button(12)
         .onFalse(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter()),
-                new InstantCommand(() -> s_Shooter.indexStop()),
+                new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot(),
                 new InstantCommand(() -> s_Flipper.setFlipperDown())));
     driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
     driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
     // driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    driver.x().onTrue(new InstantCommand(() -> s_Shooter.setIndexPower(.2)));
-    driver.x().onFalse(new InstantCommand(() -> s_Shooter.indexStop()));
+    // driver.x().onTrue(new InstantCommand(() -> s_Index.setIndexPower(.2)));
+    // driver.x().onFalse(new InstantCommand(() -> s_Index.indexStop()));
     //driver.start().onTrue(new Aim(drivetrain));
-    pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
+    driver.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
@@ -233,7 +235,7 @@ public class RobotContainer {
     //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
     //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
     // );
-    driver.povDown().onTrue(new InstantCommand(() -> s_Flipper.panic()));
+    driver.x().onTrue(new InstantCommand(() -> s_Flipper.panic()));
     driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
     driver
         .y()
@@ -241,7 +243,7 @@ public class RobotContainer {
         .onFalse(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter()),
-                new InstantCommand(() -> s_Shooter.indexStop())));
+                new InstantCommand(() -> s_Index.indexStop())));
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
@@ -269,12 +271,12 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
-    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Shooter.setIndexRPM(-6000)));
+    NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
     NamedCommands.registerCommand(
-        "runIndex", new InstantCommand(() -> s_Shooter.setIndexPower(-.4)));
+        "runIndex", new InstantCommand(() -> s_Index.setIndexPower(-.4)));
     NamedCommands.registerCommand(
-        "stopIndex", new InstantCommand(() -> s_Shooter.indexStop(), s_Shooter));
+        "stopIndex", new InstantCommand(() -> s_Index.indexStop(), s_Shooter));
     NamedCommands.registerCommand(
         "shooterHome", new InstantCommand(() -> s_Shooter.shooterTo(65), s_Shooter));
     NamedCommands.registerCommand(

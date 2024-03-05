@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
@@ -14,21 +15,22 @@ public class RepositionNote extends Command {
 
   Shooter s_Shooter;
   Intake s_Intake;
+  Index s_Index;
   StateController s_StateController;
 
   /** Creates a new RepositionNote. */
   public RepositionNote() {
     s_Intake = Intake.getInstance();
     s_Shooter = Shooter.getInstance();
+    s_Index = Index.getInstance();
     s_StateController = StateController.getInstance();
-    addRequirements(s_Shooter, s_Intake, s_StateController);
+    addRequirements(s_Shooter, s_Intake, s_StateController,s_Index);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Shooter.setIndexPower(-0.1);
-    s_Shooter.setShooterRPM(100, -100);
+    s_Index.setIndexPower(-0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,7 +40,7 @@ public class RepositionNote extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_Shooter.indexStop();
+    s_Index.indexStop();
 
     s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     s_StateController.setTravel();
@@ -48,6 +50,6 @@ public class RepositionNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_Shooter.hasNote();
+    return s_Index.hasNote();
   }
 }

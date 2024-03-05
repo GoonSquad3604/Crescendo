@@ -21,7 +21,6 @@ public class Shooter extends SubsystemBase {
   // Declares variables
   private CANSparkFlex leftShooterMotor;
   private CANSparkFlex rightShooterMotor;
-  private CANSparkFlex indexMotor;
   private CANSparkFlex angleMotor;
 
   private RelativeEncoder leftShooterEncoder;
@@ -30,19 +29,16 @@ public class Shooter extends SubsystemBase {
 
   private SparkPIDController leftShooterPIDController;
   private SparkPIDController rightShooterPIDController;
-  private SparkPIDController IndexPIDController;
   private SparkPIDController anglePIDController;
 
   private AbsoluteEncoder angleEncoder;
 
-  private DigitalInput sensor;
 
   private static Shooter _instance;
   private double angleD, angleP, angleI, kPLeft, kFFLeft, kPRight, kFFRight;
 
   private double leftRPM = 4000;
   private double rightRPM = 6500;
-  private int IndexRPM = 6000;
   private double trapAngle = 48;
 
   /** Creates a new Shooter. */
@@ -51,14 +47,11 @@ public class Shooter extends SubsystemBase {
     leftShooterMotor = new CANSparkFlex(Constants.ShooterConstants.leftID, MotorType.kBrushless);
     rightShooterMotor = new CANSparkFlex(Constants.ShooterConstants.rightID, MotorType.kBrushless);
     angleMotor = new CANSparkFlex(Constants.ShooterConstants.angleID, MotorType.kBrushless);
-    indexMotor = new CANSparkFlex(Constants.ShooterConstants.indexID, MotorType.kBrushless);
 
-    sensor = new DigitalInput(0);
 
     leftShooterMotor.restoreFactoryDefaults();
     rightShooterMotor.restoreFactoryDefaults();
     angleMotor.restoreFactoryDefaults();
-    indexMotor.restoreFactoryDefaults();
 
     anglePIDController = angleMotor.getPIDController();
     angleEncoder = angleMotor.getAbsoluteEncoder(Type.kDutyCycle);
@@ -69,8 +62,7 @@ public class Shooter extends SubsystemBase {
     leftShooterEncoder = leftShooterMotor.getEncoder();
     leftShooterPIDController = leftShooterMotor.getPIDController();
 
-    IndexPIDController = indexMotor.getPIDController();
-    indexEncoder = indexMotor.getEncoder();
+    
 
     // PIDS
 
@@ -93,23 +85,14 @@ public class Shooter extends SubsystemBase {
     rightShooterPIDController.setD(Constants.ShooterConstants.shooterkD);
     rightShooterPIDController.setFF(Constants.ShooterConstants.shooterkF);
 
-    IndexPIDController.setP(Constants.ShooterConstants.indexkP);
-    IndexPIDController.setI(Constants.ShooterConstants.indexkI);
-    IndexPIDController.setD(Constants.ShooterConstants.indexkD);
-    IndexPIDController.setFF(Constants.ShooterConstants.indexkF);
+    
 
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
     anglePIDController.setOutputRange(-1, 1);
-    IndexPIDController.setOutputRange(-1, 1);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
-
-    // Inverts left shooter motor
-    leftShooterMotor.setInverted(false);
-    indexMotor.setInverted(true);
-    angleMotor.setInverted(false);
-  }
+      }
 
   public static Shooter getInstance() {
     if (_instance == null) {
@@ -192,22 +175,11 @@ public class Shooter extends SubsystemBase {
 
   // Indexer methods
 
-  public void setIndexRPM(double RPM) {
-    IndexPIDController.setReference(RPM, ControlType.kVelocity);
-  }
+  
 
-  public void setIndexPower(double speed) {
-    indexMotor.set(-speed);
-  }
+  
 
-  public void indexStop() {
-    indexMotor.set(0);
-  }
-
-  public boolean hasNote() {
-    return !sensor.get();
-  }
-
+  
   // -0.002667*X + 0.7915
   public void shooterTo(double position) {
     anglePIDController.setReference(position * .00297 + .49717, ControlType.kPosition);
@@ -226,8 +198,6 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
     SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .7915) / -.002667);
 
-    SmartDashboard.putBoolean("sensor has target: ", hasNote());
-    SmartDashboard.putNumber("indexRPM", indexEncoder.getVelocity());
     SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
 

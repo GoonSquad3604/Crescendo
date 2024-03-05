@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionNote;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,10 +17,12 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Feed extends ParallelCommandGroup {
   Intake m_Intake;
+  Index m_Index;
 
   /** Creates a new Feed. */
   public Feed() {
     m_Intake = Intake.getInstance();
+    m_Index = Index.getInstance();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

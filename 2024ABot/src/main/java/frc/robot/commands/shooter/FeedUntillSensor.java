@@ -5,22 +5,23 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
 
 public class FeedUntillSensor extends Command {
   /** Creates a new FeedUntillSensor. */
-  Shooter s_Shooter;
+  Index s_Index;
 
   public FeedUntillSensor() {
-    s_Shooter = Shooter.getInstance();
+    s_Index = Index.getInstance();
 
-    addRequirements(s_Shooter);
+    addRequirements(s_Index);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Shooter.setIndexPower(.3);
+    s_Index.setIndexPower(.4);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,12 +31,12 @@ public class FeedUntillSensor extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_Shooter.indexStop();
+    s_Index.indexStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_Shooter.hasNote();
+    return s_Index.hasNote();
   }
 }

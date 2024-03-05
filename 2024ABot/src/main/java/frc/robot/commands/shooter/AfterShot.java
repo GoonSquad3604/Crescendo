@@ -15,13 +15,11 @@ import frc.robot.subsystems.StateController;
 public class AfterShot extends InstantCommand {
   Shooter m_Shooter;
   StateController m_StateContoller;
-  private Timer timer;
 
   public AfterShot() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Shooter = Shooter.getInstance();
     m_StateContoller = StateController.getInstance();
-    timer = new Timer();
 
     addRequirements(m_Shooter, m_StateContoller);
   }
@@ -29,7 +27,7 @@ public class AfterShot extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.delay(1);
+    
     m_StateContoller.setTravel();
     m_Shooter.shooterTo(m_StateContoller.getAngle());
   }

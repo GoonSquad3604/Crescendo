@@ -43,7 +43,7 @@ public class Aim extends Command {
       end(false);
     }
     if(m_Vision.getTx() > 0) direction = 1;
-    else direction = -1;
+    else direction = - 1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

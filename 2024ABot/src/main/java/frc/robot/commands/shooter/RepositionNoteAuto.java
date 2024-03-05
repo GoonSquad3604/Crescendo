@@ -6,18 +6,20 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 
 public class RepositionNoteAuto extends Command {
-
+  Index s_Index;
   Shooter s_Shooter;
   Intake s_Intake;
   StateController s_StateController;
 
   /** Creates a new RepositionNote. */
   public RepositionNoteAuto() {
+    s_Index = Index.getInstance();
     s_Intake = Intake.getInstance();
     s_Shooter = Shooter.getInstance();
     s_StateController = StateController.getInstance();
@@ -27,7 +29,7 @@ public class RepositionNoteAuto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Shooter.setIndexPower(-0.1);
+    s_Index.setIndexPower(-0.1);
     s_Shooter.setShooterRPM(100, -100);
   }
 
@@ -38,7 +40,7 @@ public class RepositionNoteAuto extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_Shooter.indexStop();
+    s_Index.indexStop();
 
     
   }
@@ -46,6 +48,6 @@ public class RepositionNoteAuto extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_Shooter.hasNote();
+    return s_Index.hasNote();
   }
 }

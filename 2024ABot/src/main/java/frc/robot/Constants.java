@@ -12,33 +12,22 @@ public final class Constants {
   public static final class ShooterConstants {
     public static final int leftID = 15;
     public static final int rightID = 14;
-    public static final int indexID = 4;
     public static final int angleID = 5;
 
     // RPMS
     public static final int leftShooterSpeakerRPM = -4000;
     public static final int rightShooterSpeakerRPM = 6000;
 
-    public static final int leftShooterAmpRPM = -500;
-    public static final int rightShooterAmpRPM = 500;
+    public static final int leftShooterAmpRPM = -400;
+    public static final int rightShooterAmpRPM = 400;
 
-    public static final int leftShooterTrapRPM = -3300;
-    public static final int rightShooterTrapRPM = 4200;
-
-    public static final int indexSpeakerRPM = -6000;
-    public static final double indexSpeakerSpeed = 1;
-
-    public static final int indexTrapRPM = -6000;
-    public static final double indexTrapSpeed = 1;
-
-    public static final int indexAmpRPM = -800;
-
-    public static final double indexAmpSpeed = 1;
-
+    public static final int leftShooterTrapRPM = -1000; //-3300
+    public static final int rightShooterTrapRPM = 2000; //4200
+    
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 55;
-    public static final double shooterTrap = 55.5;
+    public static final double shooterAmp = 55;//55
+    public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;
 
@@ -58,10 +47,7 @@ public final class Constants {
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
 
-    public static final double indexkP = 0.00025;
-    public static final double indexkI = 0.0;
-    public static final double indexkD = 0.0;
-    public static final double indexkF = 0.00016;
+    
   }
 
   public static final class ClimberConstants {
@@ -104,6 +90,24 @@ public final class Constants {
     public static final double hingeStart = .2752;
 
     public static final int intakeRPM = 2000;
+  }
+  public static final class IndexConstants {
+    public static final int indexID = 4;
+
+    public static final int indexTrapRPM = -6000;
+    public static final double indexTrapSpeed = 1;
+
+    public static final int indexAmpRPM = -800;
+
+    public static final double indexAmpSpeed = 1;
+    public static final int indexSpeakerRPM = -6000;
+    public static final double indexSpeakerSpeed = 1;
+
+    
+    public static final double indexkP = 0.00025;
+    public static final double indexkI = 0.0;
+    public static final double indexkD = 0.0;
+    public static final double indexkF = 0.00016;
   }
 
   public static final class FlipperConstants {

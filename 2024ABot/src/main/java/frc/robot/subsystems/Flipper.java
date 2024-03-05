@@ -35,7 +35,7 @@ public class Flipper extends SubsystemBase {
     flipperPIDController.setI(0);
     flipperPIDController.setD(0);
 
-    flipperPIDController.setOutputRange(-.4, .25);
+    flipperPIDController.setOutputRange(-.3, .25);
   }
 
   public void runFlipper() {

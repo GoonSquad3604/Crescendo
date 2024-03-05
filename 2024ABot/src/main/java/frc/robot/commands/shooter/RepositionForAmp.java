@@ -6,20 +6,21 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RepositionForAmp extends Command {
-  Shooter s_Shooter;
+  Index m_Index;
   private Timer timer;
 
   public RepositionForAmp() {
     // Use addRequirements() here to declare subsystem dependencies.
-    s_Shooter = Shooter.getInstance();
+    m_Index = Index.getInstance();
     timer = new Timer();
-    addRequirements(s_Shooter);
+    addRequirements(m_Index);
   }
 
   // Called when the command is initially scheduled.
@@ -29,10 +30,10 @@ public class RepositionForAmp extends Command {
   @Override
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
-    if (s_Shooter.hasNote()) {
-      s_Shooter.setIndexPower(.2);
+    if (m_Index.hasNote()) {
+      m_Index.setIndexPower(.2);
     } else {
-      s_Shooter.indexStop();
+      m_Index.indexStop();
     }
   }
 
@@ -40,13 +41,12 @@ public class RepositionForAmp extends Command {
   @Override
   public void end(boolean interrupted) {
     // stop index and shooter
-    s_Shooter.stopShooter();
-    s_Shooter.indexStop();
+    m_Index.indexStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() >= .4;
+    return timer.get() >= .6;
   }
 }

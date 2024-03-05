@@ -32,5 +32,6 @@ public class TrapMode extends InstantCommand {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_StateController.setTrap();
     m_Shooter.shooterTo(m_StateController.getAngle());
+    m_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterTrapRPM, Constants.ShooterConstants.rightShooterTrapRPM);
   }
 }
