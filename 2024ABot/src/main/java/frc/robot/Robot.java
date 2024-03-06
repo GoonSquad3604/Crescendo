@@ -2,14 +2,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.clear;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Vision;
 
 import org.littletonrobotics.junction.*;
-import org.littletonrobotics.junction.LoggedRobot;
-import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot extends LoggedRobot {
@@ -17,9 +20,11 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Vision m_Vision;
 
   @Override
   public void robotInit() {
+    m_Vision = Vision.getInstance();
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
@@ -63,6 +68,14 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    if (m_Vision.robotPose()!=null) {
+      m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
+    }
+    // SmartDashboard.putNumber("train", defaultPeriodSecs);
+    //vision get pose
+    // if pose present
+    //convert to pose
+    //robotcontain.drivetrain.addvision
   }
 
   @Override

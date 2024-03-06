@@ -92,6 +92,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
     configurePathPlanner();
+
     if (Utils.isSimulation()) {
       startSimThread();
     }
@@ -105,6 +106,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     if (Utils.isSimulation()) {
       startSimThread();
     }
+    SmartDashboard.putData("Field", m_field);
+
   }
 
   private void configurePathPlanner() {
@@ -179,6 +182,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
   @Override
   public void periodic() {
+    m_field.setRobotPose(this.getState().Pose);
     SmartDashboard.putNumber("xPose",this.getState().Pose.getX());
     SmartDashboard.putNumber("yPose", this.getState().Pose.getY());
     /* Periodically try to apply the operator perspective */

@@ -56,7 +56,7 @@ public class RobotContainer {
 
   private final CommandXboxController driver = new CommandXboxController(0); // My joystick
   private final CommandJoystick buttonBox = new CommandJoystick(1);
-  private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
@@ -64,7 +64,7 @@ public class RobotContainer {
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
   private final Vision s_Vision = Vision.getInstance();
-  private final SwerveRequest.FieldCentric drive =
+  public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
           .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -224,7 +224,7 @@ public class RobotContainer {
     // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     // driver.x().onTrue(new InstantCommand(() -> s_Index.setIndexPower(.2)));
     // driver.x().onFalse(new InstantCommand(() -> s_Index.indexStop()));
-    //driver.start().onTrue(new Aim(drivetrain));
+    driver.start().onTrue(new Aim(drivetrain));
     driver.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));

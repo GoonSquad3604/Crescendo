@@ -195,56 +195,56 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .7915) / -.002667);
+    // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
+    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .7915) / -.002667);
 
-    SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
-    SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
+    // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
+    // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
 
-    SmartDashboard.putBoolean("isInverted", angleMotor.getInverted());
-    double newAngleP = SmartDashboard.getNumber("AnglekP", 7);
-    if (newAngleP != angleP) {
-      angleP = newAngleP;
-      anglePIDController.setP(angleP);
-    }
-    leftRPM = SmartDashboard.getNumber("leftRPM", 4000);
-    SmartDashboard.putNumber("leftRPM", leftRPM);
+    // SmartDashboard.putBoolean("isInverted", angleMotor.getInverted());
+    // double newAngleP = SmartDashboard.getNumber("AnglekP", 7);
+    // if (newAngleP != angleP) {
+    //   angleP = newAngleP;
+    //   anglePIDController.setP(angleP);
+    // }
+    // leftRPM = SmartDashboard.getNumber("leftRPM", 4000);
+    // SmartDashboard.putNumber("leftRPM", leftRPM);
 
-    rightRPM = SmartDashboard.getNumber("rightRPM", 6500);
-    SmartDashboard.putNumber("rightRPM", rightRPM);
+    // rightRPM = SmartDashboard.getNumber("rightRPM", 6500);
+    // SmartDashboard.putNumber("rightRPM", rightRPM);
 
-    double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
-    if (newLeftSpinP != kPLeft) {
-      kPLeft = newLeftSpinP;
-      leftShooterPIDController.setP(kPLeft);
-    }
-    SmartDashboard.putNumber("LSpinP", kPLeft);
+    // double newLeftSpinP = SmartDashboard.getNumber("LSpinP", .0005);
+    // if (newLeftSpinP != kPLeft) {
+    //   kPLeft = newLeftSpinP;
+    //   leftShooterPIDController.setP(kPLeft);
+    // }
+    // SmartDashboard.putNumber("LSpinP", kPLeft);
 
-    double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
-    if (newLeftSpinFF != kFFLeft) {
-      kFFLeft = newLeftSpinFF;
-      leftShooterPIDController.setFF(kFFLeft);
-    }
-    SmartDashboard.putNumber("LSpinFF", kFFLeft);
+    // double newLeftSpinFF = SmartDashboard.getNumber("LSpinFF", .00016);
+    // if (newLeftSpinFF != kFFLeft) {
+    //   kFFLeft = newLeftSpinFF;
+    //   leftShooterPIDController.setFF(kFFLeft);
+    // }
+    // SmartDashboard.putNumber("LSpinFF", kFFLeft);
 
-    double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
-    if (newRightSpinP != kPRight) {
-      kPRight = newRightSpinP;
-      rightShooterPIDController.setP(kPRight);
-    }
-    SmartDashboard.putNumber("RSpinP", kPRight);
+    // double newRightSpinP = SmartDashboard.getNumber("RSpinP", .0005);
+    // if (newRightSpinP != kPRight) {
+    //   kPRight = newRightSpinP;
+    //   rightShooterPIDController.setP(kPRight);
+    // }
+    // SmartDashboard.putNumber("RSpinP", kPRight);
 
-    double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
-    if (newRightSpinFF != kFFRight) {
-      kFFRight = newRightSpinFF;
-      rightShooterPIDController.setFF(kFFRight);
-    }
-    SmartDashboard.putNumber("RSpinFF", kFFRight);
+    // double newRightSpinFF = SmartDashboard.getNumber("RSpinFF", .00016);
+    // if (newRightSpinFF != kFFRight) {
+    //   kFFRight = newRightSpinFF;
+    //   rightShooterPIDController.setFF(kFFRight);
+    // }
+    // SmartDashboard.putNumber("RSpinFF", kFFRight);
 
-    SmartDashboard.putNumber("AnglekP", angleP);
-    trapAngle = SmartDashboard.getNumber("trap angle", 48);
-    SmartDashboard.putNumber("trap angle", trapAngle);
-    SmartDashboard.putNumber("aNGLe dest", trapAngle);
+    // SmartDashboard.putNumber("AnglekP", angleP);
+    // trapAngle = SmartDashboard.getNumber("trap angle", 48);
+    // SmartDashboard.putNumber("trap angle", trapAngle);
+    // SmartDashboard.putNumber("aNGLe dest", trapAngle);
 
     //   double newAnglekD = SmartDashboard.getNumber("AnglekD", 0);
     //   if(newAnglekD!=angleD){

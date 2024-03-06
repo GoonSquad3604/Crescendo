@@ -35,6 +35,7 @@ public class ShootAmp extends Command {
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
+    timer.reset();
     started = false;
     s_Index.setIndexPower(.1);
     s_Shooter.setShooterRPM(
@@ -50,16 +51,19 @@ public class ShootAmp extends Command {
     // if sensor is triggered, move shooter to steeper angle.
     s_Index.setIndexPower(.2);
     if (s_Index.hasNote()) started = true;
-     if(started){ 
-      s_Shooter.setShooterRPM(0, 0);}
-      if (timer.get() >= .5 && started) {
-        s_Flipper.setFlipperUp();
+     
+      if (timer.get() >= .4 && started) {
         s_Shooter.setShooterRPM(
-          Constants.ShooterConstants.leftShooterAmpRPM,
-          Constants.ShooterConstants.rightShooterAmpRPM);
+          0,
+          0);
+        s_Flipper.setFlipperUp();
+        // s_Shooter.setShooterRPM(
+        //   Constants.ShooterConstants.leftShooterAmpRPM+100,
+        //   Constants.ShooterConstants.rightShooterAmpRPM-100);
         s_Index.setIndexPower(.1);
       }
     
+
   }
 
   // Called once the command ends or is interrupted.
@@ -69,6 +73,8 @@ public class ShootAmp extends Command {
     s_Shooter.stopShooter();
     s_Index.indexStop();
     started = false;
+    timer.stop();
+    
   }
 
   // Returns true when the command should end.

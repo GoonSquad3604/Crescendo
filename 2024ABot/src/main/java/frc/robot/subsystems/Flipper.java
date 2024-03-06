@@ -43,7 +43,7 @@ public class Flipper extends SubsystemBase {
   }
 
   public void setFlipperUp() {
-    flipperPIDController.setReference(.22, ControlType.kPosition);
+    flipperPIDController.setReference(.3, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
@@ -73,20 +73,20 @@ public class Flipper extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
-    double newFlipperkD = SmartDashboard.getNumber("FlipperkD", 0);
-    if (newFlipperkD != flipperD) {
-      flipperD = newFlipperkD;
-      flipperPIDController.setD(flipperD);
-    }
-    SmartDashboard.putNumber("FlipperkD", flipperD);
+    // SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
+    // double newFlipperkD = SmartDashboard.getNumber("FlipperkD", 0);
+    // if (newFlipperkD != flipperD) {
+    //   flipperD = newFlipperkD;
+    //   flipperPIDController.setD(flipperD);
+    // }
+    // SmartDashboard.putNumber("FlipperkD", flipperD);
 
-    double newFlipperI = SmartDashboard.getNumber("FlipperkI", 0);
-    if (newFlipperI != flipperI) {
-      flipperI = newFlipperI;
-      flipperPIDController.setI(flipperI);
-    }
-    SmartDashboard.putNumber("FlipperkI", flipperI);
+    // double newFlipperI = SmartDashboard.getNumber("FlipperkI", 0);
+    // if (newFlipperI != flipperI) {
+    //   flipperI = newFlipperI;
+    //   flipperPIDController.setI(flipperI);
+    // }
+    // SmartDashboard.putNumber("FlipperkI", flipperI);
 
     //  double newFlipperP = SmartDashboard.getNumber("FlipperkP", 1);
     //   if(newFlipperP!=flipperP){
@@ -95,12 +95,12 @@ public class Flipper extends SubsystemBase {
     //   }
     //   SmartDashboard.putNumber("FlipperkP", flipperP);
 
-    SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
+    // SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
 
-    double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
-    if (newSetFlipper != setFlipper) {
-      setFlipper = newSetFlipper;
-    }
-    SmartDashboard.putNumber("setFlipper", setFlipper);
+    // double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
+    // if (newSetFlipper != setFlipper) {
+    //   setFlipper = newSetFlipper;
+    // }
+    // SmartDashboard.putNumber("setFlipper", setFlipper);
   }
 }

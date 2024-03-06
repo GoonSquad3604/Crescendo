@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -33,6 +35,8 @@ public class Vision extends SubsystemBase {
   private boolean hasTarget = false;
 
   private double tx = 0;
+  private double txSpeaker = 0;
+
   private double ty = 0;
   private double ta = 0;
 
@@ -57,19 +61,21 @@ public class Vision extends SubsystemBase {
   private PhotonPoseEstimator photonPoseEstimator;
   private Rotation2d targetToRobotRotation2d;
   private double toTargetRotation;
-
+  Pose3d bestTagPose;
   private Transform3d robotToCam;
   private Pose3d robotPose;
-
+private boolean has4;
   /** Creates a new Vision. */
   public Vision() {
-    camera = new PhotonCamera("photonvision");
+    camera = new PhotonCamera("photonvision1");
+
 
     try {
-      AprilTagFieldLayout aprilTagFieldLayout =
-          AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
+      aprilTagFieldLayout =
+      AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
+
     } catch (Exception e) {
-      AprilTagFieldLayout aprilTagFieldLayout = null;
+      aprilTagFieldLayout = null;
     }
     robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, 0, 0));
 
@@ -86,6 +92,11 @@ public class Vision extends SubsystemBase {
     return _instance;
   }
 
+  public Pose2d robotPose() {
+    if(!getHasTarget()) return null;
+    return robotPose.toPose2d();
+  }
+
   public boolean getHasTarget() {
     return hasTarget;
   }
@@ -93,9 +104,15 @@ public class Vision extends SubsystemBase {
   public double getTx() {
     return tx;
   }
+  public double getTxSpeaker() {
+    return txSpeaker;
+  }
 
   public double getTy() {
     return ty;
+  }
+  public boolean has4() {
+    return has4;
   }
 
   // public double targetToRobotRotation(CommandSwerveDrivetrain m_Swerve) {
@@ -129,26 +146,33 @@ public class Vision extends SubsystemBase {
 
     result = camera.getLatestResult();
     hasTarget = result.hasTargets();
-    // if (result.getMultiTagResult().estimatedPose.isPresent){
-    //   fieldToCamera = result.getMultiTagResult().estimatedPose.best;
+    if (result.getMultiTagResult().estimatedPose.isPresent){
+      fieldToCamera = result.getMultiTagResult().estimatedPose.best;
 
-    // }
+    }
     List<PhotonTrackedTarget> targets = result.getTargets();
     tags.clear();
-
     if (hasTarget) {
       // photonPoseEstimator.update();
       PhotonTrackedTarget bestTarget = result.getBestTarget();
+      // if(bestTarget.getFiducialId() ==4) 
+      // {txSpeaker = bestTarget.getYaw(); 
+      //   has4 = true;
+      // }
+      // else has4 = false;
       tx = bestTarget.getYaw();
       ty = bestTarget.getPitch();
       ta = bestTarget.getArea();
       bestCameraToTarget = bestTarget.getBestCameraToTarget();
-      //Pose3d bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
-      // robotPose =
-      //     PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
-
-      // xPos = robotPose.getTranslation().getX();
-      // yPos = robotPose.getTranslation().getY();
+       bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
+      if(getHasTarget()){
+        photonPoseEstimator.setReferencePose(bestTagPose);
+        robotPose = 
+        //photonPoseEstimator.update().get().estimatedPose;
+          PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
+      }
+      xPos = robotPose.getTranslation().getX();
+      yPos = robotPose.getTranslation().getY();
 
       x = bestCameraToTarget.getX();
       y = bestCameraToTarget.getY();
@@ -156,22 +180,18 @@ public class Vision extends SubsystemBase {
 
       targetID = bestTarget.getFiducialId();
 
-      try {
-        var targetpose = aprilTagFieldLayout.getTagPose(5);
-        SmartDashboard.putNumber("apriltagheight", targetpose.get().getZ());
-      } catch (Exception e) {
-      }
+      
     }
 
     // targetToRobotRotation = targetToRobotRotation();
     getDistance();
     // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
-    // SmartDashboard.putBoolean("hastarget", hasTarget);
+    SmartDashboard.putBoolean("hastarget", hasTarget);
     SmartDashboard.putNumber("tx", tx);
     // SmartDashboard.putNumber("ty", ty);
     // SmartDashboard.putNumber("ta", ta);
-    // SmartDashboard.putNumber("robotPose X: ", xPos);
-    // SmartDashboard.putNumber("robotPose y: ", yPos);
+    SmartDashboard.putNumber("robotPose X: ", xPos);
+    SmartDashboard.putNumber("robotPose y: ", yPos);
 
     SmartDashboard.putNumber("targetID", targetID);
 

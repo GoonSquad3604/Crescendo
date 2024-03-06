@@ -22,16 +22,16 @@ public class Aim extends Command {
   Vision m_Vision;
   private double direction;
   private double speed;
-  private final SwerveRequest.FieldCentric drive =
+  private  SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
-          .withDeadband(MaxSpeed * 0.1)
-          .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+          .withDeadband(MaxSpeed*.1)
+          .withRotationalDeadband(MaxAngularRate*.1) 
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
 
 
-  public Aim(CommandSwerveDrivetrain drive) {
+  public Aim(CommandSwerveDrivetrain swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Swerve = drive;
+    m_Swerve = swerve;
     m_Vision = Vision.getInstance();
     addRequirements(m_Swerve, m_Vision);
   }
@@ -39,28 +39,33 @@ public class Aim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(m_Vision.getHasTarget()){
-      end(false);
-    }
-    if(m_Vision.getTx() > 0) direction = 1;
-    else direction = - 1;
+    // if(m_Vision.getHasTarget()){
+    //   end(false);
+    // }
+    if(!m_Vision.has4()){direction = 0;}
+    else{if(m_Vision.getTxSpeaker() > 0) {direction = 1;}
+    else direction = - 1;}
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Swerve.applyRequest(() -> drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction));
-    if(m_Vision.getTx() > 0) direction = -.5;
-    else direction = .5;
+    m_Swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction));
+    //m_Swerve.applyRequest(() -> drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction*MaxAngularRate));
+    if(m_Vision.getTxSpeaker() > 0) direction = .5;
+    else direction = -.5;
+    System.out.println("running ");
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Vision.getTx()) < .3;
+    return Math.abs(m_Vision.getTxSpeaker()) < .3;
   }
 }

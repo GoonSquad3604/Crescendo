@@ -18,15 +18,15 @@ public final class Constants {
     public static final int leftShooterSpeakerRPM = -4000;
     public static final int rightShooterSpeakerRPM = 6000;
 
-    public static final int leftShooterAmpRPM = -400;
-    public static final int rightShooterAmpRPM = 400;
+    public static final int leftShooterAmpRPM = -300;
+    public static final int rightShooterAmpRPM = 300;
 
     public static final int leftShooterTrapRPM = -1000; //-3300
     public static final int rightShooterTrapRPM = 2000; //4200
     
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 55;//55
+    public static final double shooterAmp = 35;//55
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;
