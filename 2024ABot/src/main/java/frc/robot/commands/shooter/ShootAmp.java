@@ -38,9 +38,10 @@ public class ShootAmp extends Command {
     timer.reset();
     started = false;
     s_Index.setIndexPower(.1);
-    s_Shooter.setShooterRPM(
-        Constants.ShooterConstants.leftShooterAmpRPM,
-        Constants.ShooterConstants.rightShooterAmpRPM);
+    s_Shooter.setPower(.07);
+    // s_Shooter.setShooterRPM(
+    //     Constants.ShooterConstants.leftShooterAmpRPM+100,
+    //     Constants.ShooterConstants.rightShooterAmpRPM-100);
 
     timer.start();
   }
@@ -50,18 +51,20 @@ public class ShootAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     s_Index.setIndexPower(.2);
-    if (s_Index.hasNote()) started = true;
+    if (s_Index.hasNote()) {started = true;
+            // s_Flipper.setFlipperUp();
+}
      
-      if (timer.get() >= .4 && started) {
-        s_Shooter.setShooterRPM(
-          0,
-          0);
+      if (timer.get() >= .15 && started) {
+        // s_Shooter.setShooterRPM(
+        //   0,
+        //   0);
         s_Flipper.setFlipperUp();
         // s_Shooter.setShooterRPM(
         //   Constants.ShooterConstants.leftShooterAmpRPM+100,
         //   Constants.ShooterConstants.rightShooterAmpRPM-100);
         s_Index.setIndexPower(.1);
-      }
+       }
     
 
   }

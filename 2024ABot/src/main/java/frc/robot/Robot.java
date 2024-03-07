@@ -68,9 +68,9 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    if (m_Vision.robotPose()!=null) {
-      m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
-    }
+    // if (m_Vision.robotPose()!=null) {
+    //   m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
+    // }
     // SmartDashboard.putNumber("train", defaultPeriodSecs);
     //vision get pose
     // if pose present

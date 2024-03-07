@@ -52,8 +52,8 @@ public class Aim extends Command {
   public void execute() {
     m_Swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction));
     //m_Swerve.applyRequest(() -> drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction*MaxAngularRate));
-    if(m_Vision.getTxSpeaker() > 0) direction = .5;
-    else direction = -.5;
+    if(m_Vision.getTxSpeaker() > 0) direction = 1;
+    else direction = -1;
     System.out.println("running ");
   }
 

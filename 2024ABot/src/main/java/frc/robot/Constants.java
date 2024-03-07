@@ -26,7 +26,7 @@ public final class Constants {
     
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 35;//55
+    public static final double shooterAmp = 55;//55
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;

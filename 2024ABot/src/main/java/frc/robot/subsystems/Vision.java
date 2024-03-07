@@ -12,8 +12,11 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ public class Vision extends SubsystemBase {
   private double xPos;
   private double yPos;
   private double zPos;
-
+  private double angle;
   Transform3d bestCameraToTarget;
   private int targetID;
 
@@ -65,8 +68,16 @@ public class Vision extends SubsystemBase {
   private Transform3d robotToCam;
   private Pose3d robotPose;
 private boolean has4;
+public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016, 5.5478);
+  // public static final Translation2d SPEAKER_BLUE = new Translation2d(.1016, 5.5478);
+  private Translation2d speakerTranslation;
+  private double speakerDist;
+
   /** Creates a new Vision. */
   public Vision() {
+    var alliance = DriverStation.getAlliance();
+    // speakerTranslation = (alliance.isEmpty() || alliance.get() == Alliance.Blue) ? SPEAKER_BLUE : SPEAKER_RED;
+    speakerTranslation = SPEAKER_RED;
     camera = new PhotonCamera("photonvision1");
 
 
@@ -114,6 +125,10 @@ private boolean has4;
   public boolean has4() {
     return has4;
   }
+  public double getX() {
+    return x;
+  }
+  
 
   // public double targetToRobotRotation(CommandSwerveDrivetrain m_Swerve) {
   //   toTargetRotation = m_Swerve.getState().getRotation().getRadians() + tx;
@@ -132,8 +147,14 @@ private boolean has4;
 
   // NOT FINISHED + need to get the right formulas
   public double getShooterAngle() {
-    return getDistance() * 123;
+    //if(Math.atan(60/(getDistance()-.2413))<=56&&Math.atan(60/getDistance()-.2413)>=10)
+    // return Math.toDegrees(Math.atan(1.524/(getX()-.27-.2159)));
+    return Math.toDegrees(Math.atan(1.524/(speakerDist-.2413))) -4;
+
+    //return 56;
   }
+  
+  
 
   public double getShooterSpeed() {
     return getDistance() * 123;
@@ -153,13 +174,18 @@ private boolean has4;
     List<PhotonTrackedTarget> targets = result.getTargets();
     tags.clear();
     if (hasTarget) {
+      for(PhotonTrackedTarget x: targets){
+        if(x.getFiducialId()==4){
+          txSpeaker = x.getYaw();
+        }
+      }
       // photonPoseEstimator.update();
       PhotonTrackedTarget bestTarget = result.getBestTarget();
-      // if(bestTarget.getFiducialId() ==4) 
-      // {txSpeaker = bestTarget.getYaw(); 
-      //   has4 = true;
-      // }
-      // else has4 = false;
+      if(bestTarget.getFiducialId() ==4) 
+      {txSpeaker = bestTarget.getYaw(); 
+        has4 = true;
+      }
+      else has4 = false;
       tx = bestTarget.getYaw();
       ty = bestTarget.getPitch();
       ta = bestTarget.getArea();
@@ -168,9 +194,10 @@ private boolean has4;
       if(getHasTarget()){
         photonPoseEstimator.setReferencePose(bestTagPose);
         robotPose = 
-        //photonPoseEstimator.update().get().estimatedPose;
-          PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
+       //photonPoseEstimator.update().get().estimatedPose;
+         PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
       }
+      
       xPos = robotPose.getTranslation().getX();
       yPos = robotPose.getTranslation().getY();
 
@@ -179,12 +206,14 @@ private boolean has4;
       z = bestCameraToTarget.getZ();
 
       targetID = bestTarget.getFiducialId();
-
+      var robotTranslation = new Translation2d(robotPose.getX(), robotPose.getY());
+      speakerDist = robotTranslation.getDistance(speakerTranslation);
       
     }
-
     // targetToRobotRotation = targetToRobotRotation();
     getDistance();
+        SmartDashboard.putNumber("angleto", getShooterAngle());
+
     // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
     SmartDashboard.putBoolean("hastarget", hasTarget);
     SmartDashboard.putNumber("tx", tx);
@@ -194,7 +223,7 @@ private boolean has4;
     SmartDashboard.putNumber("robotPose y: ", yPos);
 
     SmartDashboard.putNumber("targetID", targetID);
-
+    SmartDashboard.putNumber("txSpeaker", txSpeaker);
     SmartDashboard.putNumber("x", x);
     SmartDashboard.putNumber("y", y);
     SmartDashboard.putNumber("z", z);

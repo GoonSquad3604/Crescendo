@@ -196,7 +196,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .7915) / -.002667);
+    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
 
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());

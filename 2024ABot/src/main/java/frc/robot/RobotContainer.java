@@ -172,8 +172,7 @@ public class RobotContainer {
     buttonBox
         .button(10)
         .and(speakerTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.setShooterRPMSpeaker()));
-    buttonBox.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(s_Vision.getShooterAngle())));
     buttonBox
         .button(10)
         .and(climberTrigger)
