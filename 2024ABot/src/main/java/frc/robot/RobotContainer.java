@@ -35,6 +35,8 @@ import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.Aim;
+import frc.robot.commands.vision.AimPID;
+import frc.robot.commands.vision.BetterAim;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -64,6 +66,7 @@ public class RobotContainer {
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
   private final Vision s_Vision = Vision.getInstance();
+  // haha69
   public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -121,15 +124,18 @@ public class RobotContainer {
     pit.a().onTrue(new InstantCommand(()-> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
     buttonBox.button(2).onTrue(new SpeakerMode());
-    buttonBox.button(3).onTrue(new AmpMode());
-    buttonBox.button(3).onTrue(new RepositionForAmp());
+    buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
+    // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
     buttonBox.button(5).onTrue(new ClimberMode());
 
-    buttonBox.button(6).onTrue(new SetIntakeDown());
+    buttonBox.button(6).onTrue(new SetIntakeDown().andThen(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()))));
+    buttonBox.button(6).onFalse(new TravelMode());
+    buttonBox.button(6).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
-    buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
-
+    // buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
+    // buttonBox.button(7).and(intakeTrigger).onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
+   
 
     buttonBox
         .button(7)
@@ -223,7 +229,7 @@ public class RobotContainer {
     // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     // driver.x().onTrue(new InstantCommand(() -> s_Index.setIndexPower(.2)));
     // driver.x().onFalse(new InstantCommand(() -> s_Index.indexStop()));
-    driver.start().onTrue(new Aim(drivetrain));
+    driver.start().onTrue(new AimPID(s_Vision, drivetrain, drive));
     driver.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
@@ -291,7 +297,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTo35", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
+        "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(24), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
             

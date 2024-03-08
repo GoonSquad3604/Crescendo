@@ -91,6 +91,9 @@ public class Shooter extends SubsystemBase {
     leftShooterPIDController.setOutputRange(-1, 1);
     anglePIDController.setOutputRange(-1, 1);
 
+    leftShooterMotor.enableVoltageCompensation(12);
+    rightShooterMotor.enableVoltageCompensation(12);
+
     angleMotor.setIdleMode(IdleMode.kBrake);
       }
 
@@ -196,7 +199,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+   // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
 
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());

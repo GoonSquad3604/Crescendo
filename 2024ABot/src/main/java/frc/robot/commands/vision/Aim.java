@@ -42,14 +42,14 @@ public class Aim extends Command {
     // if(m_Vision.getHasTarget()){
     //   end(false);
     // }
-    if(!m_Vision.has4()){direction = 0;}
+    if(!m_Vision.has4()||m_Vision.has14()){direction = 0;}
     else{if(m_Vision.getTxSpeaker() > 0) {direction = 1;}
     else direction = - 1;}
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() {    
     m_Swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction));
     //m_Swerve.applyRequest(() -> drive.withVelocityX(0).withVelocityY(0).withRotationalRate(direction*MaxAngularRate));
     if(m_Vision.getTxSpeaker() > 0) direction = 1;
@@ -66,6 +66,7 @@ public class Aim extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Vision.getTxSpeaker()) < .3;
+    //hahaha696969
+    return Math.abs(m_Vision.getTxSpeaker()) < .4;
   }
 }

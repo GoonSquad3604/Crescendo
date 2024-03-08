@@ -72,13 +72,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.5
+                  "waitTime": 1.5
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterToE"
+                  "pathName": "middleTwoNote"
                 }
               },
               {
@@ -93,7 +93,49 @@
         {
           "type": "named",
           "data": {
+            "name": "shooterTo24"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "revShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "fire"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIndex"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooterHome"
           }
         },
         {
@@ -103,7 +145,32 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 3.5
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "pickedUpBToE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "runIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.4
                 }
               },
               {
@@ -111,20 +178,26 @@
                 "data": {
                   "pathName": "EtoShoot"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooterTo30"
-                }
               }
             ]
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "revShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooterTo20"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.7
           }
         },
         {
@@ -168,24 +241,18 @@
                 }
               },
               {
-                "type": "path",
-                "data": {
-                  "pathName": "OutOfStageToF"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "runIntake"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "OutOfStageToF"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
           }
         },
         {
@@ -201,7 +268,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.7
+                  "waitTime": 3.0
                 }
               },
               {
@@ -216,89 +283,16 @@
         {
           "type": "named",
           "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "shooterSpeaker"
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "fire"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIndex"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterHome"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "middleTwoNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "runIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "revShooter"
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "shooterTo20"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 0.5
@@ -313,19 +307,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
           "type": "named",
           "data": {
             "name": "stopIndex"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShooter"
           }
         }
       ]

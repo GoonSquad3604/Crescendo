@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4243070953520323,
-      "y": 5.531293435066112
+      "x": 0.7636103146671328,
+      "y": 4.438407050851191
     },
-    "rotation": 0
+    "rotation": -61.81775948388735
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "revShooter"
+            "name": "shooterSpeaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shooterSpeaker"
+            "name": "revShooter"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -56,44 +56,13 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "stopShooter"
           }
         },
         {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.5
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CenterToE"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "runIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "revShooter"
+            "name": "shooterHome"
           }
         },
         {
@@ -109,22 +78,34 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "EtoShoot"
+                  "pathName": "FarPickUpCloseNote"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "shooterTo30"
+                  "name": "runIntake"
                 }
               }
             ]
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shooterTo30"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "revShooter"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -142,6 +123,12 @@
         {
           "type": "named",
           "data": {
+            "name": "shooterHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "stopIndex"
           }
         },
@@ -152,9 +139,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "shooterTravel"
+            "waitTime": 0.25
           }
         },
         {
@@ -164,13 +151,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.7
+                  "waitTime": 2.5
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "OutOfStageToF"
+                  "pathName": "FarpickUpMiddleNote"
                 }
               },
               {
@@ -185,32 +172,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterTravel"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.7
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "FtoSubShot"
-                }
-              }
-            ]
+            "waitTime": 0.5
           }
         },
         {
@@ -222,7 +184,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterSpeaker"
+            "name": "shooterTo32"
           }
         },
         {
@@ -246,7 +208,7 @@
         {
           "type": "named",
           "data": {
-            "name": "stopIndex"
+            "name": "shooterHome"
           }
         },
         {
@@ -258,7 +220,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterHome"
+            "name": "stopIndex"
           }
         },
         {
@@ -274,7 +236,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "middleTwoNote"
+                  "pathName": "pickUpFarNote"
                 }
               },
               {
@@ -284,6 +246,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
@@ -326,6 +294,12 @@
           "type": "named",
           "data": {
             "name": "stopShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIntake"
           }
         }
       ]

@@ -21,16 +21,14 @@ public class RepositionNoteAuto extends Command {
   public RepositionNoteAuto() {
     s_Index = Index.getInstance();
     s_Intake = Intake.getInstance();
-    s_Shooter = Shooter.getInstance();
     s_StateController = StateController.getInstance();
-    addRequirements(s_Shooter, s_Intake, s_StateController);
+    addRequirements(s_Intake, s_StateController);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     s_Index.setIndexPower(-0.1);
-    s_Shooter.setShooterRPM(100, -100);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

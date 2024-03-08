@@ -68,6 +68,10 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    
+
+
+    
     // if (m_Vision.robotPose()!=null) {
     //   m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
     // }
@@ -111,7 +115,18 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // var visionEst = m_Vision.getEstimatedGlobalPose();
+    // visionEst.ifPresent(
+    //   est-> {
+    //       var estPose = est.estimatedPose.toPose2d();
+
+    //       var estStdDevs = m_Vision.getEstimationStdDevs(estPose);
+
+    //       m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), estStdDevs);
+
+    //   });
+  }
 
   @Override
   public void teleopExit() {}

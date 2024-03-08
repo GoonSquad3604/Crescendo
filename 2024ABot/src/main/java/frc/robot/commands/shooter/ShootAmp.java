@@ -38,7 +38,7 @@ public class ShootAmp extends Command {
     timer.reset();
     started = false;
     s_Index.setIndexPower(.1);
-    s_Shooter.setPower(.07);
+    s_Shooter.setPower(.06);
     // s_Shooter.setShooterRPM(
     //     Constants.ShooterConstants.leftShooterAmpRPM+100,
     //     Constants.ShooterConstants.rightShooterAmpRPM-100);
@@ -55,7 +55,7 @@ public class ShootAmp extends Command {
             // s_Flipper.setFlipperUp();
 }
      
-      if (timer.get() >= .15 && started) {
+      if (timer.get() >= .1 && started) {
         // s_Shooter.setShooterRPM(
         //   0,
         //   0);

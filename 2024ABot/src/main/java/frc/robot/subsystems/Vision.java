@@ -5,8 +5,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.apriltag.AprilTagPoseEstimate;
+import edu.wpi.first.apriltag.AprilTagPoseEstimator;
+import edu.wpi.first.apriltag.jni.AprilTagJNI;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +21,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -21,6 +30,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
@@ -38,7 +50,9 @@ public class Vision extends SubsystemBase {
   private boolean hasTarget = false;
 
   private double tx = 0;
-  private double txSpeaker = 0;
+  private double txSpeaker4 = 0;
+  private double txSpeaker14 =0;
+  
 
   private double ty = 0;
   private double ta = 0;
@@ -68,16 +82,22 @@ public class Vision extends SubsystemBase {
   private Transform3d robotToCam;
   private Pose3d robotPose;
 private boolean has4;
+private boolean has14;
+
 public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016, 5.5478);
-  // public static final Translation2d SPEAKER_BLUE = new Translation2d(.1016, 5.5478);
+  public static final Translation2d SPEAKER_BLUE = new Translation2d(.1016, 5.5478);
   private Translation2d speakerTranslation;
   private double speakerDist;
+  public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,4,8);
+    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,1);
 
   /** Creates a new Vision. */
   public Vision() {
-    var alliance = DriverStation.getAlliance();
+    
+    if(setSpeakerTranslation()) speakerTranslation = SPEAKER_RED;
+    else speakerTranslation = SPEAKER_BLUE;
     // speakerTranslation = (alliance.isEmpty() || alliance.get() == Alliance.Blue) ? SPEAKER_BLUE : SPEAKER_RED;
-    speakerTranslation = SPEAKER_RED;
+    // speakerTranslation = SPEAKER_RED;
     camera = new PhotonCamera("photonvision1");
 
 
@@ -88,11 +108,13 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     } catch (Exception e) {
       aprilTagFieldLayout = null;
     }
-    robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, 0, 0));
+    robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, Math.toRadians(15), 0));
 
     photonPoseEstimator =
         new PhotonPoseEstimator(
-            aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
+            aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam);
+
+    photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
   }
 
   public static Vision getInstance() {
@@ -102,11 +124,47 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
 
     return _instance;
   }
+  public boolean setSpeakerTranslation() {
+        var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+          }  
+        return false;
+        }
 
   public Pose2d robotPose() {
     if(!getHasTarget()) return null;
     return robotPose.toPose2d();
   }
+  
+  public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
+    photonPoseEstimator.setReferencePose(robotPose);
+    return photonPoseEstimator.update();
+
+  }
+  public Matrix<N3, N1> getEstimationStdDevs (Pose2d estimatedPose) {
+    var estStdDevs = kSingleTagStdDevs;
+    var targets = camera.getLatestResult().getTargets();
+    int numTags = 0;
+    double avgDist = 0;
+    for(var tar : targets) {
+        var tagPose = photonPoseEstimator.getFieldTags().getTagPose(tar.getFiducialId());
+        if(tagPose.isEmpty()) continue; 
+          numTags++;
+          avgDist += tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
+
+    }
+    if(numTags == 0) return estStdDevs;
+    avgDist /= numTags;
+    if(numTags >1 ) estStdDevs = kMultiTagStdDevs;
+    if (numTags ==1 && avgDist >4) 
+      estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+    else estStdDevs = estStdDevs.times(1+ (avgDist * avgDist/30));
+
+    return estStdDevs;
+
+  }
+
 
   public boolean getHasTarget() {
     return hasTarget;
@@ -116,7 +174,8 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     return tx;
   }
   public double getTxSpeaker() {
-    return txSpeaker;
+    if(setSpeakerTranslation())    return txSpeaker4;
+    return txSpeaker14;
   }
 
   public double getTy() {
@@ -125,8 +184,14 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
   public boolean has4() {
     return has4;
   }
+  public boolean has14() {
+    return has14;
+  }
   public double getX() {
     return x;
+  }
+  public Translation2d getSpeakerTranslation() {
+    return speakerTranslation;
   }
   
 
@@ -153,6 +218,8 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
 
     //return 56;
   }
+
+  
   
   
 
@@ -176,13 +243,19 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     if (hasTarget) {
       for(PhotonTrackedTarget x: targets){
         if(x.getFiducialId()==4){
-          txSpeaker = x.getYaw();
+          txSpeaker4 = x.getYaw();
+        }
+      }
+      for(PhotonTrackedTarget x: targets){
+        if(x.getFiducialId()==14){
+          txSpeaker14 = x.getYaw();
         }
       }
       // photonPoseEstimator.update();
       PhotonTrackedTarget bestTarget = result.getBestTarget();
+      
       if(bestTarget.getFiducialId() ==4) 
-      {txSpeaker = bestTarget.getYaw(); 
+      {txSpeaker4 = bestTarget.getYaw(); 
         has4 = true;
       }
       else has4 = false;
@@ -191,23 +264,23 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
       ta = bestTarget.getArea();
       bestCameraToTarget = bestTarget.getBestCameraToTarget();
        bestTagPose = aprilTagFieldLayout.getTagPose(bestTarget.getFiducialId()).orElse(null);
-      if(getHasTarget()){
-        photonPoseEstimator.setReferencePose(bestTagPose);
-        robotPose = 
-       //photonPoseEstimator.update().get().estimatedPose;
-         PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
-      }
+      // if(getHasTarget()){
+      //   photonPoseEstimator.setReferencePose(bestTagPose);
+      //   robotPose = 
+      //  //photonPoseEstimator.update().get().estimatedPose;
+      //    PhotonUtils.estimateFieldToRobotAprilTag(bestCameraToTarget, bestTagPose, robotToCam);
+      // }
       
-      xPos = robotPose.getTranslation().getX();
-      yPos = robotPose.getTranslation().getY();
+      // xPos = robotPose.getTranslation().getX();
+      // yPos = robotPose.getTranslation().getY();    
 
       x = bestCameraToTarget.getX();
       y = bestCameraToTarget.getY();
       z = bestCameraToTarget.getZ();
 
-      targetID = bestTarget.getFiducialId();
-      var robotTranslation = new Translation2d(robotPose.getX(), robotPose.getY());
-      speakerDist = robotTranslation.getDistance(speakerTranslation);
+      // targetID = bestTarget.getFiducialId();
+      // var robotTranslation = new Translation2d(robotPose.getX(), robotPose.getY());
+      // speakerDist = robotTranslation.getDistance(speakerTranslation);
       
     }
     // targetToRobotRotation = targetToRobotRotation();
@@ -219,11 +292,11 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     SmartDashboard.putNumber("tx", tx);
     // SmartDashboard.putNumber("ty", ty);
     // SmartDashboard.putNumber("ta", ta);
-    SmartDashboard.putNumber("robotPose X: ", xPos);
-    SmartDashboard.putNumber("robotPose y: ", yPos);
+    // SmartDashboard.putNumber("robotPose X: ", xPos);
+    // SmartDashboard.putNumber("robotPose y: ", yPos);
 
     SmartDashboard.putNumber("targetID", targetID);
-    SmartDashboard.putNumber("txSpeaker", txSpeaker);
+    // SmartDashboard.putNumber("txSpeaker", txSpeaker);
     SmartDashboard.putNumber("x", x);
     SmartDashboard.putNumber("y", y);
     SmartDashboard.putNumber("z", z);
