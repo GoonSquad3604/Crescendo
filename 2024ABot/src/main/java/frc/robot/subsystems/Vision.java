@@ -245,12 +245,11 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
         if(x.getFiducialId()==4){
           txSpeaker4 = x.getYaw();
         }
-      }
-      for(PhotonTrackedTarget x: targets){
         if(x.getFiducialId()==14){
           txSpeaker14 = x.getYaw();
         }
       }
+      
       // photonPoseEstimator.update();
       PhotonTrackedTarget bestTarget = result.getBestTarget();
       

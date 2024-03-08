@@ -135,22 +135,23 @@ public class RobotContainer {
 
     // buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
     // buttonBox.button(7).and(intakeTrigger).onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
-   
-
+//    buttonBox.button(7).and(indexTrigger).onTrue(new ParallelCommandGroup(
+//                 new InstantCommand(() -> s_Shooter.stopShooter()),
+//                 new InstantCommand(() -> s_Index.indexStop(), s_Index)).andThen(new TravelMode()));
     buttonBox
         .button(7)
-        .and(indexTrigger)
         .onTrue(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Intake.stopIntake()),
-                new InstantCommand(() -> s_Shooter.stopShooter())));
+                new InstantCommand(() -> s_Shooter.shooterTo(20)),
+                new InstantCommand(() -> s_Shooter.babyBird(200,200)),
+                new InstantCommand(() -> s_Index.babyBirdIndex())));
 
     buttonBox
         .button(7)
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Intake.stopIntake()),
-                new InstantCommand(() -> s_Index.indexStop(), s_Shooter)));
+                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Index.indexStop(), s_Index)));
 
     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Intake.vomit()));
     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Index.setIndexPower(-.3)));
@@ -162,9 +163,7 @@ public class RobotContainer {
         .onTrue(
             new InstantCommand(
                 () ->
-                    s_Shooter.setShooterRPM(
-                        s_StateController.getLeftShooterSpeed(),
-                        s_StateController.getRightShooterSpeed()),
+                    s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker),
                 s_Shooter));
     buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
     buttonBox
@@ -223,14 +222,16 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot(),
                 new InstantCommand(() -> s_Flipper.setFlipperDown())));
-    driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-    // driver.a().onTrue(new InstantCommand(() -> s_Intake.cleam()));
-    // driver.a().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    // driver.x().onTrue(new InstantCommand(() -> s_Index.setIndexPower(.2)));
-    // driver.x().onFalse(new InstantCommand(() -> s_Index.indexStop()));
-    driver.start().onTrue(new AimPID(s_Vision, drivetrain, drive));
-    driver.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
+    // driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    // driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driver.start().onTrue(new Aim(drivetrain));
+        // driver.start().onTrue(new AimPID(s_Vision, drivetrain,drive));
+    
+    pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
@@ -242,13 +243,13 @@ public class RobotContainer {
     // );
     driver.x().onTrue(new InstantCommand(() -> s_Flipper.panic()));
     driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
-    driver
-        .y()
-        .and(indexTrigger.negate())
-        .onFalse(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooter()),
-                new InstantCommand(() -> s_Index.indexStop())));
+    // driver
+    //     .y()
+    //     .and(indexTrigger.negate())
+    //     .onFalse(
+    //         new ParallelCommandGroup(
+    //             new InstantCommand(() -> s_Shooter.stopShooter()),
+    //             new InstantCommand(() -> s_Index.indexStop())));
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }

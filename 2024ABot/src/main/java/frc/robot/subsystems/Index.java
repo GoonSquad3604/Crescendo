@@ -64,7 +64,9 @@ public class Index extends SubsystemBase {
   public boolean hasNote() {
     return !sensor.get();
   }
-
+  public void babyBirdIndex() {
+    indexMotor.set(.2);
+  }
     
 
 

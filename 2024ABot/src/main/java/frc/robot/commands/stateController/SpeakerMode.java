@@ -23,6 +23,7 @@ public class SpeakerMode extends InstantCommand {
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
     m_StateController = StateController.getInstance();
+
     addRequirements(m_Intake, m_Shooter, m_StateController);
   }
 
@@ -31,7 +32,7 @@ public class SpeakerMode extends InstantCommand {
   public void initialize() {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_StateController.setSpeaker();
-    m_Shooter.shooterTo(m_StateController.getAngle());
+    m_Shooter.shooterTo(32);
     m_Shooter.setShooterRPM(
         m_StateController.getLeftShooterSpeed(), m_StateController.getRightShooterSpeed());
   }

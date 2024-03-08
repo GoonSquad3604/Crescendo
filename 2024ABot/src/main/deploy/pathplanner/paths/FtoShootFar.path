@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.705442894651881,
-        "y": 4.019285469263791
+        "x": 4.511049022098044,
+        "y": 5.626895204407693
       },
       "isLocked": false,
       "linkedName": "pickedUpF"
     },
     {
       "anchor": {
-        "x": 1.4243070953520323,
-        "y": 5.531293435066112
+        "x": 2.9702380392415106,
+        "y": 3.1950128097787056
       },
       "prevControl": {
-        "x": 1.589856370697321,
-        "y": 5.365744159720822
+        "x": 4.594586966951712,
+        "y": 1.7006117962853207
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "subShotF"
+      "linkedName": "FshotFar"
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -30.411081267125372,
     "rotateFast": false
   },
   "reversed": false,

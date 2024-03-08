@@ -3,34 +3,52 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.01036071207945,
-        "y": 4.05823823993327
+        "x": 2.9702380392415106,
+        "y": 3.1950128097787056
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.705442894651881,
-        "y": 4.019285469263791
+        "x": 3.9448473958676313,
+        "y": 2.6659391590388117
       },
       "isLocked": false,
-      "linkedName": "pickedUpF"
+      "linkedName": "FshotFar"
     },
     {
       "anchor": {
-        "x": 1.4243070953520323,
-        "y": 5.531293435066112
+        "x": 8.01036071207945,
+        "y": 4.05823823993327
       },
       "prevControl": {
-        "x": 1.589856370697321,
-        "y": 5.365744159720822
+        "x": 5.476376384851536,
+        "y": 4.578029896800534
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "subShotF"
+      "linkedName": "pickedUpF"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.75,
     "maxAcceleration": 3.0,

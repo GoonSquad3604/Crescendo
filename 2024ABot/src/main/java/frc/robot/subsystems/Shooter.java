@@ -146,6 +146,11 @@ public class Shooter extends SubsystemBase {
     rightShooterPIDController.setReference(rightRPM, ControlType.kVelocity);
   }
 
+  public void babyBird(double leftRPM, double rightRPM) {
+    leftShooterPIDController.setReference(leftRPM, ControlType.kVelocity);
+    rightShooterPIDController.setReference(-rightRPM, ControlType.kVelocity);
+  }
+
   public void stopShooter() {
     leftShooterMotor.set(0);
     rightShooterMotor.set(0);
@@ -163,6 +168,7 @@ public class Shooter extends SubsystemBase {
   public void stopAngle() {
     angleMotor.set(.0);
   }
+  
 
   public double getShooterAngleClicks() {
     return angleEncoder.getPosition();

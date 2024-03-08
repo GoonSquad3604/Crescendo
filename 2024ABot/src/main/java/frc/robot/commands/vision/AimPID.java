@@ -9,6 +9,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.generated.TunerConstants;
@@ -37,7 +38,7 @@ public class AimPID extends PIDCommand {
   public AimPID(Vision vision, CommandSwerveDrivetrain swerve, SwerveRequest.FieldCentric drive) {
     super(
         // The controller that the command will use
-        new PIDController(.4, 0, 0),
+        new PIDController(1, 0, 0.2),
         // This should return the measurement
         () -> vision.getTxSpeaker(),
         // This should return the setpoint (can also be a constant)
@@ -45,11 +46,14 @@ public class AimPID extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(output));
+          SmartDashboard.putNumber("pidout", output);
+          SmartDashboard.putNumber("txSpeaker", vision.getTxSpeaker());
+          swerve.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(-output));
 
         }, swerve);
         getController().setTolerance(.4, 1);
         getController().enableContinuousInput(-180, 180);
+        
     // Use addRequirements() here to declare subsystem dependencies.
     m_Swerve = swerve; 
     m_Vision = vision;
