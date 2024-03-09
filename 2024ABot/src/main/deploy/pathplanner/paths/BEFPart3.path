@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.038206693697338,
-        "y": 2.600965201930404
+        "x": 8.01036071207945,
+        "y": 6.04458492867603
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.998623379962812,
-        "y": 1.3293320413801308
+        "x": 7.942193363407862,
+        "y": 6.765211186061403
       },
       "isLocked": false,
-      "linkedName": "PickUpG"
+      "linkedName": "PickedUpE"
     },
     {
       "anchor": {
-        "x": 2.9702380392415106,
-        "y": 3.1950128097787056
+        "x": 4.248382968889307,
+        "y": 6.086370417106196
       },
       "prevControl": {
-        "x": 3.128031935076216,
-        "y": 1.496407931087466
+        "x": 4.667125253586212,
+        "y": 6.076632224438826
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FshotFar"
+      "linkedName": "EndOfShootE"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -34.01934998982646,
+    "rotation": 8.972626614896429,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BEFPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

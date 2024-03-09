@@ -78,7 +78,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "middleTwoNote"
+                  "pathName": "BEFPart1"
                 }
               },
               {
@@ -151,7 +151,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "pickedUpBToE"
+                  "pathName": "BEFPart2"
                 }
               },
               {
@@ -170,7 +170,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "EtoShoot"
+                  "pathName": "BEFPart3"
                 }
               }
             ]
@@ -243,7 +243,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "OutOfStageToF"
+                  "pathName": "BEFPart4"
                 }
               }
             ]
@@ -268,7 +268,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FtoSubShot"
+                  "pathName": "BEFPart5"
                 }
               }
             ]

@@ -45,7 +45,7 @@ public class Flipper extends SubsystemBase {
   }
 
   public void setFlipperUp() {
-    flipperPIDController.setReference(.3453, ControlType.kPosition);
+    flipperPIDController.setReference(.36, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
@@ -75,7 +75,7 @@ public class Flipper extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
+    // SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
     // double newFlipperkD = SmartDashboard.getNumber("FlipperkD", 0);
     // if (newFlipperkD != flipperD) {
     //   flipperD = newFlipperkD;
@@ -97,7 +97,7 @@ public class Flipper extends SubsystemBase {
     //   }
     //   SmartDashboard.putNumber("FlipperkP", flipperP);
 
-    SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
+    // SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
 
     // double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
     // if (newSetFlipper != setFlipper) {

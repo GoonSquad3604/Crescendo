@@ -2,7 +2,13 @@
   "robotWidth": 0.9,
   "robotLength": 0.9,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "AEDPaths",
+    "BEFPaths",
+    "EFBPaths",
+    "GFPaths",
+    "WingPaths"
+  ],
   "autoFolders": [],
   "defaultMaxVel": 4.75,
   "defaultMaxAccel": 3.0,

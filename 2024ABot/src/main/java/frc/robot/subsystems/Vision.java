@@ -24,6 +24,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -99,6 +100,8 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     // speakerTranslation = (alliance.isEmpty() || alliance.get() == Alliance.Blue) ? SPEAKER_BLUE : SPEAKER_RED;
     // speakerTranslation = SPEAKER_RED;
     camera = new PhotonCamera("photonvision1");
+    // PortForwarder.add(5800, "10.36.4.11", 5800);
+    //     PortForwarder.add(5800, "10.36.4.33", 5800);
 
 
     try {
@@ -206,7 +209,7 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     distance =
         PhotonUtils.calculateDistanceToTargetMeters(
             cameraHeight, targetLowerHeight, cameraAngle, Units.degreesToRadians(ty));
-    SmartDashboard.putNumber("Distance", distance);
+    //SmartDashboard.putNumber("Distance", distance);
     return distance;
   }
 
@@ -284,20 +287,20 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     }
     // targetToRobotRotation = targetToRobotRotation();
     getDistance();
-        SmartDashboard.putNumber("angleto", getShooterAngle());
+    //     SmartDashboard.putNumber("angleto", getShooterAngle());
 
-    // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
+    // // SmartDashboard.putNumber("rotation pos of target", targetToRobotRotation.getRadians());
     SmartDashboard.putBoolean("hastarget", hasTarget);
-    SmartDashboard.putNumber("tx", tx);
-    // SmartDashboard.putNumber("ty", ty);
-    // SmartDashboard.putNumber("ta", ta);
-    // SmartDashboard.putNumber("robotPose X: ", xPos);
-    // SmartDashboard.putNumber("robotPose y: ", yPos);
+    // SmartDashboard.putNumber("tx", tx);
+    // // SmartDashboard.putNumber("ty", ty);
+    // // SmartDashboard.putNumber("ta", ta);
+    // // SmartDashboard.putNumber("robotPose X: ", xPos);
+    // // SmartDashboard.putNumber("robotPose y: ", yPos);
 
-    SmartDashboard.putNumber("targetID", targetID);
-    // SmartDashboard.putNumber("txSpeaker", txSpeaker);
-    SmartDashboard.putNumber("x", x);
-    SmartDashboard.putNumber("y", y);
-    SmartDashboard.putNumber("z", z);
+    // SmartDashboard.putNumber("targetID", targetID);
+    // // SmartDashboard.putNumber("txSpeaker", txSpeaker);
+    // SmartDashboard.putNumber("x", x);
+    // SmartDashboard.putNumber("y", y);
+    // SmartDashboard.putNumber("z", z);
   }
 }

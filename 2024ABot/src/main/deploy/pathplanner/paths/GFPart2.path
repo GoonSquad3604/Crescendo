@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4401129774976043,
-        "y": 7.0894042618452975
+        "x": 8.26051834784571,
+        "y": 2.726693946863577
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.440112977497604,
-        "y": 7.0894042618452975
+        "x": 7.220935034111184,
+        "y": 1.4550607863133038
       },
       "isLocked": false,
-      "linkedName": "endOfAEDPart1"
+      "linkedName": "PickUpG"
     },
     {
       "anchor": {
-        "x": 8.231303769843601,
-        "y": 5.75527186641562
+        "x": 2.9702380392415106,
+        "y": 3.1950128097787056
       },
       "prevControl": {
-        "x": 7.231303769843601,
-        "y": 5.75527186641562
+        "x": 3.128031935076216,
+        "y": 1.496407931087466
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndOfAEDPart2"
+      "linkedName": "FshotFar"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -34.01934998982646,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AEDPaths",
+  "folder": "GFPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -3,52 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9702380392415106,
-        "y": 3.1950128097787056
+        "x": 1.3658779393478129,
+        "y": 5.570246205735591
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.0401226728379385,
-        "y": 2.1832754776620655
+        "x": 1.6190709486994308,
+        "y": 6.680400169815762
       },
       "isLocked": false,
-      "linkedName": "FshotFar"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 8.01036071207945,
-        "y": 4.262442105131123
+        "y": 6.04458492867603
       },
       "prevControl": {
-        "x": 3.703515555179259,
-        "y": 5.1813594985214655
+        "x": 7.318949032696185,
+        "y": 7.1352625074214595
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "pickedUpF"
+      "linkedName": "PickedUpE"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.6,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "shooterHome"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.75,
     "maxAcceleration": 3.0,
@@ -61,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "EFBPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

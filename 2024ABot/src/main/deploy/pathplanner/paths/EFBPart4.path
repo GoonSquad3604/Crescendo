@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4401129774976043,
-        "y": 7.0894042618452975
+        "x": 8.29947111851519,
+        "y": 4.430877663653311
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.440112977497604,
-        "y": 7.0894042618452975
+        "x": 6.99455330108762,
+        "y": 4.391924892983832
       },
       "isLocked": false,
-      "linkedName": "endOfAEDPart1"
+      "linkedName": "pickedUpF"
     },
     {
       "anchor": {
-        "x": 8.231303769843601,
-        "y": 5.75527186641562
+        "x": 1.4243070953520323,
+        "y": 5.531293435066112
       },
       "prevControl": {
-        "x": 7.231303769843601,
-        "y": 5.75527186641562
+        "x": 1.589856370697321,
+        "y": 5.365744159720822
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndOfAEDPart2"
+      "linkedName": "subShotF"
     }
   ],
   "rotationTargets": [],
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AEDPaths",
+  "folder": "EFBPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

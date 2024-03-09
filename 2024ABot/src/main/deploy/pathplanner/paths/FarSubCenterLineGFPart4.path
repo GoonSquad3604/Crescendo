@@ -3,34 +3,52 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4401129774976043,
-        "y": 7.0894042618452975
+        "x": 2.9702380392415106,
+        "y": 3.1950128097787056
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.440112977497604,
-        "y": 7.0894042618452975
+        "x": 5.0401226728379385,
+        "y": 2.1832754776620655
       },
       "isLocked": false,
-      "linkedName": "endOfAEDPart1"
+      "linkedName": "FshotFar"
     },
     {
       "anchor": {
-        "x": 8.231303769843601,
-        "y": 5.75527186641562
+        "x": 8.29947111851519,
+        "y": 4.430877663653311
       },
       "prevControl": {
-        "x": 7.231303769843601,
-        "y": 5.75527186641562
+        "x": 3.992625961614998,
+        "y": 5.349795057043653
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndOfAEDPart2"
+      "linkedName": "pickedUpF"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.75,
     "maxAcceleration": 3.0,
@@ -43,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AEDPaths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

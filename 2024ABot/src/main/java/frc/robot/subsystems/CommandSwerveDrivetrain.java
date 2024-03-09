@@ -183,8 +183,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   @Override
   public void periodic() {
     m_field.setRobotPose(this.getState().Pose);
-    SmartDashboard.putNumber("xPose",this.getState().Pose.getX());
-    SmartDashboard.putNumber("yPose", this.getState().Pose.getY());
+    // SmartDashboard.putNumber("xPose",this.getState().Pose.getX());
+    // SmartDashboard.putNumber("yPose", this.getState().Pose.getY());
     /* Periodically try to apply the operator perspective */
     /* If we haven't applied the operator perspective before, then we should apply it regardless of DS state */
     /* This allows us to correct the perspective in case the robot code restarts mid-match */

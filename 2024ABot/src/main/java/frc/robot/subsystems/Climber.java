@@ -117,8 +117,8 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
-    SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
-    SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition() <= 100));
+    // SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
+    // SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
+    // SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition() <= 100));
   }
 }

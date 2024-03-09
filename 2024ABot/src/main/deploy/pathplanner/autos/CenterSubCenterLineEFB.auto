@@ -78,7 +78,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterToE"
+                  "pathName": "EFBPart1"
                 }
               },
               {
@@ -103,7 +103,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "EtoShoot"
+                  "pathName": "EFBPart2"
                 }
               },
               {
@@ -164,7 +164,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "OutOfStageToF"
+                  "pathName": "EFBPart3"
                 }
               },
               {
@@ -201,7 +201,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FtoSubShot"
+                  "pathName": "EFBPart4"
                 }
               }
             ]
@@ -268,7 +268,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "middleTwoNote"
+                  "pathName": "EFBPart5"
                 }
               },
               {

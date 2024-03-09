@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8353794485366749,
-        "y": 4.457363976456348
+        "x": 8.29947111851519,
+        "y": 4.430877663653311
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.67321423531736,
-        "y": 0.5403625622066051
+        "x": 4.800159428533783,
+        "y": 5.9995346281277335
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "pickedUpF"
     },
     {
       "anchor": {
-        "x": 8.038206693697338,
-        "y": 2.600965201930404
+        "x": 2.9702380392415106,
+        "y": 3.1950128097787056
       },
       "prevControl": {
-        "x": 6.812983502510216,
-        "y": 1.654201826922172
+        "x": 4.594586966951712,
+        "y": 1.7006117962853207
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "PickUpG"
+      "linkedName": "FshotFar"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 12.652556500557756,
+    "rotation": -30.411081267125372,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "GFPaths",
   "previewStartingState": {
-    "rotation": -56.1363094311817,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
