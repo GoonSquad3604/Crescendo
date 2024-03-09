@@ -68,6 +68,6 @@ public class Aim extends Command {
   @Override
   public boolean isFinished() {
     //hahaha696969
-    return Math.abs(m_Vision.getTxSpeaker()) < .4;
+    return Math.abs(m_Vision.getTxSpeaker()) < 1;
   }
 }
