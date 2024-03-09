@@ -168,12 +168,6 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.4
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "EtoShoot"

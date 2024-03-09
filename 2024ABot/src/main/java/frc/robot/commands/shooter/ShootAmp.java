@@ -59,7 +59,7 @@ public class ShootAmp extends Command {
 }
   if(!s_Index.hasNote()) speed +=.001;
      
-      if (timer.get() >= .1 && started) {
+      if (timer.get() >= .5 && started) {
         // s_Shooter.setShooterRPM(
         //   0,
         //   0);

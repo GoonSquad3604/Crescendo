@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.459589362832344,
+        "y": 6.232443307116744
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.459589362832344,
+        "y": 6.232443307116744
+      },
+      "isLocked": false,
+      "linkedName": "endOfAEDPart3"
+    },
+    {
+      "anchor": {
+        "x": 8.202089191841493,
+        "y": 7.439979197870614
+      },
+      "prevControl": {
+        "x": 7.202089191841493,
+        "y": 7.439979197870614
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "EndofAEDPart4"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.75,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
