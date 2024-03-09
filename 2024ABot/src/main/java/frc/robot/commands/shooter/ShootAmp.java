@@ -18,7 +18,7 @@ public class ShootAmp extends Command {
   private Timer timer;
   boolean started;
 
- 
+ private double speed;
 
   public ShootAmp() {
     s_Flipper = Flipper.getInstance();
@@ -35,10 +35,12 @@ public class ShootAmp extends Command {
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
+    speed = .01;
     timer.reset();
     started = false;
     s_Index.setIndexPower(.1);
-    s_Shooter.setPower(.06);
+    s_Shooter.setPower(speed);
+    //s_Shooter.setPower(.05);
     // s_Shooter.setShooterRPM(
     //     Constants.ShooterConstants.leftShooterAmpRPM+100,
     //     Constants.ShooterConstants.rightShooterAmpRPM-100);
@@ -50,10 +52,12 @@ public class ShootAmp extends Command {
   @Override
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
+    s_Shooter.setPower(speed);
     s_Index.setIndexPower(.2);
     if (s_Index.hasNote()) {started = true;
             // s_Flipper.setFlipperUp();
 }
+  if(!s_Index.hasNote()) speed +=.001;
      
       if (timer.get() >= .1 && started) {
         // s_Shooter.setShooterRPM(

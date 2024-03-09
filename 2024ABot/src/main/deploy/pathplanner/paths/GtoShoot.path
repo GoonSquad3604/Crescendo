@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.103180650805745,
-        "y": 2.4246073183504397
+        "x": 8.038206693697338,
+        "y": 2.600965201930404
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.063597337071219,
-        "y": 1.1529741578001667
+        "x": 6.998623379962812,
+        "y": 1.3293320413801308
       },
       "isLocked": false,
       "linkedName": "PickUpG"
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -28.141601232261603,
+    "rotation": -34.01934998982646,
     "rotateFast": false
   },
   "reversed": false,

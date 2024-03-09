@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.time.Instant;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -123,7 +125,8 @@ public class RobotContainer {
     pit.a().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
     pit.a().onTrue(new InstantCommand(()-> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
-    buttonBox.button(2).onTrue(new SpeakerMode());
+    buttonBox.button(2).onTrue(new SpeakerMode().andThen(    new InstantCommand(() ->s_Shooter.shooterTo(40))
+    ));
     buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
     // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
@@ -142,7 +145,7 @@ public class RobotContainer {
         .button(7)
         .onTrue(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.shooterTo(20)),
+                new InstantCommand(() -> s_Shooter.shooterTo(50)),
                 new InstantCommand(() -> s_Shooter.babyBird(200,200)),
                 new InstantCommand(() -> s_Index.babyBirdIndex())));
 
@@ -159,12 +162,12 @@ public class RobotContainer {
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
     buttonBox
         .button(9)
-        .and(ampTrigger.negate())
         .onTrue(
             new InstantCommand(
                 () ->
                     s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker),
                 s_Shooter));
+    buttonBox.button(9).onTrue(new SpeakerMode());
     buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
     buttonBox
         .button(9)

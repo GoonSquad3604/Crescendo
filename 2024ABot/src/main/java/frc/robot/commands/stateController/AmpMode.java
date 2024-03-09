@@ -38,7 +38,7 @@ public class AmpMode extends InstantCommand {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
     // m_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterAmpRPM+200, Constants.ShooterConstants.rightShooterAmpRPM-200);
-    m_Shooter.setPower(.07);
+    // m_Shooter.setPower(.07);
 
   }
 }
