@@ -258,6 +258,12 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
   }
+  public void clear() {
+    s_Intake.stopIntake();
+    s_Shooter.stopShooter();
+    s_Index.indexStop();
+    s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+  }
 
   public RobotContainer() {
     NamedCommands.registerCommand(
@@ -295,7 +301,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(56), s_Shooter));
+        "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(5), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo27", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
     NamedCommands.registerCommand(

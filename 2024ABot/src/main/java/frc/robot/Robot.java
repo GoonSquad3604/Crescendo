@@ -111,7 +111,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    new clear();
+    m_robotContainer.clear();
   }
 
   @Override
