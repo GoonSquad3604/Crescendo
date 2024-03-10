@@ -57,9 +57,9 @@ public class ShootAmp extends Command {
     if (s_Index.hasNote()) {started = true;
             // s_Flipper.setFlipperUp();
 }
-  if(!s_Index.hasNote()) speed +=.001;
-     
-      if (timer.get() >= .5 && started) {
+  if(!s_Index.hasNote()) speed += .0006;
+     //one second
+      if (timer.get() >= 1 && started) {
         // s_Shooter.setShooterRPM(
         //   0,
         //   0);

@@ -45,7 +45,7 @@ public class Flipper extends SubsystemBase {
   }
 
   public void setFlipperUp() {
-    flipperPIDController.setReference(.36, ControlType.kPosition);
+    flipperPIDController.setReference(.35, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
