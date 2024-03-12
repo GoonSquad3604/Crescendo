@@ -93,7 +93,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo30"
+            "name": "shooterTo32"
           }
         },
         {
@@ -184,7 +184,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo32"
+            "name": "shooterTo34"
           }
         },
         {
@@ -269,7 +269,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo20"
+            "name": "shooterTo24"
           }
         },
         {

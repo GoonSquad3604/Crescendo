@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.7957673443630116,
-        "y": 2.2490981791014213
+        "x": 2.3957159214701287,
+        "y": 2.115763154398079
       },
       "isLocked": false,
       "linkedName": "FshotFar"
@@ -17,38 +17,20 @@
     {
       "anchor": {
         "x": 8.494319799324847,
-        "y": 4.652888097878403
+        "y": 1.1918258447434449
       },
       "prevControl": {
-        "x": 4.187474642424656,
-        "y": 5.571805491268745
+        "x": 7.494319799324847,
+        "y": 1.1918258447434449
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "pickedUpF"
+      "linkedName": "endofGHPart3"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.6,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "shooterHome"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.75,
     "maxAcceleration": 3.0,
@@ -61,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "GHPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

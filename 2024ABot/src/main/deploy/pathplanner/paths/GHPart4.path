@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.241041962510971,
-        "y": 2.960410570880455
+        "x": 8.494319799324847,
+        "y": 1.1918258447434449
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.201458648776445,
-        "y": 1.6887774103301818
+        "x": 7.025990358600924,
+        "y": 0.4957995514132747
       },
       "isLocked": false,
-      "linkedName": "PickUpG"
+      "linkedName": "endofGHPart3"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 3.2608355112180614
       },
       "prevControl": {
-        "x": 2.883676606601289,
-        "y": 1.5622306325268218
+        "x": 2.3289736741644957,
+        "y": 1.9918132665447605
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.24132648747614,
+    "rotation": -43.24000000000001,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "GFPaths",
+  "folder": "GHPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

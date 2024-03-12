@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.24132648747614,
+    "rotation": -46.24000000000001,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "GFPaths",
+  "folder": "GHPaths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

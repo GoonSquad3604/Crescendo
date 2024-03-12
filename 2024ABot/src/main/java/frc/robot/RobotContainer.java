@@ -301,11 +301,13 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "revShooter1", new InstantCommand(() -> s_Shooter.setShooterRPM(-3500, 4000), s_Shooter));
     NamedCommands.registerCommand(
-        "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(5), s_Shooter));
+        "shooterSpeaker", new InstantCommand(() -> s_Shooter.shooterTo(56), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo27", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo35", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
+        NamedCommands.registerCommand(
+        "shooterTo34", new InstantCommand(() -> s_Shooter.shooterTo(34), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(24), s_Shooter));
     NamedCommands.registerCommand(
