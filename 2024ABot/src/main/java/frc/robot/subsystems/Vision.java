@@ -111,7 +111,9 @@ public static final Translation2d SPEAKER_RED = new Translation2d(16.579 - .1016
     } catch (Exception e) {
       aprilTagFieldLayout = null;
     }
-    robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, Math.toRadians(15), 0));
+    // if(setSpeakerTranslation())robotToCam = new Transform3d(new Translation3d(-.5, 0, .5), new Rotation3d(0, Math.toRadians(15), 180));
+    // else robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, Math.toRadians(15), 0));
+robotToCam = new Transform3d(new Translation3d(.5, 0, .5), new Rotation3d(0, Math.toRadians(15), 0));
 
     photonPoseEstimator =
         new PhotonPoseEstimator(

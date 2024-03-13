@@ -225,12 +225,12 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot(),
                 new InstantCommand(() -> s_Flipper.setFlipperDown())));
-    // driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    // driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-    driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    // driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    // driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     driver.start().onTrue(new Aim(drivetrain));
         // driver.start().onTrue(new AimPID(s_Vision, drivetrain,drive));
     

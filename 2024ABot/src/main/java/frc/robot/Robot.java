@@ -80,6 +80,16 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
     // if pose present
     //convert to pose
     //robotcontain.drivetrain.addvision
+    // var visionEst = m_Vision.getEstimatedGlobalPose();
+    // visionEst.ifPresent(
+    //   est-> {
+    //       var estPose = est.estimatedPose.toPose2d();
+
+    //       var estStdDevs = m_Vision.getEstimationStdDevs(estPose);
+
+    //       m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+
+    //   });
   }
 
   @Override
