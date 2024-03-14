@@ -1,6 +1,11 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
 
 public final class Constants {
 
@@ -65,8 +70,8 @@ public final class Constants {
     public static final double rightClimbedPos = 2;
     public static final double leftClimbedPos = 2;
 
-    public static final double maxRightClimberHeight = 100;
-    public static final double maxLeftClimberHeight = 100;
+    public static final double maxRightClimberHeight = 124;
+    public static final double maxLeftClimberHeight = 124;
 
     public static final double minRightClimberHeight = 2;
     public static final double minLeftClimberHeight = 2;
@@ -113,7 +118,40 @@ public final class Constants {
   public static final class FlipperConstants {
     public static final int flipperID = 10;
   }
+public static class VisionConstants {
 
+    /**
+     * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the camera's location.
+    */
+    public static final String[] APRILTAG_CAMERA_NAMES = {"Left","Center", "Right"};
+
+    /**
+     * Physical location of the apriltag cameras on the robot, relative to the center of the robot.
+     * The values here math APRILTAG_CAMERA_NAMES for the camera's name.
+     */
+    public static final Transform3d[] ROBOT_TO_CAMERA_TRANSFORMS = {
+        new Transform3d(
+            new Translation3d(-0.2794,0.3048 ,0.1524 ), //11.5 inches
+            new Rotation3d(Math.toRadians(0), Math.toRadians(55.5),Math.toRadians(45))), //pitch 46.9  roll55  yaw
+        new Transform3d(
+            new Translation3d(-0.29,0 ,0.153 ), //11.5 inches
+            new Rotation3d(Math.toRadians(0), Math.toRadians(20),Math.toRadians(0))), //pitch 46.9  roll55  yaw
+        new Transform3d(
+            new Translation3d(-0.2794,-0.3048 ,0.1524 ), //11.5 inches
+            new Rotation3d(Math.toRadians(0), Math.toRadians(55.5),Math.toRadians(-45))), //pitch 46.9  roll55  yaw
+        
+      };
+
+    public static final double FIELD_LENGTH = 16.54175;
+    public static final double FIELD_WIDTH = 8.0137;
+
+    /**
+     * Minimum target ambiguity. Targets with higher ambiguity will be discarded. Not appliable when multiple tags are
+     * in view in a single camera.
+     */
+    public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
+
+  }
   public static final
   class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
     // to specific robot
@@ -132,3 +170,6 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 }
+
+
+

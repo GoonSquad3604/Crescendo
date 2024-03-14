@@ -24,9 +24,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants;
+import frc.robot.PhotonRunnable;
 import frc.robot.generated.TunerConstants;
 import java.util.function.Supplier;
-
+import frc.robot.Constants.VisionConstants;
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem so it can be used
  * in command-based projects easily.
@@ -42,6 +44,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
+  private final Thread photonThread = new Thread(new PhotonRunnable(Constants.VisionConstants.APRILTAG_CAMERA_NAMES, Constants.VisionConstants.ROBOT_TO_CAMERA_TRANSFORMS,
+      this::addVisionMeasurement, () -> getState().Pose));
+
 
   private final SwerveRequest.ApplyChassisSpeeds AutoRequest =
       new SwerveRequest.ApplyChassisSpeeds();
@@ -91,17 +96,24 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
+    photonThread.setName("PhotonVision");
+    photonThread.setDaemon(true);
+    photonThread.start();
     configurePathPlanner();
 
     if (Utils.isSimulation()) {
       startSimThread();
     }
     SmartDashboard.putData("Field", m_field);
+     
   }
 
   public CommandSwerveDrivetrain(
       SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
     super(driveTrainConstants, modules);
+    photonThread.setName("PhotonVision");
+    photonThread.setDaemon(true);
+    photonThread.start();
     configurePathPlanner();
     if (Utils.isSimulation()) {
       startSimThread();

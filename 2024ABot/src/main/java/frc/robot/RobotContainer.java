@@ -36,9 +36,9 @@ import frc.robot.commands.stateController.ClimberMode;
 import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
-import frc.robot.commands.vision.Aim;
-import frc.robot.commands.vision.AimPID;
-import frc.robot.commands.vision.BetterAim;
+// import frc.robot.commands.vision.Aim;
+// import frc.robot.commands.vision.AimPID;
+// import frc.robot.commands.vision.BetterAim;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -47,7 +47,6 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
-import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -67,7 +66,7 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  private final Vision s_Vision = Vision.getInstance();
+//   private final Vision s_Vision = Vision.getInstance();
   // haha69
   public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
@@ -177,10 +176,10 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Index.indexStop())));
 
-    buttonBox
-        .button(10)
-        .and(speakerTrigger)
-        .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(s_Vision.getShooterAngle())));
+    // buttonBox
+    //     .button(10)
+    //     .and(speakerTrigger)
+    //     .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(s_Vision.getShooterAngle())));
     buttonBox
         .button(10)
         .and(climberTrigger)
@@ -231,7 +230,7 @@ public class RobotContainer {
     // driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    driver.start().onTrue(new Aim(drivetrain));
+    // driver.start().onTrue(new Aim(drivetrain));
         // driver.start().onTrue(new AimPID(s_Vision, drivetrain,drive));
     
     pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));

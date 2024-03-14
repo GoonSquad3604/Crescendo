@@ -72,15 +72,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -99,7 +93,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo32"
+            "name": "shooterTo30"
           }
         },
         {
@@ -151,15 +145,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.5
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -190,7 +178,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo34"
+            "name": "shooterTo32"
           }
         },
         {
@@ -230,15 +218,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -269,7 +251,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterTo24"
+            "name": "shooterTo20"
           }
         },
         {

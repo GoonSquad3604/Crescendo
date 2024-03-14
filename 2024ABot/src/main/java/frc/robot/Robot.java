@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.clear;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Vision;
 
 import org.littletonrobotics.junction.*;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -20,11 +19,9 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private Vision m_Vision;
 
   @Override
   public void robotInit() {
-    m_Vision = Vision.getInstance();
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
