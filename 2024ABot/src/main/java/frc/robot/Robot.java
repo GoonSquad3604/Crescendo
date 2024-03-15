@@ -82,6 +82,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
     // if pose present
     //convert to pose
     //robotcontain.drivetrain.addvision
+    m_robotContainer.getAngle();
     var visionEst = m_robotContainer.getBestPose();
     visionEst.ifPresent(
       est-> {

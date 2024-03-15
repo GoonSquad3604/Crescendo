@@ -82,6 +82,8 @@ public class RobotContainer {
   private final StateController s_StateController = StateController.getInstance();
   public final Vision rightVision = new Vision("Right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
   public final Vision leftVision = new Vision("Left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
+  public double distance =1;
+
 //   private final Vision s_Vision = Vision.getInstance();
   // haha69
   public final SwerveRequest.FieldCentric drive =
@@ -381,6 +383,14 @@ public class RobotContainer {
     if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
     else return rightVision.getEstimationStdDevs(estimatedPose);
     
+
+    }
+
+    public double getAngle() {
+        if(leftVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+        if(rightVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+        SmartDashboard.putNumber("angleto", Math.atan(distance/60));
+        return (Math.atan(distance/60));
 
     }
 
