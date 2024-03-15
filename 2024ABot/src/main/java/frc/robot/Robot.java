@@ -1,6 +1,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -65,7 +66,11 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    
+    // if(m_robotContainer.getBestPose()!=null) {
+    //   Pose2d x = (Pose2d)m_robotContainer.getBestPose();
+    //   m_robotContainer.drivetrain.addVisionMeasurement(x,Timer.getFPGATimestamp());
+    // }
+
 
 
     
@@ -77,16 +82,16 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
     // if pose present
     //convert to pose
     //robotcontain.drivetrain.addvision
-    // var visionEst = m_Vision.getEstimatedGlobalPose();
-    // visionEst.ifPresent(
-    //   est-> {
-    //       var estPose = est.estimatedPose.toPose2d();
+    var visionEst = m_robotContainer.getBestPose();
+    visionEst.ifPresent(
+      est-> {
+          var estPose = est.estimatedPose.toPose2d();
 
-    //       var estStdDevs = m_Vision.getEstimationStdDevs(estPose);
+          var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
 
-    //       m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+          m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds,estStdDevs);
 
-    //   });
+      });
   }
 
   @Override

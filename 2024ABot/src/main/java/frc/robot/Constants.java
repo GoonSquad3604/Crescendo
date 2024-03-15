@@ -123,24 +123,20 @@ public static class VisionConstants {
     /**
      * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the camera's location.
     */
-    public static final String[] APRILTAG_CAMERA_NAMES = {"Left","Center", "Right"};
+    public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
 
     /**
      * Physical location of the apriltag cameras on the robot, relative to the center of the robot.
      * The values here math APRILTAG_CAMERA_NAMES for the camera's name.
      */
-    public static final Transform3d[] ROBOT_TO_CAMERA_TRANSFORMS = {
-        new Transform3d(
+    public static final Transform3d LEFT_ROBOT_TO_CAMERA = new Transform3d(
             new Translation3d(-0.2794,0.3048 ,0.1524 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), Math.toRadians(55.5),Math.toRadians(45))), //pitch 46.9  roll55  yaw
-        new Transform3d(
-            new Translation3d(-0.29,0 ,0.153 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), Math.toRadians(20),Math.toRadians(0))), //pitch 46.9  roll55  yaw
-        new Transform3d(
+            new Rotation3d(Math.toRadians(0), Math.toRadians(23.3),Math.toRadians(135))); //pitch 46.9  roll55  yaw
+    public static final Transform3d RIGHT_ROBOT_TO_CAMERA =  new Transform3d(
             new Translation3d(-0.2794,-0.3048 ,0.1524 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), Math.toRadians(55.5),Math.toRadians(-45))), //pitch 46.9  roll55  yaw
-        
-      };
+            new Rotation3d(Math.toRadians(0), Math.toRadians(32),Math.toRadians(-135))); //pitch 46.9  roll55  yaw
+    
+      
 
     public static final double FIELD_LENGTH = 16.54175;
     public static final double FIELD_WIDTH = 8.0137;

@@ -13,6 +13,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,9 +27,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
-import frc.robot.PhotonRunnable;
 import frc.robot.generated.TunerConstants;
+
+import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.photonvision.EstimatedRobotPose;
+
 import frc.robot.Constants.VisionConstants;
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem so it can be used
@@ -44,8 +50,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
-  private final Thread photonThread = new Thread(new PhotonRunnable(Constants.VisionConstants.APRILTAG_CAMERA_NAMES, Constants.VisionConstants.ROBOT_TO_CAMERA_TRANSFORMS,
-      this::addVisionMeasurement, () -> getState().Pose));
+  
 
 
   private final SwerveRequest.ApplyChassisSpeeds AutoRequest =
@@ -96,9 +101,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
-    photonThread.setName("PhotonVision");
-    photonThread.setDaemon(true);
-    photonThread.start();
+    
     configurePathPlanner();
 
     if (Utils.isSimulation()) {
@@ -111,9 +114,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   public CommandSwerveDrivetrain(
       SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
     super(driveTrainConstants, modules);
-    photonThread.setName("PhotonVision");
-    photonThread.setDaemon(true);
-    photonThread.start();
+    
     configurePathPlanner();
     if (Utils.isSimulation()) {
       startSimThread();
@@ -158,6 +159,25 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   public Command getAutoPath(String pathName) {
     return new PathPlannerAuto(pathName);
   }
+   public Command addMeasurementCommand(Supplier<Pose2d> measurement, Supplier<Double> timeStamp) {
+        return runOnce(() -> {
+            Pose2d pose = measurement.get();
+            if (pose == new Pose2d())
+                return;
+
+            addVisionMeasurement(pose, timeStamp.get());
+        });
+    }
+
+    public Command addMeasurementCommand(Supplier<Optional<EstimatedRobotPose>> pose) {
+        return runOnce(() -> {
+            Optional<EstimatedRobotPose> estPose = pose.get();
+            if (estPose.isPresent()) {
+                addVisionMeasurement(estPose.get().estimatedPose.toPose2d(), estPose.get().timestampSeconds);
+            }
+        });
+    }
+
 
   /*
    * Both the sysid commands are specific to one particular sysid routine, change

@@ -5,18 +5,30 @@
 package frc.robot;
 
 import java.time.Instant;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -36,6 +48,7 @@ import frc.robot.commands.stateController.ClimberMode;
 import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
+import frc.robot.commands.vision.RotateToSpeaker;
 // import frc.robot.commands.vision.Aim;
 // import frc.robot.commands.vision.AimPID;
 // import frc.robot.commands.vision.BetterAim;
@@ -47,6 +60,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
   private double MaxSpeed =
@@ -66,6 +80,8 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
+  public final Vision rightVision = new Vision("Right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
+  public final Vision leftVision = new Vision("Left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
 //   private final Vision s_Vision = Vision.getInstance();
   // haha69
   public final SwerveRequest.FieldCentric drive =
@@ -231,8 +247,9 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-        // driver.start().onTrue(new AimPID(s_Vision, drivetrain,drive));
-    
+     driver.start().onTrue(new RotateToSpeaker(drivetrain));
+    // driver.start()
+    //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
     pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
@@ -311,11 +328,61 @@ public class RobotContainer {
         "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(24), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
+
             
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
+  public Optional<EstimatedRobotPose> getBestPose() {
+        Pose2d drivetrainPose = drivetrain.getState().Pose;
+
+        Optional<EstimatedRobotPose> front = rightVision.getCameraResult(drivetrainPose);
+        Optional<EstimatedRobotPose> back = leftVision.getCameraResult(drivetrainPose);
+
+        int numPoses = 0;
+
+        numPoses += front.isPresent() ? 1 : 0;
+        numPoses += back.isPresent() ? 1 : 0;
+
+        Optional<Pose2d> pose = Optional.empty();
+        SmartDashboard.putNumber("numPoses", numPoses);
+
+        if (numPoses == 1) {
+            pose = Optional
+                    .of(new Pose2d((front.isEmpty() ? back : front).get().estimatedPose.toPose2d()
+                            .getTranslation(),
+                            drivetrainPose.getRotation()));
+        } else if (numPoses == 2) {
+            // average the poses
+            Pose3d frontP = front.get().estimatedPose;
+            Pose3d backP = back.get().estimatedPose;
+
+            Translation2d frontT = frontP.getTranslation().toTranslation2d();
+            Translation2d backT = backP.getTranslation().toTranslation2d();
+
+            pose = Optional.of(
+                    new Pose2d(frontT.plus(backT).div(2.),
+                            drivetrainPose.getRotation()));
+        }
+
+        if (pose.isPresent()) {
+            return Optional.of(new EstimatedRobotPose(
+                    new Pose3d(pose.get()
+                            ),
+                    (front.isEmpty() ? back : front).get().timestampSeconds,
+                    null, null));
+        }
+
+        return Optional.empty();
+    }
+
+    public Matrix<N3, N1> getEstimationStdDevs (Pose2d estimatedPose) {
+    if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
+    else return rightVision.getEstimationStdDevs(estimatedPose);
+    
+
+    }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
