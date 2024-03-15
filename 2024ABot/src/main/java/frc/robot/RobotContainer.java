@@ -386,13 +386,13 @@ public class RobotContainer {
 
     }
 
-    public double getAngle() {
-        if(leftVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
-        if(rightVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
-        SmartDashboard.putNumber("angleto", Math.atan(distance/60));
-        return (Math.atan(distance/60));
+    // public double getAngle() {
+    //     if(leftVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+    //     if(rightVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+    //     SmartDashboard.putNumber("angleto", Math.atan(distance/60));
+    //     return (Math.atan(distance/60));
 
-    }
+    // }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
