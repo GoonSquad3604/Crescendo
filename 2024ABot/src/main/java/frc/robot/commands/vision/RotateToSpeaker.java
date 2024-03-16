@@ -44,7 +44,7 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
                 // This should return the measurement
                 () -> drivetrain.getState().Pose.getRotation().getRadians(),
                 // This should return the goal (can also be a constant)
-                () -> new TrapezoidProfile.State(target.getRadians()+Math.PI, 0.),
+                () -> new TrapezoidProfile.State(target.getRadians(), 0.),
                 // This uses the output
                 (output, setpoint) -> {
                     // Use the output (and setpoint, if desired) here

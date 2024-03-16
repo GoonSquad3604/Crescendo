@@ -120,7 +120,7 @@ public class Vision extends SubsystemBase {
     }
 
     public Optional<EstimatedRobotPose> getCameraResult(Pose2d prevPose) {
-       if(getHasTarget() &&getBestTarget().getPoseAmbiguity()<.15) {m_estimator.setReferencePose(prevPose);
+       if(getHasTarget() && getBestTarget()!= null&& getBestTarget().getPoseAmbiguity()<.15) {m_estimator.setReferencePose(prevPose);
         Optional<EstimatedRobotPose> pose = m_estimator.update();
         return pose;}
         return Optional.empty();

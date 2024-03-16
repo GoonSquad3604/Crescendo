@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -41,6 +42,7 @@ public class Intake extends SubsystemBase {
     hingeMotor.restoreFactoryDefaults();
     hingePIDController = hingeMotor.getPIDController();
     hingeEncoder = hingeMotor.getAbsoluteEncoder(Type.kDutyCycle);
+    hingeMotor.setIdleMode(IdleMode.kBrake);
 
     hingePIDController.setFeedbackDevice(hingeEncoder);
 

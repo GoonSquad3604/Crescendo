@@ -22,6 +22,7 @@ public class AutoShootAngle extends Command {
   CommandSwerveDrivetrain m_drive;
   Shooter m_shooter;
   StateController m_statecontroller;
+  double angleRAD;
   double angle;
   double distance;
   Pose2d target;
@@ -53,19 +54,22 @@ public class AutoShootAngle extends Command {
              if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
           }
          distance = pose.getTranslation().getDistance(target.getTranslation());
-        angle = Math.atan(1.524/(distance-0.2286));
-
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&Math.toDegrees(angle)>56){
+        angleRAD = Math.atan(1.524/(distance-0.2286));
+    angle = Math.toDegrees(angleRAD);
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&angle>56){
       m_shooter.shooterTo(56);
     }
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&Math.toDegrees(angle)<13){
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&angle<13){
       m_shooter.shooterTo(13);
     }
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER && Math.toDegrees(angle)<56 && Math.toDegrees(angle)>13) {
-            m_shooter.shooterTo(Math.toDegrees(angle));
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER && angle<56 && angle>13&& distance<3) {
+            m_shooter.shooterTo(angle);
       }
-    System.out.println(Math.toDegrees(angle));
-    SmartDashboard.putNumber("angleTo", Math.toDegrees(angle));
+      if(m_statecontroller.getMode() == RobotMode.SPEAKER && angle<56 && angle>13&& distance>3) {
+            m_shooter.shooterTo(angle+distance);
+      }
+    System.out.println(angle);
+    SmartDashboard.putNumber("angleTo", angle);
     SmartDashboard.putNumber("distance", distance);
   }
 
