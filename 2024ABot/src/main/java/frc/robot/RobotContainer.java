@@ -48,6 +48,7 @@ import frc.robot.commands.stateController.ClimberMode;
 import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
+import frc.robot.commands.vision.AutoShootAngle;
 import frc.robot.commands.vision.RotateToSpeaker;
 // import frc.robot.commands.vision.Aim;
 // import frc.robot.commands.vision.AimPID;
@@ -80,9 +81,8 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  public final Vision rightVision = new Vision("Right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
-  public final Vision leftVision = new Vision("Left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
-  public double distance =1;
+  private final Vision rightVision = new Vision("Right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
+  private final Vision leftVision = new Vision("Left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
 
 //   private final Vision s_Vision = Vision.getInstance();
   // haha69
@@ -238,7 +238,7 @@ public class RobotContainer {
         .button(12)
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot(),
                 new InstantCommand(() -> s_Flipper.setFlipperDown())));
@@ -249,7 +249,7 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-     driver.start().onTrue(new RotateToSpeaker(drivetrain));
+     driver.start().onTrue(new RotateToSpeaker(drivetrain).andThen(new AutoShootAngle(drivetrain, s_Shooter)));
     // driver.start()
     //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
     pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));

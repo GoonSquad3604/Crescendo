@@ -155,6 +155,10 @@ public class Shooter extends SubsystemBase {
     leftShooterMotor.set(0);
     rightShooterMotor.set(0);
   }
+  public void stopShooterRPM() {
+   leftShooterPIDController.setReference(0, ControlType.kVelocity);
+    rightShooterPIDController.setReference(-0, ControlType.kVelocity);
+  }
 
   // ShooterAngle methods
   public void raiseAngle() {

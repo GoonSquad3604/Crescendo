@@ -104,6 +104,7 @@ public class Vision extends SubsystemBase {
         return Optional.of(yaw);
     }
 
+    
     public Optional<Double> getTagDistance(int tagID) {
         Optional<PhotonTrackedTarget> target = getTag(tagID);
 

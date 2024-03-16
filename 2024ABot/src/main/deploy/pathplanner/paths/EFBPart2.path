@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.01036071207945,
-        "y": 6.04458492867603
+        "x": 8.182612806506752,
+        "y": 5.803962829752469
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.942193363407862,
-        "y": 6.765211186061403
+        "x": 8.114445457835163,
+        "y": 6.524589087137842
       },
       "isLocked": false,
       "linkedName": "PickedUpE"
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.75,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

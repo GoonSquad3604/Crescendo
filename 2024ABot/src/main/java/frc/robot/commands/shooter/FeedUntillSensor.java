@@ -21,7 +21,7 @@ public class FeedUntillSensor extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Index.setIndexPower(.45);
+    s_Index.setIndexPower(.36);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

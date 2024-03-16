@@ -35,7 +35,7 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
                 // The ProfiledPIDController used by the command
                 new ProfiledPIDController(
                         // The PID gains
-                        4.,
+                        7,
                         0,
                         0,
                         // The motion profile constraints
@@ -63,7 +63,7 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
         super.initialize();
 
         Pose2d pose = drivetrain.getState().Pose;
-        Pose2d target = SPEAKER_DISTANCE_TARGET;
+        Pose2d target = Constants.VisionConstants.SPEAKER_DISTANCE_TARGET;
 
         Translation2d distance = new Translation2d(
                 pose.getX() - target.getX(),
