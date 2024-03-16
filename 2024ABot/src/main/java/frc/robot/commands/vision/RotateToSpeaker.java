@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
@@ -25,7 +26,7 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
     private final CommandSwerveDrivetrain drivetrain;
     Field2d field = new Field2d();
     Field2d bruh = new Field2d();
-    public static final Pose2d SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(Math.PI));
+    // public static final Pose2d SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(Math.PI));
 
     private static Rotation2d target = new Rotation2d();
 
@@ -61,10 +62,13 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
     @Override
     public void initialize() {
         super.initialize();
-
+        Pose2d target =Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;;
         Pose2d pose = drivetrain.getState().Pose;
-        Pose2d target = Constants.VisionConstants.SPEAKER_DISTANCE_TARGET;
 
+        var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+             if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+          }
         Translation2d distance = new Translation2d(
                 pose.getX() - target.getX(),
                 pose.getY() - target.getY());

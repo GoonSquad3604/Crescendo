@@ -1,16 +1,21 @@
 package frc.robot;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 
 public final class Constants {
+  
 
   public static final class General {
     public static final double stickDeadband = .1; // drive stick deadband
@@ -127,7 +132,10 @@ public static class VisionConstants {
      * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the camera's location.
     */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-    public static final Pose2d SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(Math.PI));
+    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(Math.PI));
+    public static final Pose2d RED_SPEAKER_DISTANCE_TARGET = new Pose2d(16.3, 5.52, new Rotation2d(Math.PI));
+public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,4,8);
+    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,1);
 
 
     /**
@@ -135,11 +143,11 @@ public static class VisionConstants {
      * The values here math APRILTAG_CAMERA_NAMES for the camera's name.
      */
     public static final Transform3d LEFT_ROBOT_TO_CAMERA = new Transform3d(
-            new Translation3d(-0.2794,0.3048 ,0.1524 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), Math.toRadians(23.3),Math.toRadians(135))); //pitch 46.9  roll55  yaw
+            new Translation3d(-.2667,0.24765 ,0.56896 ), //11.5 inches
+            new Rotation3d(Math.toRadians(0), -Math.toRadians(65),Math.toRadians(120))); //pitch 46.9  roll55  yaw
     public static final Transform3d RIGHT_ROBOT_TO_CAMERA =  new Transform3d(
-            new Translation3d(-0.2794,-0.3048 ,0.1524 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), Math.toRadians(32),Math.toRadians(-135))); //pitch 46.9  roll55  yaw
+            new Translation3d(-.2667,-0.24765 ,0.56896 ), //11.5 inches
+            new Rotation3d(Math.toRadians(0), -Math.toRadians(65),Math.toRadians(-120))); //pitch 46.9  roll55  yaw
     
       
 

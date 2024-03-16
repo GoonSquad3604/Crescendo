@@ -25,6 +25,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.intake.Feed;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
@@ -81,8 +83,8 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  private final Vision rightVision = new Vision("Right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
-  private final Vision leftVision = new Vision("Left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
+  private final Vision rightVision = new Vision("right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
+  private final Vision leftVision = new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
 
 //   private final Vision s_Vision = Vision.getInstance();
   // haha69
@@ -138,12 +140,19 @@ public class RobotContainer {
                         new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    // driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+        pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+
+        pit.rightTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        pit.leftTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kForward));
+
+
     pit.a().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
     pit.a().onTrue(new InstantCommand(()-> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
-    buttonBox.button(2).onTrue(new SpeakerMode().andThen(    new InstantCommand(() ->s_Shooter.shooterTo(40))
-    ));
+    buttonBox.button(2).onTrue(new SpeakerMode().andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController))
+    );
     buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
     // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
@@ -249,7 +258,9 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-     driver.start().onTrue(new RotateToSpeaker(drivetrain).andThen(new AutoShootAngle(drivetrain, s_Shooter)));
+     driver.start().onTrue(new RotateToSpeaker(drivetrain));
+
+    // driver.start().onTrue(new AutoShootAngle(drivetrain, s_Shooter,s_StateController));
     // driver.start()
     //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
     pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
@@ -381,8 +392,8 @@ public class RobotContainer {
 
     public Matrix<N3, N1> getEstimationStdDevs (Pose2d estimatedPose) {
     if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
-    else return rightVision.getEstimationStdDevs(estimatedPose);
-    
+    if(rightVision.getHasTarget()) return rightVision.getEstimationStdDevs(estimatedPose);
+    return Constants.VisionConstants.kSingleTagStdDevs;
 
     }
 

@@ -20,6 +20,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 
@@ -29,8 +30,7 @@ public class Vision extends SubsystemBase {
     private final Transform3d m_offset;
 
     private PhotonPoseEstimator m_estimator;
-    public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,4,8);
-    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,1);
+    
     
 
     // "2.5": 44 in (14 in)
@@ -71,7 +71,7 @@ public class Vision extends SubsystemBase {
         return Optional.empty();
     }
      public Matrix<N3, N1> getEstimationStdDevs (Pose2d estimatedPose) {
-    var estStdDevs = kSingleTagStdDevs;
+    var estStdDevs = Constants.VisionConstants.kSingleTagStdDevs;
     var targets = m_camera.getLatestResult().getTargets();
     int numTags = 0;
     double avgDist = 0;
@@ -84,7 +84,7 @@ public class Vision extends SubsystemBase {
     }
     if(numTags == 0) return estStdDevs;
     avgDist /= numTags;
-    if(numTags >1 ) estStdDevs = kMultiTagStdDevs;
+    if(numTags >1 ) estStdDevs = Constants.VisionConstants.kMultiTagStdDevs;
     if (numTags ==1 && avgDist >4) 
       estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
     else estStdDevs = estStdDevs.times(1+ (avgDist * avgDist/30));
@@ -120,7 +120,7 @@ public class Vision extends SubsystemBase {
     }
 
     public Optional<EstimatedRobotPose> getCameraResult(Pose2d prevPose) {
-       if(getHasTarget() &&getBestTarget().getPoseAmbiguity()<.2) {m_estimator.setReferencePose(prevPose);
+       if(getHasTarget() &&getBestTarget().getPoseAmbiguity()<.15) {m_estimator.setReferencePose(prevPose);
         Optional<EstimatedRobotPose> pose = m_estimator.update();
         return pose;}
         return Optional.empty();

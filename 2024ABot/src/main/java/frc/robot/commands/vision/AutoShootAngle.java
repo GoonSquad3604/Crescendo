@@ -6,43 +6,67 @@ package frc.robot.commands.vision;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.StateController;
+import frc.util.RobotMode;
 
 public class AutoShootAngle extends Command {
   /** Creates a new AutoShootAngle. */
 
   CommandSwerveDrivetrain m_drive;
   Shooter m_shooter;
+  StateController m_statecontroller;
   double angle;
+  double distance;
+  Pose2d target;
 
-  public AutoShootAngle(CommandSwerveDrivetrain drive, Shooter shooter) {
+  public AutoShootAngle(CommandSwerveDrivetrain drive, Shooter shooter, StateController statecontroller) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
     m_shooter = shooter;
-    addRequirements(m_drive,m_shooter);
+    m_statecontroller = statecontroller;
+    addRequirements(m_shooter, m_statecontroller);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-        Pose2d pose = m_drive.getState().Pose;
         
-        Pose2d target = Constants.VisionConstants.SPEAKER_DISTANCE_TARGET;
-        double distance = pose.getTranslation().getDistance(target.getTranslation());
-        angle = Math.atan(1.524/(distance-0.2286));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_shooter.shooterTo(angle);
+    Pose2d pose = m_drive.getState().Pose;
+        target =Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+          
+        var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+             if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+          }
+         distance = pose.getTranslation().getDistance(target.getTranslation());
+        angle = Math.atan(1.524/(distance-0.2286));
+
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&Math.toDegrees(angle)>56){
+      m_shooter.shooterTo(56);
+    }
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&Math.toDegrees(angle)<13){
+      m_shooter.shooterTo(13);
+    }
+    if(m_statecontroller.getMode() == RobotMode.SPEAKER && Math.toDegrees(angle)<56 && Math.toDegrees(angle)>13) {
+            m_shooter.shooterTo(Math.toDegrees(angle));
+      }
     System.out.println(Math.toDegrees(angle));
-    SmartDashboard.putNumber("angleTo", angle);
+    SmartDashboard.putNumber("angleTo", Math.toDegrees(angle));
+    SmartDashboard.putNumber("distance", distance);
   }
 
   // Called once the command ends or is interrupted.

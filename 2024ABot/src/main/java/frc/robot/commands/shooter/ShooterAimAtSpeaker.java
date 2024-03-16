@@ -1,23 +1,53 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// // Copyright (c) FIRST and other WPILib contributors.
+// // Open Source Software; you can modify and/or share it under the terms of
+// // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter;
+// package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.subsystems.Shooter;
+// import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import frc.robot.Constants;
+// import frc.robot.subsystems.CommandSwerveDrivetrain;
+// import frc.robot.subsystems.Shooter;
+// import frc.robot.subsystems.StateController;
+// import frc.util.RobotMode;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShooterAimAtSpeaker extends ParallelCommandGroup {
+// public class ShooterAimAtSpeaker extends Command {
+//   /** Creates a new ShooterAimAtSpeaker. */
 
-  Shooter m_Shooter;
+//   Shooter m_shooter;
+//   CommandSwerveDrivetrain m_drive;
+//   StateController m_StateController;
+//   double angle;
+//   double distance;
+//   Pose2d target;
+//   public ShooterAimAtSpeaker(CommandSwerveDrivetrain drive, Shooter shoot, StateController statecontroller) {
+//     m_shooter = shoot;
+//     m_drive = drive;
+//     m_StateController = statecontroller;
+//   }
 
-  /** Creates a new ShooterAimAtSpeaker. */
-  public ShooterAimAtSpeaker() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
-  }
-}
+//   // Called when the command is initially scheduled.
+//   @Override
+//   public void init() {
+//      Pose2d pose = m_drive.getState().Pose;
+//         target =Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+          
+//         var alliance = DriverStation.getAlliance();
+//           if (alliance.isPresent()) {
+//              if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+//           }
+//          distance = pose.getTranslation().getDistance(target.getTranslation());
+//         angle = Math.atan(1.524/(distance-0.2286));
+//           if(m_StateController.getMode() == RobotMode.SPEAKER && Math.toDegrees(angle)<56 && Math.toDegrees(angle)>13) {
+//             m_shooter.shooterTo(Math.toDegrees(angle));
+//       }
+// }
+//   // Called every time the scheduler runs while the command is scheduled.
+
+  
+
+//   // Returns true when the command should end.
+ 
+// }

@@ -71,7 +71,7 @@ public class Shooter extends SubsystemBase {
     // anglePIDController.setI(Constants.ShooterConstants.anglekI);
     // anglePIDController.setD(Constants.ShooterConstants.anglekD);
 
-    anglePIDController.setP(7);
+    anglePIDController.setP(9);
     anglePIDController.setI(angleI);
     anglePIDController.setD(angleD);
 

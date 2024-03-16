@@ -91,7 +91,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               null,
               (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
-              (volts) -> setControl(SteerCharacterization.withVolts(volts)), null, this));
+              (volts) -> setControl(SteerCharacterization.withVolts(volts)),    null,
+              // Tell SysId to make generated commands require this subsystem, suffix test state in
+              // WPILog with this subsystem's name ("drive")
+               this));
 
   /* Change this to the sysid routine you want to test */
   private final SysIdRoutine RoutineToApply = SysIdRoutineTranslation;
@@ -137,7 +140,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             this.setControl(
                 AutoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
         new HolonomicPathFollowerConfig(
-            new PIDConstants(7, 0, 0),
+            new PIDConstants(9, 0, 0),
             new PIDConstants(7, 0, 0),
             TunerConstants.kSpeedAt12VoltsMps,
             driveBaseRadius,
@@ -151,6 +154,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         }, // Change this if the path needs to be flipped on red vs blue
         this); // Subsystem for requirements
   }
+  
 
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
     return run(() -> this.setControl(requestSupplier.get()));
