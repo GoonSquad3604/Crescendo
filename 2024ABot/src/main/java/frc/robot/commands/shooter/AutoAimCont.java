@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.vision;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -16,7 +16,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import frc.util.RobotMode;
 
-public class AutoShootAngle extends Command {
+public class AutoAimCont extends Command {
   /** Creates a new AutoShootAngle. */
 
   CommandSwerveDrivetrain m_drive;
@@ -27,12 +27,11 @@ public class AutoShootAngle extends Command {
   double distance;
   Pose2d target;
 
-  public AutoShootAngle(CommandSwerveDrivetrain drive, Shooter shooter, StateController statecontroller) {
+  public AutoAimCont(CommandSwerveDrivetrain drive, Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
     m_shooter = shooter;
-    m_statecontroller = statecontroller;
-    addRequirements(m_shooter, m_statecontroller);
+    addRequirements(m_shooter);
 
   }
 
@@ -56,21 +55,19 @@ public class AutoShootAngle extends Command {
          distance = pose.getTranslation().getDistance(target.getTranslation());
         angleRAD = Math.atan(1.524/(distance-0.2286));
     angle = Math.toDegrees(angleRAD);
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&angle>56){
+    if(angle>56){
       m_shooter.shooterTo(56);
     }
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER&&angle<13){
+    if(angle<13){
       m_shooter.shooterTo(45);
     }
-    if(m_statecontroller.getMode() == RobotMode.SPEAKER && angle<56 && angle>13&& distance<3) {
+    if( angle<56 && angle>13&& distance<3) {
             m_shooter.shooterTo(angle);
       }
-      if(m_statecontroller.getMode() == RobotMode.SPEAKER && angle<56 && angle>13&& distance>3) {
+      if( angle<56 && angle>13&& distance>3) {
             m_shooter.shooterTo(angle+distance);
       }
-    System.out.println(angle);
-    SmartDashboard.putNumber("angleTo", angle);
-    SmartDashboard.putNumber("distance", distance);
+   
   }
 
   // Called once the command ends or is interrupted.

@@ -132,10 +132,10 @@ public static class VisionConstants {
      * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the camera's location.
     */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(Math.PI));
+    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
     public static final Pose2d RED_SPEAKER_DISTANCE_TARGET = new Pose2d(16.3, 5.52, new Rotation2d(Math.PI));
-public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,4,8);
-    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,1);
+public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,5,10);
+    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,3);
 
 
     /**

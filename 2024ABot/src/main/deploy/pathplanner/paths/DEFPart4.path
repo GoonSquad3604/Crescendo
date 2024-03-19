@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.936104761098411,
+        "x": 8.084616663060487,
         "y": 5.868227045096066
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.867937412426823,
-        "y": 6.588853302481438
+        "x": 7.351339147122739,
+        "y": 7.334782076971561
       },
       "isLocked": false,
-      "linkedName": "PickedUpE"
+      "linkedName": "EndOfDEFPart3"
     },
     {
       "anchor": {
-        "x": 4.248382968889307,
-        "y": 6.086370417106196
+        "x": 4.1212052794475955,
+        "y": 5.868227045096066
       },
       "prevControl": {
-        "x": 4.667125253586212,
-        "y": 6.076632224438826
+        "x": 4.176897242683375,
+        "y": 6.239506800001254
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndOfShootE"
+      "linkedName": "EndOfDEFPart2"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 8.972626614896429,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "EFBPaths",
+  "folder": "DEFPath",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

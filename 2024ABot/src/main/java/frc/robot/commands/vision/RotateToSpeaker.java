@@ -36,7 +36,7 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
                 // The ProfiledPIDController used by the command
                 new ProfiledPIDController(
                         // The PID gains
-                        7,
+                        9,
                         0,
                         0,
                         // The motion profile constraints
@@ -67,7 +67,8 @@ public class RotateToSpeaker extends ProfiledPIDCommand {
 
         var alliance = DriverStation.getAlliance();
           if (alliance.isPresent()) {
-             if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+             if(alliance.get() == DriverStation.Alliance.Blue)
+                target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
           }
         Translation2d distance = new Translation2d(
                 pose.getX() - target.getX(),

@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.86995,
+  "robotLength": 0.86995,
   "holonomicMode": true,
   "pathFolders": [
     "AEDPaths",
@@ -8,6 +8,7 @@
     "EFBPaths",
     "GFPaths",
     "GHPaths",
+    "DEFPath",
     "WingPaths"
   ],
   "autoFolders": [],

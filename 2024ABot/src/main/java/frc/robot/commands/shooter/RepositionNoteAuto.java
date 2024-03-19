@@ -22,7 +22,7 @@ public class RepositionNoteAuto extends Command {
     s_Index = Index.getInstance();
     s_Intake = Intake.getInstance();
     s_StateController = StateController.getInstance();
-    addRequirements(s_Intake, s_StateController);
+    addRequirements(s_Intake, s_StateController, s_Index);
   }
 
   // Called when the command is initially scheduled.

@@ -40,7 +40,9 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.intake.Feed;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
+import frc.robot.commands.shooter.AutoAimCont;
 import frc.robot.commands.shooter.FeedUntillSensor;
+import frc.robot.commands.shooter.RepositionAutoAim;
 import frc.robot.commands.shooter.RepositionForAmp;
 import frc.robot.commands.shooter.RepositionNote;
 import frc.robot.commands.shooter.RepositionNoteAuto;
@@ -85,7 +87,7 @@ public class RobotContainer {
   private final StateController s_StateController = StateController.getInstance();
   private final Vision rightVision = new Vision("right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
   private final Vision leftVision = new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
-
+  private Command aimAndShootCommand;
 //   private final Vision s_Vision = Vision.getInstance();
   // haha69
   public final SwerveRequest.FieldCentric drive =
@@ -141,11 +143,11 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     // driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-        pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        pit.rightTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        pit.leftTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // pit.rightTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // pit.leftTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kForward));
 
 
     pit.a().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
@@ -258,7 +260,7 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-     driver.start().onTrue(new RotateToSpeaker(drivetrain));
+     driver.start().onTrue(aimAndShootCommand);
 
     // driver.start().onTrue(new AutoShootAngle(drivetrain, s_Shooter,s_StateController));
     // driver.start()
@@ -295,6 +297,19 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
+     NamedCommands.registerCommand(
+        "runIntakeFaster",
+        new SequentialCommandGroup(
+            new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
+            new FeedUntillSensor(),
+            new RepositionAutoAim(s_Index, s_Intake, s_Shooter, drivetrain)));
+    NamedCommands.registerCommand(
+        "runIntakeFasterCont",
+        new SequentialCommandGroup(
+            new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
+            new FeedUntillSensor(),
+            new RepositionNoteAuto(),
+            new AutoAimCont(drivetrain, s_Shooter)));
     NamedCommands.registerCommand(
         "runIntake",
         new SequentialCommandGroup(
@@ -302,7 +317,7 @@ public class RobotContainer {
             new FeedUntillSensor(),
             new RepositionNoteAuto()));
     NamedCommands.registerCommand(
-        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
+        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooterRPM(), s_Shooter));
     NamedCommands.registerCommand(
         "intakeDown",
         new InstantCommand(
@@ -313,7 +328,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTo20", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
     NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000)));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
@@ -342,7 +357,12 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
 
-            
+    aimAndShootCommand = Commands.runOnce(
+        () -> { 
+            var pose = getBestPose();
+                if(pose.isPresent()) 
+                    drivetrain.seedFieldRelative(pose.get().estimatedPose.toPose2d());
+        }).andThen(Commands.waitSeconds(.1)).andThen(new RotateToSpeaker(drivetrain));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
@@ -357,7 +377,6 @@ public class RobotContainer {
 
         numPoses += front.isPresent() ? 1 : 0;
         numPoses += back.isPresent() ? 1 : 0;
-
         Optional<Pose2d> pose = Optional.empty();
         SmartDashboard.putNumber("numPoses", numPoses);
 
