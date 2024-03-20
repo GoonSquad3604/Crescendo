@@ -6,7 +6,6 @@ package frc.robot.commands.stateController;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
-import frc.robot.commands.shooter.RepositionForAmp;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -37,7 +36,8 @@ public class AmpMode extends InstantCommand {
     // new RepositionForAmp();
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
-    // m_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterAmpRPM+200, Constants.ShooterConstants.rightShooterAmpRPM-200);
+    // m_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterAmpRPM+200,
+    // Constants.ShooterConstants.rightShooterAmpRPM-200);
     // m_Shooter.setPower(.07);
 
   }

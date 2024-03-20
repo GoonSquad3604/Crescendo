@@ -18,7 +18,6 @@ public class clear extends InstantCommand {
   Shooter m_Shooter;
   Index m_Index;
 
-
   public clear() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();

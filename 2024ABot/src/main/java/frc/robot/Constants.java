@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -11,11 +10,8 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.units.Distance;
-import edu.wpi.first.units.Measure;
 
 public final class Constants {
-  
 
   public static final class General {
     public static final double stickDeadband = .1; // drive stick deadband
@@ -34,12 +30,12 @@ public final class Constants {
     public static final int leftShooterAmpRPM = -300;
     public static final int rightShooterAmpRPM = 300;
 
-    public static final int leftShooterTrapRPM = -1000; //-3300
-    public static final int rightShooterTrapRPM = 2000; //4200
-    
+    public static final int leftShooterTrapRPM = -1000; // -3300
+    public static final int rightShooterTrapRPM = 2000; // 4200
+
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 55;//55
+    public static final double shooterAmp = 55; // 55
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;
@@ -59,8 +55,6 @@ public final class Constants {
 
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
-
-    
   }
 
   public static final class ClimberConstants {
@@ -104,6 +98,7 @@ public final class Constants {
 
     public static final int intakeRPM = 2000;
   }
+
   public static final class IndexConstants {
     public static final int indexID = 4;
 
@@ -116,7 +111,6 @@ public final class Constants {
     public static final int indexSpeakerRPM = -6000;
     public static final double indexSpeakerSpeed = 1;
 
-    
     public static final double indexkP = 0.00025;
     public static final double indexkI = 0.0;
     public static final double indexkD = 0.0;
@@ -126,41 +120,52 @@ public final class Constants {
   public static final class FlipperConstants {
     public static final int flipperID = 10;
   }
-public static class VisionConstants {
+
+  public static class VisionConstants {
 
     /**
-     * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the camera's location.
-    */
+     * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the
+     * camera's location.
+     */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET = new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
-    public static final Pose2d RED_SPEAKER_DISTANCE_TARGET = new Pose2d(16.3, 5.52, new Rotation2d(Math.PI));
-public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,5,10);
-    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.5,.5,3);
 
+    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET =
+        new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
+    public static final Pose2d RED_SPEAKER_DISTANCE_TARGET =
+        new Pose2d(16.3, 5.52, new Rotation2d(Math.PI));
+    public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(6, 6, 10);
+    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.6, .6, 7);
 
     /**
      * Physical location of the apriltag cameras on the robot, relative to the center of the robot.
      * The values here math APRILTAG_CAMERA_NAMES for the camera's name.
      */
-    public static final Transform3d LEFT_ROBOT_TO_CAMERA = new Transform3d(
-            new Translation3d(-.2667,0.24765 ,0.56896 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), -Math.toRadians(65),Math.toRadians(120))); //pitch 46.9  roll55  yaw
-    public static final Transform3d RIGHT_ROBOT_TO_CAMERA =  new Transform3d(
-            new Translation3d(-.2667,-0.24765 ,0.56896 ), //11.5 inches
-            new Rotation3d(Math.toRadians(0), -Math.toRadians(65),Math.toRadians(-120))); //pitch 46.9  roll55  yaw
-    
-      
+    public static final Transform3d LEFT_ROBOT_TO_CAMERA =
+        new Transform3d(
+            new Translation3d(-.2667, 0.24765, 0.56896), // 11.5 inches
+            new Rotation3d(
+                Math.toRadians(0),
+                -Math.toRadians(65),
+                Math.toRadians(120))); // pitch 46.9  roll55  yaw
+
+    public static final Transform3d RIGHT_ROBOT_TO_CAMERA =
+        new Transform3d(
+            new Translation3d(-.2667, -0.24765, 0.56896), // 11.5 inches
+            new Rotation3d(
+                Math.toRadians(0),
+                -Math.toRadians(65),
+                Math.toRadians(-120))); // pitch 46.9  roll55  yaw
 
     public static final double FIELD_LENGTH = 16.54175;
     public static final double FIELD_WIDTH = 8.0137;
 
     /**
-     * Minimum target ambiguity. Targets with higher ambiguity will be discarded. Not appliable when multiple tags are
-     * in view in a single camera.
+     * Minimum target ambiguity. Targets with higher ambiguity will be discarded. Not appliable when
+     * multiple tags are in view in a single camera.
      */
     public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
-
   }
+
   public static final
   class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
     // to specific robot
@@ -179,6 +184,3 @@ public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,5,10);
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 }
-
-
-

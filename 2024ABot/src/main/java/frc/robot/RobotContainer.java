@@ -4,28 +4,18 @@
 
 package frc.robot;
 
-import java.time.Instant;
-import java.util.Optional;
-
-import org.photonvision.EstimatedRobotPose;
-
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,8 +26,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.intake.Feed;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.AutoAimCont;
@@ -66,15 +54,18 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import frc.robot.subsystems.Vision;
+import java.util.Optional;
+import org.photonvision.EstimatedRobotPose;
 
 public class RobotContainer {
   private double MaxSpeed =
       TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
-  private double MaxAngularRate =
-      3 * Math.PI; // 3/4 of a rotation per second max angular velocity
+  private double MaxAngularRate = 3 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController pit = new CommandXboxController(2); // My joystick
+
+  // 69
 
   private final CommandXboxController driver = new CommandXboxController(0); // My joystick
   private final CommandJoystick buttonBox = new CommandJoystick(1);
@@ -85,11 +76,12 @@ public class RobotContainer {
   private final Flipper s_Flipper = Flipper.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
-  private final Vision rightVision = new Vision("right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
-  private final Vision leftVision = new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
+  private final Vision rightVision =
+      new Vision("right", Constants.VisionConstants.RIGHT_ROBOT_TO_CAMERA);
+  private final Vision leftVision =
+      new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
   private Command aimAndShootCommand;
-//   private final Vision s_Vision = Vision.getInstance();
-  // haha69
+  //   private final Vision s_Vision = Vision.getInstance();
   public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
@@ -143,38 +135,52 @@ public class RobotContainer {
 
     // reset the field-centric heading on left bumper press
     // driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-        // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+    // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+    // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        // pit.rightTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // pit.leftTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kForward));
-
+    // pit.rightTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+    // pit.leftTrigger().onTrue(drivetrain.sysIdDynamic(Direction.kForward));
 
     pit.a().onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
-    pit.a().onTrue(new InstantCommand(()-> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
+    pit.a()
+        .onTrue(
+            new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
-    buttonBox.button(2).onTrue(new SpeakerMode().andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController))
-    );
+    buttonBox
+        .button(2)
+        .onTrue(
+            new SpeakerMode()
+                .andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController)));
     buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
     // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
     buttonBox.button(5).onTrue(new ClimberMode());
 
-    buttonBox.button(6).onTrue(new SetIntakeDown().andThen(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()))));
+    buttonBox
+        .button(6)
+        .onTrue(
+            new SetIntakeDown()
+                .andThen(
+                    new ParallelCommandGroup(
+                        new InstantCommand(() -> s_Intake.runIntake()),
+                        new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote()))));
     buttonBox.button(6).onFalse(new TravelMode());
     buttonBox.button(6).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
     // buttonBox.button(7).and(intakeTrigger).onTrue(new Feed());
-    // buttonBox.button(7).and(intakeTrigger).onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new RepositionNote())));
-//    buttonBox.button(7).and(indexTrigger).onTrue(new ParallelCommandGroup(
-//                 new InstantCommand(() -> s_Shooter.stopShooter()),
-//                 new InstantCommand(() -> s_Index.indexStop(), s_Index)).andThen(new TravelMode()));
+    // buttonBox.button(7).and(intakeTrigger).onTrue(new ParallelCommandGroup(new InstantCommand(()
+    // -> s_Intake.runIntake()), new SequentialCommandGroup(new FeedUntillSensor(), new
+    // RepositionNote())));
+    //    buttonBox.button(7).and(indexTrigger).onTrue(new ParallelCommandGroup(
+    //                 new InstantCommand(() -> s_Shooter.stopShooter()),
+    //                 new InstantCommand(() -> s_Index.indexStop(), s_Index)).andThen(new
+    // TravelMode()));
     buttonBox
         .button(7)
         .onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.shooterTo(50)),
-                new InstantCommand(() -> s_Shooter.babyBird(200,200)),
+                new InstantCommand(() -> s_Shooter.babyBird(200, 200)),
                 new InstantCommand(() -> s_Index.babyBirdIndex())));
 
     buttonBox
@@ -192,9 +198,7 @@ public class RobotContainer {
         .button(9)
         .onTrue(
             new InstantCommand(
-                () ->
-                    s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker),
-                s_Shooter));
+                () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
     buttonBox.button(9).onTrue(new SpeakerMode());
     buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
     buttonBox
@@ -249,7 +253,7 @@ public class RobotContainer {
         .button(12)
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
+                new InstantCommand(() -> s_Shooter.stopShooter()),
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot(),
                 new InstantCommand(() -> s_Flipper.setFlipperDown())));
@@ -260,12 +264,12 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-     driver.start().onTrue(aimAndShootCommand);
+    driver.start().onTrue(aimAndShootCommand);
 
     // driver.start().onTrue(new AutoShootAngle(drivetrain, s_Shooter,s_StateController));
     // driver.start()
     //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
-    pit.b().onTrue(new InstantCommand(()-> s_Climber.climberDown()));
+    pit.b().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
@@ -276,7 +280,7 @@ public class RobotContainer {
     //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
     // );
     driver.x().onTrue(new InstantCommand(() -> s_Flipper.panic()));
-    driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    // driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
     // driver
     //     .y()
     //     .and(indexTrigger.negate())
@@ -289,6 +293,7 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
   }
+
   public void clear() {
     s_Intake.stopIntake();
     s_Shooter.stopShooter();
@@ -297,7 +302,7 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
-     NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "runIntakeFaster",
         new SequentialCommandGroup(
             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
@@ -317,7 +322,7 @@ public class RobotContainer {
             new FeedUntillSensor(),
             new RepositionNoteAuto()));
     NamedCommands.registerCommand(
-        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooterRPM(), s_Shooter));
+        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
     NamedCommands.registerCommand(
         "intakeDown",
         new InstantCommand(
@@ -328,12 +333,11 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTo20", new InstantCommand(() -> s_Shooter.shooterTo(20), s_Shooter));
     NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000)));
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
-    NamedCommands.registerCommand(
-        "runIndex", new InstantCommand(() -> s_Index.setIndexPower(-.4)));
+    NamedCommands.registerCommand("runIndex", new InstantCommand(() -> s_Index.setIndexPower(-.4)));
     NamedCommands.registerCommand(
         "stopIndex", new InstantCommand(() -> s_Index.indexStop(), s_Shooter));
     NamedCommands.registerCommand(
@@ -350,79 +354,83 @@ public class RobotContainer {
         "shooterTo27", new InstantCommand(() -> s_Shooter.shooterTo(27), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo35", new InstantCommand(() -> s_Shooter.shooterTo(35), s_Shooter));
-        NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "shooterTo34", new InstantCommand(() -> s_Shooter.shooterTo(34), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(24), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
+    NamedCommands.registerCommand("varAngle", new AutoAimCont(drivetrain, s_Shooter));
 
-    aimAndShootCommand = Commands.runOnce(
-        () -> { 
-            var pose = getBestPose();
-                if(pose.isPresent()) 
+    aimAndShootCommand =
+        Commands.runOnce(
+                () -> {
+                  var pose = getBestPose();
+                  if (pose.isPresent())
                     drivetrain.seedFieldRelative(pose.get().estimatedPose.toPose2d());
-        }).andThen(Commands.waitSeconds(.1)).andThen(new RotateToSpeaker(drivetrain));
+                })
+            .andThen(Commands.waitSeconds(.1))
+            .andThen(new RotateToSpeaker(drivetrain));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
+
   public Optional<EstimatedRobotPose> getBestPose() {
-        Pose2d drivetrainPose = drivetrain.getState().Pose;
+    Pose2d drivetrainPose = drivetrain.getState().Pose;
 
-        Optional<EstimatedRobotPose> front = rightVision.getCameraResult(drivetrainPose);
-        Optional<EstimatedRobotPose> back = leftVision.getCameraResult(drivetrainPose);
+    Optional<EstimatedRobotPose> front = rightVision.getCameraResult(drivetrainPose);
+    Optional<EstimatedRobotPose> back = leftVision.getCameraResult(drivetrainPose);
 
-        int numPoses = 0;
+    int numPoses = 0;
 
-        numPoses += front.isPresent() ? 1 : 0;
-        numPoses += back.isPresent() ? 1 : 0;
-        Optional<Pose2d> pose = Optional.empty();
-        SmartDashboard.putNumber("numPoses", numPoses);
+    numPoses += front.isPresent() ? 1 : 0;
+    numPoses += back.isPresent() ? 1 : 0;
+    Optional<Pose2d> pose = Optional.empty();
+    SmartDashboard.putNumber("numPoses", numPoses);
 
-        if (numPoses == 1) {
-            pose = Optional
-                    .of(new Pose2d((front.isEmpty() ? back : front).get().estimatedPose.toPose2d()
-                            .getTranslation(),
-                            drivetrainPose.getRotation()));
-        } else if (numPoses == 2) {
-            // average the poses
-            Pose3d frontP = front.get().estimatedPose;
-            Pose3d backP = back.get().estimatedPose;
+    if (numPoses == 1) {
+      pose =
+          Optional.of(
+              new Pose2d(
+                  (front.isEmpty() ? back : front).get().estimatedPose.toPose2d().getTranslation(),
+                  drivetrainPose.getRotation()));
+    } else if (numPoses == 2) {
+      // average the poses
+      Pose3d frontP = front.get().estimatedPose;
+      Pose3d backP = back.get().estimatedPose;
 
-            Translation2d frontT = frontP.getTranslation().toTranslation2d();
-            Translation2d backT = backP.getTranslation().toTranslation2d();
+      Translation2d frontT = frontP.getTranslation().toTranslation2d();
+      Translation2d backT = backP.getTranslation().toTranslation2d();
 
-            pose = Optional.of(
-                    new Pose2d(frontT.plus(backT).div(2.),
-                            drivetrainPose.getRotation()));
-        }
-
-        if (pose.isPresent()) {
-            return Optional.of(new EstimatedRobotPose(
-                    new Pose3d(pose.get()
-                            ),
-                    (front.isEmpty() ? back : front).get().timestampSeconds,
-                    null, null));
-        }
-
-        return Optional.empty();
+      pose = Optional.of(new Pose2d(frontT.plus(backT).div(2.), drivetrainPose.getRotation()));
     }
 
-    public Matrix<N3, N1> getEstimationStdDevs (Pose2d estimatedPose) {
+    if (pose.isPresent()) {
+      return Optional.of(
+          new EstimatedRobotPose(
+              new Pose3d(pose.get()),
+              (front.isEmpty() ? back : front).get().timestampSeconds,
+              null,
+              null));
+    }
+
+    return Optional.empty();
+  }
+
+  public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
     if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
-    if(rightVision.getHasTarget()) return rightVision.getEstimationStdDevs(estimatedPose);
+    if (rightVision.getHasTarget()) return rightVision.getEstimationStdDevs(estimatedPose);
     return Constants.VisionConstants.kSingleTagStdDevs;
+  }
 
-    }
+  //   public double getAngle() {
+  //       if(leftVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+  //       if(rightVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
+  //       SmartDashboard.putNumber("angleto", Math.atan(distance/60));
+  //       return (Math.atan(distance/60));
 
-    // public double getAngle() {
-    //     if(leftVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
-    //     if(rightVision.getTargetById(4)!=null) distance = leftVision.getTagDistance(4).get();
-    //     SmartDashboard.putNumber("angleto", Math.atan(distance/60));
-    //     return (Math.atan(distance/60));
-
-    // }
+  //   }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();

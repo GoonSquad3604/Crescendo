@@ -1,21 +1,15 @@
-
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.clear;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-
 import org.littletonrobotics.junction.*;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
-import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot extends LoggedRobot {
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+public class Robot extends LoggedRobot {
 
   private Command m_autonomousCommand;
 
@@ -71,28 +65,26 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
     //   m_robotContainer.drivetrain.addVisionMeasurement(x,Timer.getFPGATimestamp());
     // }
 
-
-
-    
     // if (m_Vision.robotPose()!=null) {
-    //   m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
+    //
+    // m_robotContainer.drivetrain.addVisionMeasurement(m_Vision.robotPose(),Timer.getFPGATimestamp());
     // }
     // SmartDashboard.putNumber("train", defaultPeriodSecs);
-    //vision get pose
+    // vision get pose
     // if pose present
-    //convert to pose
-    //robotcontain.drivetrain.addvision
+    // convert to pose
+    // robotcontain.drivetrain.addvision
     // m_robotContainer.getAngle();
     var visionEst = m_robotContainer.getBestPose();
     visionEst.ifPresent(
-      est-> {
+        est -> {
           var estPose = est.estimatedPose.toPose2d();
 
           var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
 
-          m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds,estStdDevs);
-
-      });
+          m_robotContainer.drivetrain.addVisionMeasurement(
+              est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+        });
   }
 
   @Override
@@ -136,7 +128,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;public class Robot ext
 
     //       var estStdDevs = m_Vision.getEstimationStdDevs(estPose);
 
-    //       m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), estStdDevs);
+    //       m_robotContainer.drivetrain.addVisionMeasurement(est.estimatedPose.toPose2d(),
+    // Timer.getFPGATimestamp(), estStdDevs);
 
     //   });
   }

@@ -6,10 +6,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +24,7 @@ public class Index extends SubsystemBase {
   private DigitalInput sensor;
 
   private double indexRPM;
+
   public Index() {
     indexMotor = new CANSparkFlex(Constants.IndexConstants.indexID, MotorType.kBrushless);
     indexMotor.restoreFactoryDefaults();
@@ -39,10 +39,8 @@ public class Index extends SubsystemBase {
     indexPIDController.setD(Constants.IndexConstants.indexkD);
     indexPIDController.setFF(Constants.IndexConstants.indexkF);
 
-
     indexPIDController.setOutputRange(-1, 1);
     indexMotor.setInverted(true);
-
   }
 
   public static Index getInstance() {
@@ -51,9 +49,11 @@ public class Index extends SubsystemBase {
     }
     return _instance;
   }
+
   public void setIndexRPM(double RPM) {
     indexPIDController.setReference(RPM, ControlType.kVelocity);
   }
+
   public void setIndexPower(double speed) {
     indexMotor.set(-speed);
   }
@@ -61,14 +61,14 @@ public class Index extends SubsystemBase {
   public void indexStop() {
     indexMotor.set(0);
   }
+
   public boolean hasNote() {
     return !sensor.get();
   }
+
   public void babyBirdIndex() {
     indexMotor.set(.2);
   }
-    
-
 
   @Override
   public void periodic() {

@@ -13,7 +13,6 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -26,15 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
-
 import java.util.Optional;
 import java.util.function.Supplier;
-
 import org.photonvision.EstimatedRobotPose;
 
-import frc.robot.Constants.VisionConstants;
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem so it can be used
  * in command-based projects easily.
@@ -50,8 +45,6 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
-  
-
 
   private final SwerveRequest.ApplyChassisSpeeds AutoRequest =
       new SwerveRequest.ApplyChassisSpeeds();
@@ -91,10 +84,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               null,
               (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
-              (volts) -> setControl(SteerCharacterization.withVolts(volts)),    null,
+              (volts) -> setControl(SteerCharacterization.withVolts(volts)),
+              null,
               // Tell SysId to make generated commands require this subsystem, suffix test state in
               // WPILog with this subsystem's name ("drive")
-               this));
+              this));
 
   /* Change this to the sysid routine you want to test */
   private final SysIdRoutine RoutineToApply = SysIdRoutineTranslation;
@@ -104,26 +98,24 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
-    
+
     configurePathPlanner();
 
     if (Utils.isSimulation()) {
       startSimThread();
     }
     SmartDashboard.putData("Field", m_field);
-     
   }
 
   public CommandSwerveDrivetrain(
       SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
     super(driveTrainConstants, modules);
-    
+
     configurePathPlanner();
     if (Utils.isSimulation()) {
       startSimThread();
     }
     SmartDashboard.putData("Field", m_field);
-
   }
 
   private void configurePathPlanner() {
@@ -154,7 +146,6 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         }, // Change this if the path needs to be flipped on red vs blue
         this); // Subsystem for requirements
   }
-  
 
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
     return run(() -> this.setControl(requestSupplier.get()));
@@ -163,25 +154,27 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   public Command getAutoPath(String pathName) {
     return new PathPlannerAuto(pathName);
   }
-   public Command addMeasurementCommand(Supplier<Pose2d> measurement, Supplier<Double> timeStamp) {
-        return runOnce(() -> {
-            Pose2d pose = measurement.get();
-            if (pose == new Pose2d())
-                return;
 
-            addVisionMeasurement(pose, timeStamp.get());
+  public Command addMeasurementCommand(Supplier<Pose2d> measurement, Supplier<Double> timeStamp) {
+    return runOnce(
+        () -> {
+          Pose2d pose = measurement.get();
+          if (pose == new Pose2d()) return;
+
+          addVisionMeasurement(pose, timeStamp.get());
         });
-    }
+  }
 
-    public Command addMeasurementCommand(Supplier<Optional<EstimatedRobotPose>> pose) {
-        return runOnce(() -> {
-            Optional<EstimatedRobotPose> estPose = pose.get();
-            if (estPose.isPresent()) {
-                addVisionMeasurement(estPose.get().estimatedPose.toPose2d(), estPose.get().timestampSeconds);
-            }
+  public Command addMeasurementCommand(Supplier<Optional<EstimatedRobotPose>> pose) {
+    return runOnce(
+        () -> {
+          Optional<EstimatedRobotPose> estPose = pose.get();
+          if (estPose.isPresent()) {
+            addVisionMeasurement(
+                estPose.get().estimatedPose.toPose2d(), estPose.get().timestampSeconds);
+          }
         });
-    }
-
+  }
 
   /*
    * Both the sysid commands are specific to one particular sysid routine, change

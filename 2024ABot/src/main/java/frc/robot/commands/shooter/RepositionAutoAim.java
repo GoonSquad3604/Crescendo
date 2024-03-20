@@ -12,7 +12,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.util.RobotMode;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,7 +25,9 @@ public class RepositionAutoAim extends InstantCommand {
   double angle;
   double distance;
   Pose2d target;
-  public RepositionAutoAim(Index index, Intake intake, Shooter shooter, CommandSwerveDrivetrain drive) {
+
+  public RepositionAutoAim(
+      Index index, Intake intake, Shooter shooter, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     s_Index = index;
     s_Intake = intake;
@@ -39,26 +40,27 @@ public class RepositionAutoAim extends InstantCommand {
   @Override
   public void initialize() {
     Pose2d pose = s_Drive.getState().Pose;
-        target =Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
-          
-        var alliance = DriverStation.getAlliance();
-          if (alliance.isPresent()) {
-             if(alliance.get() == DriverStation.Alliance.Blue)target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
-          }
-         distance = pose.getTranslation().getDistance(target.getTranslation());
-        angleRAD = Math.atan(1.524/(distance-0.2286));
+    target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      if (alliance.get() == DriverStation.Alliance.Blue)
+        target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+    }
+    distance = pose.getTranslation().getDistance(target.getTranslation());
+    angleRAD = Math.atan(1.524 / (distance - 0.2286));
     angle = Math.toDegrees(angleRAD);
-    if(angle>56){
+    if (angle > 56) {
       s_Shooter.shooterTo(56);
     }
-    if(angle<13){
+    if (angle < 13) {
       s_Shooter.shooterTo(13);
     }
-    if( angle<56 && angle>13&& distance<3) {
-            s_Shooter.shooterTo(angle);
-      }
-      if(angle<56 && angle>13&& distance>3) {
-            s_Shooter.shooterTo(angle+distance);
-      }
+    if (angle < 56 && angle > 13 && distance < 3) {
+      s_Shooter.shooterTo(angle);
+    }
+    if (angle < 56 && angle > 13 && distance > 3) {
+      s_Shooter.shooterTo(angle + distance);
+    }
   }
 }

@@ -4,11 +4,23 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class rAMP extends SubsystemBase {
-  /** Creates a new rAMP. */
-  public rAMP() {}
+  private static rAMP instance;
+  private AbsoluteEncoder rAMPEncoder;
+  private CANSparkMax rAMPSparkMax;
+  private double rAMPP, rAMPI, rAMPD;
+  private SparkPIDController rAMPPIDController;
+
+  public rAMP() {
+    rAMPEncoder = rAMPSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
+    rAMPPIDController = rAMPSparkMax.getPIDController();
+  }
 
   @Override
   public void periodic() {

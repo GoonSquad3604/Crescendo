@@ -4,7 +4,6 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
@@ -27,7 +26,7 @@ public class AfterShot extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+
     m_StateContoller.setTravel();
     m_Shooter.shooterTo(m_StateContoller.getAngle());
   }

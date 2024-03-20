@@ -6,7 +6,6 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
@@ -18,7 +17,7 @@ public class ShootAmp extends Command {
   private Timer timer;
   boolean started;
 
- private double speed;
+  private double speed;
 
   public ShootAmp() {
     s_Flipper = Flipper.getInstance();
@@ -40,7 +39,7 @@ public class ShootAmp extends Command {
     started = false;
     s_Index.setIndexPower(.1);
     s_Shooter.setPower(speed);
-    //s_Shooter.setPower(.05);
+    // s_Shooter.setPower(.05);
     // s_Shooter.setShooterRPM(
     //     Constants.ShooterConstants.leftShooterAmpRPM+100,
     //     Constants.ShooterConstants.rightShooterAmpRPM-100);
@@ -54,23 +53,22 @@ public class ShootAmp extends Command {
     // if sensor is triggered, move shooter to steeper angle.
     s_Shooter.setPower(speed);
     s_Index.setIndexPower(.2);
-    if (s_Index.hasNote()) {started = true;
-            // s_Flipper.setFlipperUp();
-}
-  if(!s_Index.hasNote()) speed += .0006;
-     //one second
-      if (timer.get() >= 1 && started) {
-        // s_Shooter.setShooterRPM(
-        //   0,
-        //   0);
-        s_Flipper.setFlipperUp();
-        // s_Shooter.setShooterRPM(
-        //   Constants.ShooterConstants.leftShooterAmpRPM+100,
-        //   Constants.ShooterConstants.rightShooterAmpRPM-100);
-        s_Index.setIndexPower(.1);
-       }
-    
-
+    if (s_Index.hasNote()) {
+      started = true;
+      // s_Flipper.setFlipperUp();
+    }
+    if (!s_Index.hasNote()) speed += .0006;
+    // one second
+    if (timer.get() >= 1 && started) {
+      // s_Shooter.setShooterRPM(
+      //   0,
+      //   0);
+      s_Flipper.setFlipperUp();
+      // s_Shooter.setShooterRPM(
+      //   Constants.ShooterConstants.leftShooterAmpRPM+100,
+      //   Constants.ShooterConstants.rightShooterAmpRPM-100);
+      s_Index.setIndexPower(.1);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -81,7 +79,6 @@ public class ShootAmp extends Command {
     s_Index.indexStop();
     started = false;
     timer.stop();
-    
   }
 
   // Returns true when the command should end.

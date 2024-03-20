@@ -12,8 +12,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -33,7 +31,6 @@ public class Shooter extends SubsystemBase {
 
   private AbsoluteEncoder angleEncoder;
 
-
   private static Shooter _instance;
   private double angleD, angleP, angleI, kPLeft, kFFLeft, kPRight, kFFRight;
 
@@ -48,7 +45,6 @@ public class Shooter extends SubsystemBase {
     rightShooterMotor = new CANSparkFlex(Constants.ShooterConstants.rightID, MotorType.kBrushless);
     angleMotor = new CANSparkFlex(Constants.ShooterConstants.angleID, MotorType.kBrushless);
 
-
     leftShooterMotor.restoreFactoryDefaults();
     rightShooterMotor.restoreFactoryDefaults();
     angleMotor.restoreFactoryDefaults();
@@ -61,8 +57,6 @@ public class Shooter extends SubsystemBase {
 
     leftShooterEncoder = leftShooterMotor.getEncoder();
     leftShooterPIDController = leftShooterMotor.getPIDController();
-
-    
 
     // PIDS
 
@@ -85,17 +79,17 @@ public class Shooter extends SubsystemBase {
     rightShooterPIDController.setD(Constants.ShooterConstants.shooterkD);
     rightShooterPIDController.setFF(Constants.ShooterConstants.shooterkF);
 
-    
-
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
     anglePIDController.setOutputRange(-1, 1);
 
     leftShooterMotor.enableVoltageCompensation(12);
     rightShooterMotor.enableVoltageCompensation(12);
+    leftShooterMotor.setIdleMode(IdleMode.kBrake);
+    rightShooterMotor.setIdleMode(IdleMode.kBrake);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
-      }
+  }
 
   public static Shooter getInstance() {
     if (_instance == null) {
@@ -155,8 +149,9 @@ public class Shooter extends SubsystemBase {
     leftShooterMotor.set(0);
     rightShooterMotor.set(0);
   }
+
   public void stopShooterRPM() {
-   leftShooterPIDController.setReference(0, ControlType.kVelocity);
+    leftShooterPIDController.setReference(0, ControlType.kVelocity);
     rightShooterPIDController.setReference(-0, ControlType.kVelocity);
   }
 
@@ -172,7 +167,6 @@ public class Shooter extends SubsystemBase {
   public void stopAngle() {
     angleMotor.set(.0);
   }
-  
 
   public double getShooterAngleClicks() {
     return angleEncoder.getPosition();
@@ -188,11 +182,6 @@ public class Shooter extends SubsystemBase {
 
   // Indexer methods
 
-  
-
-  
-
-  
   // -0.002667*X + 0.7915
   public void shooterTo(double position) {
     anglePIDController.setReference(position * .00297 + .49717, ControlType.kPosition);
@@ -209,7 +198,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-   // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
 
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());

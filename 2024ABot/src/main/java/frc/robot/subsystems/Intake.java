@@ -126,6 +126,6 @@ public class Intake extends SubsystemBase {
     // SmartDashboard.putNumber("Raise Hinge Speed", Constants.HingeConstants.raiseHingeSpeed);
     // SmartDashboard.putNumber("Lower Hinge Speed", Constants.HingeConstants.lowerHingeSpeed);
     // SmartDashboard.putNumber("applied hinge output", hingeMotor.getAppliedOutput());
-    // SmartDashboard.putNumber("hinge position", hingeEncoder.getPosition());
+    SmartDashboard.putNumber("hinge position", hingeEncoder.getPosition());
   }
 }

@@ -24,7 +24,7 @@ public class RepositionNote extends Command {
     s_Shooter = Shooter.getInstance();
     s_Index = Index.getInstance();
     s_StateController = StateController.getInstance();
-    addRequirements(s_Shooter, s_Intake, s_StateController,s_Index);
+    addRequirements(s_Shooter, s_Intake, s_StateController, s_Index);
   }
 
   // Called when the command is initially scheduled.
