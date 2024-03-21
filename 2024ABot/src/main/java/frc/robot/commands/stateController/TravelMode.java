@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
+import frc.robot.subsystems.rAMP;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,13 +18,15 @@ public class TravelMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
+  rAMP m_ramp;
 
   public TravelMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
     m_StateController = StateController.getInstance();
-    addRequirements(m_Intake, m_Shooter, m_StateController);
+    m_ramp = rAMP.getInstance();
+    addRequirements(m_Intake, m_Shooter, m_StateController, m_ramp);
   }
 
   // Called when the command is initially scheduled.
@@ -33,5 +36,7 @@ public class TravelMode extends InstantCommand {
     m_StateController.setTravel();
     m_Shooter.shooterTo(m_StateController.getAngle());
     m_Shooter.setPower(0);
+    m_ramp.setrAMPUp();
+
   }
 }

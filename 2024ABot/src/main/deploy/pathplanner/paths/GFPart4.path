@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.995008109343441,
-        "y": 6.221545062352826
+        "x": 5.680580250049389,
+        "y": 5.552639253426655
       },
       "isLocked": false,
       "linkedName": "pickedUpF"
@@ -20,8 +20,8 @@
         "y": 3.2608355112180614
       },
       "prevControl": {
-        "x": 4.350231638476785,
-        "y": 1.7664344977246764
+        "x": 4.149051261065486,
+        "y": 1.9140976553558031
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,42 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterTravel"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.75,
     "maxAcceleration": 5.0,

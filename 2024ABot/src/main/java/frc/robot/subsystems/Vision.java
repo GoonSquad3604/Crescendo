@@ -81,9 +81,9 @@ public class Vision extends SubsystemBase {
     if (numTags == 0) return estStdDevs;
     avgDist /= numTags;
     if (numTags > 1) estStdDevs = Constants.VisionConstants.kMultiTagStdDevs;
-    if (numTags == 1 && avgDist > 4)
+    if (numTags == 1 && avgDist > 3.8)
       estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
-    else estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 3));
+    else estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 2.3));
 
     return estStdDevs;
   }
@@ -115,16 +115,24 @@ public class Vision extends SubsystemBase {
   }
 
   public Optional<EstimatedRobotPose> getCameraResult(Pose2d prevPose) {
+    try{
     if (getBestTarget() != null) {
-
       if (getHasTarget() && getBestTarget() != null && getBestTarget().getPoseAmbiguity() < .1) {
-        m_estimator.setReferencePose(prevPose);
-        Optional<EstimatedRobotPose> pose = m_estimator.update();
-        return pose;
+       if(getTagDistance(getBestTarget().getFiducialId()).isPresent()){
+          if(getTagDistance((getBestTarget().getFiducialId())).get() < 3.8){
+            m_estimator.setReferencePose(prevPose);
+            Optional<EstimatedRobotPose> pose = m_estimator.update();
+            return pose;
+          }
+        }
       }
     }
+        return Optional.empty();
 
+  }
+  catch(Exception e) {
     return Optional.empty();
+  }
   }
 
   public PhotonTrackedTarget getBestTarget() {

@@ -66,34 +66,48 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "sequential",
                 "data": {
-                  "waitTime": 6.0
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GHPart1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GHPart2"
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "path",
+                "type": "race",
                 "data": {
-                  "pathName": "GHPart1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "runIntake"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 7.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFasterCont"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterTo32"
           }
         },
         {
@@ -103,16 +117,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GHPart2"
-                }
-              }
-            ]
+            "waitTime": 0.5
           }
         },
         {
@@ -143,6 +150,74 @@
           "type": "named",
           "data": {
             "name": "shooterHome"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GHPart3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GHPart4"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "runIntakeFasterCont"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "revShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "fire"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIndex"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopShooter"
           }
         }
       ]

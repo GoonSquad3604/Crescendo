@@ -83,9 +83,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "runIntakeFasterCont"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 7.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFasterCont"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -151,9 +164,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "runIntakeFasterCont"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFasterCont"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -225,9 +251,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "runIntake"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 5.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntake"
+                      }
+                    }
+                  ]
                 }
               }
             ]

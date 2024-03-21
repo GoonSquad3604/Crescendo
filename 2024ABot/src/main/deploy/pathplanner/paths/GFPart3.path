@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.7957673443630116,
-        "y": 2.2490981791014213
+        "x": 4.65956092406012,
+        "y": 2.2853774102609927
       },
       "isLocked": false,
       "linkedName": "FshotFar"
@@ -20,8 +20,8 @@
         "y": 4.652888097878403
       },
       "prevControl": {
-        "x": 4.187474642424656,
-        "y": 5.571805491268745
+        "x": 5.4670943909789065,
+        "y": 5.357717382101431
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,6 +42,23 @@
               "type": "named",
               "data": {
                 "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterTravel"
               }
             }
           ]

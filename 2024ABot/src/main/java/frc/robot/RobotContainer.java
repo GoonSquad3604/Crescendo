@@ -54,6 +54,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.rAMP;
+
 import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 
@@ -73,7 +75,8 @@ public class RobotContainer {
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
-  private final Flipper s_Flipper = Flipper.getInstance();
+//   private final Flipper s_Flipper = Flipper.getInstance();
+private final rAMP s_rAMP = rAMP.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
   private final Vision rightVision =
@@ -81,6 +84,7 @@ public class RobotContainer {
   private final Vision leftVision =
       new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
   private Command aimAndShootCommand;
+  private Command shimmy;
   //   private final Vision s_Vision = Vision.getInstance();
   public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
@@ -134,7 +138,7 @@ public class RobotContainer {
                         new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    // driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
     // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
     // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
@@ -217,11 +221,11 @@ public class RobotContainer {
         .button(10)
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    buttonBox.button(10).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
-    buttonBox
-        .button(11)
-        .and(ampTrigger)
-        .onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    //buttonBox.button(10).and(ampTrigger).onTrue(shimmy.andThen(Commands.waitSeconds(.1)).andThen(shimmy));
+    // buttonBox
+    //     .button(11)
+    //     .and(ampTrigger)
+    //     .onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
     buttonBox
         .button(11)
@@ -240,7 +244,7 @@ public class RobotContainer {
         .and(ampTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
 
-    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    //buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
@@ -255,8 +259,8 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter()),
                 new InstantCommand(() -> s_Index.indexStop()),
-                new AfterShot(),
-                new InstantCommand(() -> s_Flipper.setFlipperDown())));
+                new AfterShot()
+               ));
     driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
     driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
     // driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
@@ -279,7 +283,6 @@ public class RobotContainer {
     //         new InstantCommand(()-> s_Shooter.setShooterRPM(200, -200)),
     //         new InstantCommand(()-> s_Shooter.setIndexPower(.2)))
     // );
-    driver.x().onTrue(new InstantCommand(() -> s_Flipper.panic()));
     // driver.povDown().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
     // driver
     //     .y()
@@ -361,7 +364,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new AutoAimCont(drivetrain, s_Shooter));
-
+    shimmy = new InstantCommand(() -> s_rAMP.setrAMPTO(Constants.rAMPConstants.almostDown)).andThen(Commands.waitSeconds(.1)).andThen(new InstantCommand(() ->s_rAMP.setrAMPTO(Constants.rAMPConstants.almostUp)));
     aimAndShootCommand =
         Commands.runOnce(
                 () -> {

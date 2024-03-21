@@ -66,34 +66,48 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "sequential",
                 "data": {
-                  "waitTime": 4.5
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GFPart1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GFPart2"
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "path",
+                "type": "race",
                 "data": {
-                  "pathName": "GFPart1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "runIntake"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 7.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFasterCont"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterTo34"
           }
         },
         {
@@ -103,16 +117,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GFPart2"
-                }
-              }
-            ]
+            "waitTime": 0.5
           }
         },
         {
@@ -140,25 +147,26 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "shooterTravel"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "sequential",
                 "data": {
-                  "waitTime": 4.0
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GFPart3"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GFPart3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GFPart4"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -174,31 +182,6 @@
           "type": "named",
           "data": {
             "name": "revShooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterTravel"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GFPart4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterTo34"
           }
         },
         {
