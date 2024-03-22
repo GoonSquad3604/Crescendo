@@ -32,7 +32,7 @@ public class rAMP extends SubsystemBase {
     rAMPPIDController.setI(0);
     rAMPPIDController.setD(0);
 
-    rAMPPIDController.setOutputRange(-.1, .1);
+    rAMPPIDController.setOutputRange(-.3, .3);
 
   }
 

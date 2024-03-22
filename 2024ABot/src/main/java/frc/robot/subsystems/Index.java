@@ -34,6 +34,7 @@ public class Index extends SubsystemBase {
     indexPIDController = indexMotor.getPIDController();
     indexEncoder = indexMotor.getEncoder();
     indexPIDController.setFeedbackDevice(indexEncoder);
+    // indexMotor.enableVoltageCompensation(12.5);
     indexPIDController.setP(Constants.IndexConstants.indexkP);
     indexPIDController.setI(Constants.IndexConstants.indexkI);
     indexPIDController.setD(Constants.IndexConstants.indexkD);

@@ -75,17 +75,20 @@ public class Robot extends LoggedRobot {
     // convert to pose
     // robotcontain.drivetrain.addvision
     // m_robotContainer.getAngle();
-    var visionEst = m_robotContainer.getBestPose();
-    visionEst.ifPresent(
-        est -> {
-          var estPose = est.estimatedPose.toPose2d();
 
-          var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
+  //   var visionEst = m_robotContainer.getBestPose();
+  //   if(m_robotContainer.distanceFilter()) {
+  //     visionEst.ifPresent(
+  //       est -> {
+  //         var estPose = est.estimatedPose.toPose2d();
 
-          m_robotContainer.drivetrain.addVisionMeasurement(
-              est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-        });
-  }
+  //         var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
+
+  //         m_robotContainer.drivetrain.addVisionMeasurement(
+  //             est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+  //       });
+  // }
+}
 
   @Override
   public void disabledInit() {}
@@ -132,6 +135,18 @@ public class Robot extends LoggedRobot {
     // Timer.getFPGATimestamp(), estStdDevs);
 
     //   });
+    var visionEst = m_robotContainer.getBestPose();
+    if(m_robotContainer.distanceFilter()) {
+      visionEst.ifPresent(
+        est -> {
+          var estPose = est.estimatedPose.toPose2d();
+
+          var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
+
+          m_robotContainer.drivetrain.addVisionMeasurement(
+              est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+        });
+  }
   }
 
   @Override

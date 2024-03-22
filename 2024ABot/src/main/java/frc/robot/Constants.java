@@ -35,7 +35,7 @@ public final class Constants {
 
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 55; // 55
+    public static final double shooterAmp = 50; // 55    //ramp 50 degrees .15 power .73 ramp pos
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;
@@ -92,7 +92,7 @@ public final class Constants {
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-    public static final double hingeDown = .6253;
+    public static final double hingeDown = .6153;
     public static final double hingeUp = .3697;
     public static final double hingeStart = .2752;
 
@@ -126,7 +126,7 @@ public final class Constants {
     public static final double almostUp = .4;
     public static final double almostDown = .5;
 
-    public static final double rAMPDOWN = .7;
+    public static final double rAMPDOWN = .73;
 
 
   }

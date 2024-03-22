@@ -159,6 +159,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
     // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
     buttonBox.button(5).onTrue(new ClimberMode());
+    // buttonBox.button(6).onTrue(new InstantCommand(() -> s_rAMP.setrAMPUp()));
 
     buttonBox
         .button(6)
@@ -199,12 +200,12 @@ private final rAMP s_rAMP = rAMP.getInstance();
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
     buttonBox
-        .button(9)
+        .button(9).and(ampTrigger)
         .onTrue(
             new InstantCommand(
                 () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
     buttonBox.button(9).onTrue(new SpeakerMode());
-    buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.05)));
+    buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.11)));
     buttonBox
         .button(9)
         .and(climberTrigger)
@@ -221,7 +222,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
         .button(10)
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    //buttonBox.button(10).and(ampTrigger).onTrue(shimmy.andThen(Commands.waitSeconds(.1)).andThen(shimmy));
+    buttonBox.button(10).and(ampTrigger).onTrue(shimmy);
     // buttonBox
     //     .button(11)
     //     .and(ampTrigger)
@@ -243,6 +244,11 @@ private final rAMP s_rAMP = rAMP.getInstance();
         .button(12)
         .and(ampTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
+    buttonBox
+        .button(12)
+        .and(ampTrigger)
+        .onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Index.setIndexPower(.2),s_Index), new InstantCommand(() -> s_Shooter.setPower(.14)))
+        );
 
     //buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
@@ -254,15 +260,23 @@ private final rAMP s_rAMP = rAMP.getInstance();
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Index.indexStop())));
     buttonBox
-        .button(12)
+        .button(12).and(ampTrigger.negate())
         .onFalse(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooter()),
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot()
                ));
-    driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+    buttonBox
+        .button(12).and(ampTrigger)
+        .onFalse(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Index.indexStop())
+                
+               ));
+    // driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+    // driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
     // driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
     // driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
@@ -277,6 +291,12 @@ private final rAMP s_rAMP = rAMP.getInstance();
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+    driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));
+    driver.y().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
+
+    driver.a().onTrue(new InstantCommand(() -> s_rAMP.runrAMPBack()));
+    driver.a().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
+
     // driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // driver.y().and(indexTrigger.negate()).onTrue(
     //     new ParallelCommandGroup(
@@ -316,16 +336,16 @@ private final rAMP s_rAMP = rAMP.getInstance();
         new SequentialCommandGroup(
             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
             new FeedUntillSensor(),
-            new RepositionNoteAuto(),
+            new RepositionNoteAuto(s_Index, s_Intake),
             new AutoAimCont(drivetrain, s_Shooter)));
     NamedCommands.registerCommand(
         "runIntake",
         new SequentialCommandGroup(
             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
             new FeedUntillSensor(),
-            new RepositionNoteAuto()));
+            new RepositionNoteAuto(s_Index, s_Intake)));
     NamedCommands.registerCommand(
-        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter));
+        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooterRPM(), s_Shooter));
     NamedCommands.registerCommand(
         "intakeDown",
         new InstantCommand(
@@ -364,7 +384,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new AutoAimCont(drivetrain, s_Shooter));
-    shimmy = new InstantCommand(() -> s_rAMP.setrAMPTO(Constants.rAMPConstants.almostDown)).andThen(Commands.waitSeconds(.1)).andThen(new InstantCommand(() ->s_rAMP.setrAMPTO(Constants.rAMPConstants.almostUp)));
+    shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)), Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
     aimAndShootCommand =
         Commands.runOnce(
                 () -> {
@@ -420,7 +440,10 @@ private final rAMP s_rAMP = rAMP.getInstance();
 
     return Optional.empty();
   }
-
+  public boolean distanceFilter() {
+    return leftVision.getDistofTag(drivetrain.getState().Pose) <4|| rightVision.getDistofTag(drivetrain.getState().Pose)<4;
+    
+  }
   public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
     if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
     if (rightVision.getHasTarget()) return rightVision.getEstimationStdDevs(estimatedPose);

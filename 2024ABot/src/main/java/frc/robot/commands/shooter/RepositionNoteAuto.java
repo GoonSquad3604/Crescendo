@@ -17,9 +17,9 @@ public class RepositionNoteAuto extends Command {
   StateController s_StateController;
 
   /** Creates a new RepositionNote. */
-  public RepositionNoteAuto() {
-    s_Index = Index.getInstance();
-    s_Intake = Intake.getInstance();
+  public RepositionNoteAuto(Index index, Intake intake) {
+    s_Index = index;
+    s_Intake = intake;
     s_StateController = StateController.getInstance();
     addRequirements(s_Intake, s_StateController, s_Index);
   }
@@ -27,7 +27,7 @@ public class RepositionNoteAuto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Index.setIndexPower(-0.1);
+    s_Index.setIndexPower(-0.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

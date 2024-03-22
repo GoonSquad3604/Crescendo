@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.7660341740436567,
-        "y": 5.580485235044544
+        "x": 2.728906198553138,
+        "y": 5.599049222789803
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5677240334753941,
-        "y": 5.46914594641983
+        "x": 1.5305960579848756,
+        "y": 5.487709934165089
       },
       "isLocked": false,
       "linkedName": "EndOfMidPickUpMid"
     },
     {
       "anchor": {
-        "x": 2.544199252099572,
-        "y": 6.8946404084978985
+        "x": 2.9516740514962514,
+        "y": 6.9449383343211135
       },
       "prevControl": {
-        "x": 1.3375400486577083,
-        "y": 6.532642647465339
+        "x": 1.7450148480543874,
+        "y": 6.582940573288554
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.75,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

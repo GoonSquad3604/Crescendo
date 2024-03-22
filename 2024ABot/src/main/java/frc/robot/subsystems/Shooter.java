@@ -85,8 +85,8 @@ public class Shooter extends SubsystemBase {
 
     leftShooterMotor.enableVoltageCompensation(12);
     rightShooterMotor.enableVoltageCompensation(12);
-    leftShooterMotor.setIdleMode(IdleMode.kBrake);
-    rightShooterMotor.setIdleMode(IdleMode.kBrake);
+    // leftShooterMotor.setIdleMode(IdleMode.kBrake);
+    // rightShooterMotor.setIdleMode(IdleMode.kBrake);
 
     angleMotor.setIdleMode(IdleMode.kBrake);
   }

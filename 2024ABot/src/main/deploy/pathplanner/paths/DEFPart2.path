@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.133921843169903,
-        "y": 7.469193775872724
+        "x": 8.316666509876232,
+        "y": 8.448621341687128
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.757291539274437,
-        "y": 7.223398150500005
+        "x": 6.940036205980766,
+        "y": 8.202825716314408
       },
       "isLocked": false,
       "linkedName": "EndOfDEFPart1"
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.75,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

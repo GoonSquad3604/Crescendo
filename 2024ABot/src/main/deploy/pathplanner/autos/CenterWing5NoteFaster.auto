@@ -85,6 +85,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "revShooter"
@@ -93,7 +99,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.7
+            "waitTime": 0.5
           }
         },
         {
@@ -105,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -143,6 +149,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
@@ -204,6 +216,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
@@ -278,9 +296,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "runIntakeFasterCont"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFasterCont"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 7.0
+                      }
+                    }
+                  ]
                 }
               }
             ]
