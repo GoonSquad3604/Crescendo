@@ -76,6 +76,7 @@ public class Robot extends LoggedRobot {
     // robotcontain.drivetrain.addvision
     // m_robotContainer.getAngle();
 
+    //UNCOMMENT TO ACTIVATE VISION FOR AUTON
   //   var visionEst = m_robotContainer.getBestPose();
   //   if(m_robotContainer.distanceFilter()) {
   //     visionEst.ifPresent(

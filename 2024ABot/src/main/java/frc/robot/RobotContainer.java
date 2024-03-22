@@ -205,6 +205,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
             new InstantCommand(
                 () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
     buttonBox.button(9).onTrue(new SpeakerMode());
+    buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
     buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.11)));
     buttonBox
         .button(9)

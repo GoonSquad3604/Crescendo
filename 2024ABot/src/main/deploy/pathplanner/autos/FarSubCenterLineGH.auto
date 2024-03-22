@@ -113,6 +113,12 @@
         {
           "type": "named",
           "data": {
+            "name": "autoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "revShooter"
           }
         },
@@ -182,6 +188,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoAim"
           }
         },
         {
