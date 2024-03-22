@@ -55,10 +55,10 @@ public class AutoAimCont extends Command {
       m_shooter.shooterTo(45);
     }
     if (angle < 56 && angle > 13 && distance < 3) {
-      m_shooter.shooterTo(angle);
+      m_shooter.shooterTo(angle+3);
     }
     if (angle < 56 && angle > 13 && distance > 3) {
-      m_shooter.shooterTo(angle + distance);
+      m_shooter.shooterTo(angle + distance* .8);
     }
   }
 
