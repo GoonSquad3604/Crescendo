@@ -385,6 +385,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new AutoAimCont(drivetrain, s_Shooter));
+    NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
     shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)), Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
     aimAndShootCommand =
         Commands.runOnce(
