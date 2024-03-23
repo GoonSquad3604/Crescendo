@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.316666509876232,
-        "y": 8.448621341687128
+        "y": 7.45
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.940036205980766,
-        "y": 8.202825716314408
+        "y": 7.20420437462728
       },
       "isLocked": false,
       "linkedName": "EndOfDEFPart1"

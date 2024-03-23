@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -44,11 +45,11 @@ public class Flipper extends SubsystemBase {
   }
 
   public void setFlipperUp() {
-    flipperPIDController.setReference(.35, ControlType.kPosition);
+    flipperPIDController.setReference(Constants.FlipperConstants.flipperUp, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
-    flipperPIDController.setReference(.7, ControlType.kPosition);
+    flipperPIDController.setReference(Constants.FlipperConstants.flipperDown, ControlType.kPosition);
   }
 
   public void runFlipperBackward() {
@@ -60,7 +61,7 @@ public class Flipper extends SubsystemBase {
   }
 
   public void panic() {
-    flipperPIDController.setReference(.23, ControlType.kPosition);
+    flipperPIDController.setReference(Constants.FlipperConstants.crap, ControlType.kPosition);
   } // aaaaaaaaaaaaaaaaa
 
   public static Flipper getInstance() {
@@ -96,7 +97,7 @@ public class Flipper extends SubsystemBase {
     //   }
     //   SmartDashboard.putNumber("FlipperkP", flipperP);
 
-    // SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
+    SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
 
     // double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
     // if (newSetFlipper != setFlipper) {

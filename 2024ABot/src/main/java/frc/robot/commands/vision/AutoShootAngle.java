@@ -61,13 +61,13 @@ public class AutoShootAngle extends Command {
     if (m_statecontroller.getMode() == RobotMode.SPEAKER
         && angle < 56
         && angle > 13
-        && distance < 3) {
-      m_shooter.shooterTo(angle + 3);
+        && distance < 3.5) {
+      m_shooter.shooterTo(angle + 5);
     }
     if (m_statecontroller.getMode() == RobotMode.SPEAKER
         && angle < 56
         && angle > 13
-        && distance > 3) {
+        && distance > 3.5) {
       m_shooter.shooterTo(angle + distance * .8);
     }
     System.out.println(angle);

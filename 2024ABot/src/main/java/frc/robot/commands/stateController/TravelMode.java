@@ -6,6 +6,7 @@ package frc.robot.commands.stateController;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
@@ -19,14 +20,15 @@ public class TravelMode extends InstantCommand {
   Shooter m_Shooter;
   StateController m_StateController;
   rAMP m_ramp;
-
+  Flipper m_flipper;
   public TravelMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
     m_StateController = StateController.getInstance();
-    m_ramp = rAMP.getInstance();
-    addRequirements(m_Intake, m_Shooter, m_StateController, m_ramp);
+    m_flipper = Flipper.getInstance();
+    // m_ramp = rAMP.getInstance();
+    addRequirements(m_Intake, m_Shooter, m_StateController,m_flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +38,7 @@ public class TravelMode extends InstantCommand {
     m_StateController.setTravel();
     m_Shooter.shooterTo(m_StateController.getAngle());
     m_Shooter.setPower(0);
-    m_ramp.setrAMPUp();
-
+    m_flipper.setFlipperDown();
+    // m_ramp.setrAMPUp();
   }
 }

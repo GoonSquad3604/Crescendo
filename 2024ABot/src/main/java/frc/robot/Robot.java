@@ -76,20 +76,20 @@ public class Robot extends LoggedRobot {
     // robotcontain.drivetrain.addvision
     // m_robotContainer.getAngle();
 
-    //UNCOMMENT TO ACTIVATE VISION FOR AUTON
-  //   var visionEst = m_robotContainer.getBestPose();
-  //   if(m_robotContainer.distanceFilter()) {
-  //     visionEst.ifPresent(
-  //       est -> {
-  //         var estPose = est.estimatedPose.toPose2d();
+    // UNCOMMENT TO ACTIVATE VISION FOR AUTON
+    var visionEst = m_robotContainer.getBestPose();
+    if (m_robotContainer.distanceFilter()) {
+      visionEst.ifPresent(
+          est -> {
+            var estPose = est.estimatedPose.toPose2d();
 
-  //         var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
+            var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
 
-  //         m_robotContainer.drivetrain.addVisionMeasurement(
-  //             est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-  //       });
-  // }
-}
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+          });
+    }
+  }
 
   @Override
   public void disabledInit() {}
@@ -136,18 +136,18 @@ public class Robot extends LoggedRobot {
     // Timer.getFPGATimestamp(), estStdDevs);
 
     //   });
-    var visionEst = m_robotContainer.getBestPose();
-    if(m_robotContainer.distanceFilter()) {
-      visionEst.ifPresent(
-        est -> {
-          var estPose = est.estimatedPose.toPose2d();
+    //   var visionEst = m_robotContainer.getBestPose();
+    //   if(m_robotContainer.distanceFilter()) {
+    //     visionEst.ifPresent(
+    //       est -> {
+    //         var estPose = est.estimatedPose.toPose2d();
 
-          var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
+    //         var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
 
-          m_robotContainer.drivetrain.addVisionMeasurement(
-              est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-        });
-  }
+    //         m_robotContainer.drivetrain.addVisionMeasurement(
+    //             est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+    //       });
+    // }
   }
 
   @Override

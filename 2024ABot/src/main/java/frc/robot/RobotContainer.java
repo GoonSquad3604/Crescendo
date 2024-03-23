@@ -54,8 +54,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.rAMP;
-
 import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 
@@ -66,7 +64,6 @@ public class RobotContainer {
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController pit = new CommandXboxController(2); // My joystick
-
   // 69
 
   private final CommandXboxController driver = new CommandXboxController(0); // My joystick
@@ -75,8 +72,8 @@ public class RobotContainer {
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
-//   private final Flipper s_Flipper = Flipper.getInstance();
-private final rAMP s_rAMP = rAMP.getInstance();
+  private final Flipper s_Flipper = Flipper.getInstance();
+  // private final rAMP s_rAMP = rAMP.getInstance();
   private final Index s_Index = Index.getInstance();
   private final StateController s_StateController = StateController.getInstance();
   private final Vision rightVision =
@@ -84,7 +81,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
   private final Vision leftVision =
       new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
   private Command aimAndShootCommand;
-  private Command shimmy;
+//   private Command shimmy;
   //   private final Vision s_Vision = Vision.getInstance();
   public final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
@@ -200,7 +197,8 @@ private final rAMP s_rAMP = rAMP.getInstance();
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
     buttonBox
-        .button(9).and(ampTrigger)
+        .button(9)
+        .and(ampTrigger)
         .onTrue(
             new InstantCommand(
                 () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
@@ -223,7 +221,7 @@ private final rAMP s_rAMP = rAMP.getInstance();
         .button(10)
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    buttonBox.button(10).and(ampTrigger).onTrue(shimmy);
+    // buttonBox.button(10).and(ampTrigger).onTrue(shimmy);
     // buttonBox
     //     .button(11)
     //     .and(ampTrigger)
@@ -245,13 +243,14 @@ private final rAMP s_rAMP = rAMP.getInstance();
         .button(12)
         .and(ampTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
-    buttonBox
-        .button(12)
-        .and(ampTrigger)
-        .onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Index.setIndexPower(.2),s_Index), new InstantCommand(() -> s_Shooter.setPower(.14)))
-        );
+    // buttonBox
+    //     .button(12)
+    //     .and(ampTrigger)
+    //     .onTrue(new ParallelCommandGroup(new InstantCommand(() ->
+    // s_Index.setIndexPower(.2),s_Index), new InstantCommand(() -> s_Shooter.setPower(.12)))
+    //     );
 
-    //buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
 
     buttonBox
         .button(12)
@@ -261,21 +260,22 @@ private final rAMP s_rAMP = rAMP.getInstance();
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Index.indexStop())));
     buttonBox
-        .button(12).and(ampTrigger.negate())
+        .button(12)
+        .and(ampTrigger.negate())
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooter()),
+                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
                 new InstantCommand(() -> s_Index.indexStop()),
-                new AfterShot()
-               ));
+                new AfterShot()));
     buttonBox
-        .button(12).and(ampTrigger)
+        .button(12)
+        .and(ampTrigger)
         .onFalse(
             new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooter()),
-                new InstantCommand(() -> s_Index.indexStop())
-                
-               ));
+                new InstantCommand(() -> s_Shooter.stopShooter(),s_Shooter),
+                new InstantCommand(() -> s_Index.indexStop(),s_Index),
+                new InstantCommand(() -> s_Flipper.setFlipperDown())).andThen(new AfterShot()));
+
     // driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
     // driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
@@ -284,6 +284,8 @@ private final rAMP s_rAMP = rAMP.getInstance();
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
     driver.start().onTrue(aimAndShootCommand);
+    driver.y().and(driver.b()).onTrue(new InstantCommand(() ->s_Flipper.panic()));
+    driver.y().onFalse(new InstantCommand(()-> s_Flipper.setFlipperDown()));
 
     // driver.start().onTrue(new AutoShootAngle(drivetrain, s_Shooter,s_StateController));
     // driver.start()
@@ -292,11 +294,11 @@ private final rAMP s_rAMP = rAMP.getInstance();
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));
-    driver.y().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
+    // driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));
+    // driver.y().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
 
-    driver.a().onTrue(new InstantCommand(() -> s_rAMP.runrAMPBack()));
-    driver.a().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
+    // driver.a().onTrue(new InstantCommand(() -> s_rAMP.runrAMPBack()));
+    // driver.a().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
 
     // driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // driver.y().and(indexTrigger.negate()).onTrue(
@@ -323,9 +325,12 @@ private final rAMP s_rAMP = rAMP.getInstance();
     s_Shooter.stopShooter();
     s_Index.indexStop();
     s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+    // s_rAMP.setrAMPUp();
   }
 
   public RobotContainer() {
+     NamedCommands.registerCommand(
+        "rampDown", new InstantCommand(() -> s_Flipper.setFlipperDown(), s_Flipper));
     NamedCommands.registerCommand(
         "runIntakeFaster",
         new SequentialCommandGroup(
@@ -386,7 +391,8 @@ private final rAMP s_rAMP = rAMP.getInstance();
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new AutoAimCont(drivetrain, s_Shooter));
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
-    shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)), Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
+    // shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)),
+    // Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
     aimAndShootCommand =
         Commands.runOnce(
                 () -> {
@@ -442,10 +448,12 @@ private final rAMP s_rAMP = rAMP.getInstance();
 
     return Optional.empty();
   }
+
   public boolean distanceFilter() {
-    return leftVision.getDistofTag(drivetrain.getState().Pose) <4|| rightVision.getDistofTag(drivetrain.getState().Pose)<4;
-    
+    return leftVision.getDistOfTag(drivetrain.getState().Pose) < 4
+        || rightVision.getDistOfTag(drivetrain.getState().Pose) < 4;
   }
+
   public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
     if (leftVision.getHasTarget()) return leftVision.getEstimationStdDevs(estimatedPose);
     if (rightVision.getHasTarget()) return rightVision.getEstimationStdDevs(estimatedPose);

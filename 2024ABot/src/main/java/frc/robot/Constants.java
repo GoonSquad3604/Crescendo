@@ -119,7 +119,11 @@ public final class Constants {
 
   public static final class FlipperConstants {
     public static final int flipperID = 10;
+    public static final double flipperDown = .808;
+    public static final double flipperUp = .366;
+    public static final double  crap = .26;
   }
+
   public static final class rAMPConstants {
     public static final int rAMPID = 10;
     public static final double rAMPUP = .35;
@@ -127,8 +131,6 @@ public final class Constants {
     public static final double almostDown = .5;
 
     public static final double rAMPDOWN = .73;
-
-
   }
 
   public static class VisionConstants {

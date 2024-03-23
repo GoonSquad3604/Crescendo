@@ -56,11 +56,11 @@ public class RepositionAutoAim extends InstantCommand {
     if (angle < 13) {
       s_Shooter.shooterTo(13);
     }
-    if (angle < 56 && angle > 13 && distance < 3) {
-      s_Shooter.shooterTo(angle+3);
+    if (angle < 56 && angle > 13 && distance < 3.5) {
+      s_Shooter.shooterTo(angle + 5);
     }
-    if (angle < 56 && angle > 13 && distance > 3) {
-      s_Shooter.shooterTo(angle + distance*.8);
+    if (angle < 56 && angle > 13 && distance > 3.5) {
+      s_Shooter.shooterTo(angle + distance * .8);
     }
   }
 }

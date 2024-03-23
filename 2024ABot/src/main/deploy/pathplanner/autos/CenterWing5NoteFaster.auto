@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "rampDown"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shooterSpeaker"
           }
         },
@@ -98,12 +104,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "revShooter"
@@ -124,7 +124,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -178,12 +178,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "revShooter"
@@ -192,7 +186,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.8
+            "waitTime": 0.5
           }
         },
         {
@@ -255,12 +249,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
           }
         },
         {

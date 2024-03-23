@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "rampDown"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "intakeDown"
           }
         },

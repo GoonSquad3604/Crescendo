@@ -50,24 +50,29 @@ public class Vision extends SubsystemBase {
           new PhotonPoseEstimator(
               m_layout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_camera, robotToCamera);
       m_estimator.setMultiTagFallbackStrategy(PoseStrategy.CLOSEST_TO_REFERENCE_POSE);
-      
+
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.exit(1);
     }
   }
-  public double getDistofTag(Pose2d prevPose){
-    Pose2d target;
-    Pose2d pose = prevPose;
-    double distance;
-    if(getBestTarget() != null) {
+
+  public double getDistOfTag(Pose2d prevPose) {
+    try {
+      Pose2d target;
+      Pose2d pose = prevPose;
+      double distance;
+      if (getBestTarget() != null) {
         if (getHasTarget() && getBestTarget() != null && getBestTarget().getPoseAmbiguity() < .1) {
-         target = m_layout.getTagPose(getBestTarget().getFiducialId()).get().toPose2d();
-         distance = pose.getTranslation().getDistance(target.getTranslation());
+          target = m_layout.getTagPose(getBestTarget().getFiducialId()).get().toPose2d();
+          distance = pose.getTranslation().getDistance(target.getTranslation());
           return distance;
         }
       }
-        return 999;
+    } catch (Exception e) {
+      return 999;
+    }
+    return 999;
   }
 
   public Optional<PhotonTrackedTarget> getTag(int tagID) {
@@ -111,8 +116,9 @@ public class Vision extends SubsystemBase {
 
     return Optional.of(yaw);
   }
-   public boolean getTagDistance() {
-    if(getBestTarget()==null) return false;
+
+  public boolean getTagDistance() {
+    if (getBestTarget() == null) return false;
 
     Optional<PhotonTrackedTarget> target = getTag(getBestTarget().getFiducialId());
 
@@ -125,7 +131,7 @@ public class Vision extends SubsystemBase {
             m_layout.getTagPose(getBestTarget().getFiducialId()).get().getZ(),
             m_offset.getRotation().getY(),
             target.get().getPitch());
-    return distance<4;
+    return distance < 4;
   }
 
   public Optional<Double> getTagDistance(int tagID) {
@@ -141,29 +147,25 @@ public class Vision extends SubsystemBase {
             m_offset.getRotation().getY(),
             target.get().getPitch());
 
-            SmartDashboard.putNumber(m_camera.getName() + " camera distance", distance);
+    SmartDashboard.putNumber(m_camera.getName() + " camera distance", distance);
     return Optional.of(distance);
   }
 
   public Optional<EstimatedRobotPose> getCameraResult(Pose2d prevPose) {
-    try{
-    if (getBestTarget() != null) {
-      if (getHasTarget() && getBestTarget() != null && getBestTarget().getPoseAmbiguity() < .1) {
-       
-          
-            m_estimator.setReferencePose(prevPose);
-            Optional<EstimatedRobotPose> pose = m_estimator.update();
-            return pose;
-          
-        
-      }
-    }
-        return Optional.empty();
+    try {
+      if (getBestTarget() != null) {
+        if (getHasTarget() && getBestTarget() != null && getBestTarget().getPoseAmbiguity() < .1) {
 
-  }
-  catch(Exception e) {
-    return Optional.empty();
-  }
+          m_estimator.setReferencePose(prevPose);
+          Optional<EstimatedRobotPose> pose = m_estimator.update();
+          return pose;
+        }
+      }
+      return Optional.empty();
+
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 
   public PhotonTrackedTarget getBestTarget() {
