@@ -120,7 +120,7 @@ public final class Constants {
   public static final class FlipperConstants {
     public static final int flipperID = 10;
     public static final double flipperDown = .808;
-    public static final double flipperUp = .366;
+    public static final double flipperUp = .457;
     public static final double  crap = .26;
   }
 
@@ -140,7 +140,10 @@ public final class Constants {
      * camera's location.
      */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-
+public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
+        new Pose2d(1.91, 8.16, new Rotation2d(-Math.PI));
+    public static final Pose2d RED_AMP_DISTANCE_TARGET =
+        new Pose2d(14.66, 8.16, new Rotation2d(Math.PI));
     public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET =
         new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
     public static final Pose2d RED_SPEAKER_DISTANCE_TARGET =

@@ -41,6 +41,7 @@ import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.AutoShootAngle;
+import frc.robot.commands.vision.RotateToAmp;
 import frc.robot.commands.vision.RotateToSpeaker;
 // import frc.robot.commands.vision.Aim;
 // import frc.robot.commands.vision.AimPID;
@@ -81,6 +82,8 @@ public class RobotContainer {
   private final Vision leftVision =
       new Vision("left", Constants.VisionConstants.LEFT_ROBOT_TO_CAMERA);
   private Command aimAndShootCommand;
+    private Command aimAndShootCommandAmp;
+
 //   private Command shimmy;
   //   private final Vision s_Vision = Vision.getInstance();
   public final SwerveRequest.FieldCentric drive =
@@ -284,6 +287,7 @@ public class RobotContainer {
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
     driver.start().onTrue(aimAndShootCommand);
+    driver.a().onTrue(aimAndShootCommandAmp);
     driver.y().and(driver.b()).onTrue(new InstantCommand(() ->s_Flipper.panic()));
     driver.y().onFalse(new InstantCommand(()-> s_Flipper.setFlipperDown()));
 
@@ -325,6 +329,7 @@ public class RobotContainer {
     s_Shooter.stopShooter();
     s_Index.indexStop();
     s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+    s_Flipper.setFlipperDown();
     // s_rAMP.setrAMPUp();
   }
 
@@ -393,6 +398,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
     // shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)),
     // Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
+    aimAndShootCommandAmp =
+        Commands.runOnce(
+                () -> {
+                  var pose = getBestPose();
+                  if (pose.isPresent())
+                    drivetrain.seedFieldRelative(pose.get().estimatedPose.toPose2d());
+                })
+            .andThen(Commands.waitSeconds(.1))
+            .andThen(new RotateToAmp(drivetrain));
     aimAndShootCommand =
         Commands.runOnce(
                 () -> {
