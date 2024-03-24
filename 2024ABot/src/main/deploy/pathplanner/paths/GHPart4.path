@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.494319799324847,
-        "y": 1.1918258447434449
+        "x": 8.715792246399308,
+        "y": 1.1436921639275377
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.025990358600924,
-        "y": 0.4957995514132747
+        "x": 7.247462805675386,
+        "y": 0.4476658705973675
       },
       "isLocked": false,
       "linkedName": "endofGHPart3"
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.75,
+    "maxVelocity": 5.27,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0

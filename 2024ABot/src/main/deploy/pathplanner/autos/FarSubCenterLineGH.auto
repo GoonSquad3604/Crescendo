@@ -119,19 +119,19 @@
         {
           "type": "named",
           "data": {
-            "name": "autoAim"
+            "name": "revShooter"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "revShooter"
+            "name": "autoAim"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -199,19 +199,13 @@
         {
           "type": "named",
           "data": {
-            "name": "autoAim"
+            "name": "revShooter"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "autoAim"
           }
         },
         {

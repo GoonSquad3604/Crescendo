@@ -296,6 +296,8 @@ public class RobotContainer {
     //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
     pit.b().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    pit.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    pit.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     // driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));

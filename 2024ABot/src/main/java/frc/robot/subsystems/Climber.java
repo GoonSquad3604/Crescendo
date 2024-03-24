@@ -50,7 +50,7 @@ public class Climber extends SubsystemBase {
 
     // PIDs
     leftClimberPIDController.setP(.5);
-    rightClimberPIDController.setP(.5);
+    rightClimberPIDController.setP(.2);
 
     leftClimberPIDController.setI(0);
     rightClimberPIDController.setI(0);

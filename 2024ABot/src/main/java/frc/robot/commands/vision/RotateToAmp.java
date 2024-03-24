@@ -62,14 +62,14 @@ public class RotateToAmp extends ProfiledPIDCommand {
   @Override
   public void initialize() {
     super.initialize();
-    Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+    Pose2d target = Constants.VisionConstants.RED_AMP_DISTANCE_TARGET;
     ;
     Pose2d pose = drivetrain.getState().Pose;
 
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
       if (alliance.get() == DriverStation.Alliance.Blue)
-        target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+        target = Constants.VisionConstants.BLUE_AMP_DISTANCE_TARGET;
     }
     Translation2d distance =
         new Translation2d(pose.getX() - target.getX(), pose.getY() - target.getY());

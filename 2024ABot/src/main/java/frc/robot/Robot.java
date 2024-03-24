@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +18,9 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+    // PortForwarder.add(5800, "10.36.4.33", 5800);   
+
+    // PortForwarder.add(5801, "10.36.4.33", 5801);   
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);

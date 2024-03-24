@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -30,12 +31,14 @@ public class Flipper extends SubsystemBase {
     angleEncoder = flipperMotor.getAbsoluteEncoder(Type.kDutyCycle);
     flipperPIDController = flipperMotor.getPIDController();
     flipperPIDController.setFeedbackDevice(angleEncoder);
+    
 
     flipperPIDController.setP(2.2); // geometry dash
     flipperPIDController.setI(0);
     flipperPIDController.setD(0);
 
     flipperPIDController.setOutputRange(-.4, .25);
+    flipperMotor.setIdleMode(IdleMode.kBrake);
 
     flipperMotor.enableVoltageCompensation(12);
   }
