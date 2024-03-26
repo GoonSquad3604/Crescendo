@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5432663211005435,
-        "y": 4.38310802547531
+        "x": 2.680533949442751,
+        "y": 4.343233929646981
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3737350931491987,
-        "y": 4.596593884545793
+        "x": 1.5110027214914064,
+        "y": 4.556719788717465
       },
       "isLocked": false,
       "linkedName": "endOfMid4notepart1"
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.27,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

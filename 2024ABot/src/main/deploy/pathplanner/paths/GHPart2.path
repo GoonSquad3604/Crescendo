@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.241041962510971,
-        "y": 2.960410570880455
+        "x": 8.620831476538397,
+        "y": 2.8922432222088648
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.34205715325011,
-        "y": 1.255076090399094
+        "x": 7.721846667277536,
+        "y": 1.186908741727504
       },
       "isLocked": false,
       "linkedName": "PickUpG"
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.27,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

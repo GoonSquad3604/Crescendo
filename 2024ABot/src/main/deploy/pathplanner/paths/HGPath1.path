@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.309209311182562,
-        "y": 4.197161039636433
+        "x": 0.8353794485366749,
+        "y": 4.457363976456348
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.004291493754993,
-        "y": 4.158208268966955
+        "x": 3.8148994816461754,
+        "y": 0.42897863573504874
       },
       "isLocked": false,
-      "linkedName": "pickedUpF"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4243070953520323,
-        "y": 5.531293435066112
+        "x": 8.502306387328824,
+        "y": 1.013744249710721
       },
       "prevControl": {
-        "x": 1.589856370697321,
-        "y": 5.365744159720822
+        "x": 7.3337232672444355,
+        "y": 0.6729075063527727
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "subShotF"
+      "linkedName": "endOfHG1"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 12.652556500557756,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HGPaths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -56.1363094311817,
     "velocity": 0
   },
   "useDefaultConstraints": true

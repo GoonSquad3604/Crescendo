@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.826097454664045,
-      "y": 4.457363976456348
+      "x": 1.3171869760109631,
+      "y": 5.511817049731372
     },
-    "rotation": -56.76828893202058
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -20,12 +20,6 @@
         {
           "type": "named",
           "data": {
-            "name": "intakeDown"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "shooterSpeaker"
           }
         },
@@ -33,6 +27,12 @@
           "type": "named",
           "data": {
             "name": "revShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeDown"
           }
         },
         {
@@ -76,22 +76,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "GHPart1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "GHPart2"
-                      }
-                    }
-                  ]
+                  "pathName": "midStartOf4Note"
                 }
               },
               {
@@ -101,13 +88,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 7.0
+                        "waitTime": 4.0
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "runIntakeFasterCont"
+                        "name": "runIntakeFaster"
                       }
                     }
                   ]
@@ -123,15 +110,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "autoAim"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.5
           }
         },
         {
@@ -149,7 +130,81 @@
         {
           "type": "named",
           "data": {
+            "name": "shooterHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "stopIndex"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopShooter"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MidpickUpMiddleNote"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntakeFaster"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 4.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "revShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "fire"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooterHome"
           }
         },
         {
@@ -161,7 +216,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterHome"
+            "name": "stopIndex"
           }
         },
         {
@@ -175,22 +230,35 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart3"
+                        "pathName": "BurntToast1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart4"
+                        "pathName": "BurntToast2"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "runIntakeFasterCont"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runIntake"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 7.0
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -203,39 +271,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "autoAim"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.4
           }
         },
         {
           "type": "named",
           "data": {
             "name": "fire"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIndex"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShooter"
           }
         }
       ]

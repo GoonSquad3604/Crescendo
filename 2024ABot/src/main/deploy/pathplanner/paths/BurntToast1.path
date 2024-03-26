@@ -3,37 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.309209311182562,
-        "y": 4.197161039636433
+        "x": 2.85582141745541,
+        "y": 5.62867536173981
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.495469761907104,
-        "y": 5.096912195184685
+        "x": 4.37181911401324,
+        "y": 4.670849835522191
       },
       "isLocked": false,
-      "linkedName": "pickedUpF"
+      "linkedName": "EndOfMidPickUpMid"
     },
     {
       "anchor": {
-        "x": 2.7258827107665837,
-        "y": 3.2608355112180614
+        "x": 8.548716356696614,
+        "y": 4.216032135763334
       },
       "prevControl": {
-        "x": 4.149051261065486,
-        "y": 1.9140976553558031
+        "x": 7.02646936158534,
+        "y": 3.5941385462971422
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FshotFar"
+      "linkedName": "endOfBurntToast1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": -45.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -50,7 +61,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -58,7 +69,7 @@
             {
               "type": "named",
               "data": {
-                "name": "varAngle"
+                "name": "shooterHome"
               }
             }
           ]
@@ -74,11 +85,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.24000000000001,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "GFPaths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

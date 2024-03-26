@@ -82,13 +82,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart1"
+                        "pathName": "HGPath1"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart2"
+                        "pathName": "HGPath2"
                       }
                     }
                   ]
@@ -131,7 +131,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.25
           }
         },
         {
@@ -175,13 +175,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart3"
+                        "pathName": "HGPath3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "GHPart4"
+                        "pathName": "HGPath4"
                       }
                     }
                   ]

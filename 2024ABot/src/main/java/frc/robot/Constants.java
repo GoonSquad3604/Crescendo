@@ -141,9 +141,9 @@ public final class Constants {
      */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
 public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
-        new Pose2d(1.91, 8.16, new Rotation2d(-Math.PI));
+        new Pose2d(1.95, 6.82, new Rotation2d(-Math.PI));
     public static final Pose2d RED_AMP_DISTANCE_TARGET =
-        new Pose2d(14.66, 8.16, new Rotation2d(Math.PI));
+        new Pose2d(14.6, 6.82, new Rotation2d(Math.PI));
     public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET =
         new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
     public static final Pose2d RED_SPEAKER_DISTANCE_TARGET =
