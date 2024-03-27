@@ -35,7 +35,7 @@ public final class Constants {
 
     // Shooter Positions
     public static final double shooterSpeaker = 56;
-    public static final double shooterAmp = 50; // 55    //ramp 50 degrees .15 power .73 ramp pos
+    public static final double shooterAmp = 35; // 55    //ramp 50 degrees .15 power .73 ramp pos
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
     public static final double shooterTravel = 12;
@@ -147,7 +147,7 @@ public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
     public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET =
         new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
     public static final Pose2d RED_SPEAKER_DISTANCE_TARGET =
-        new Pose2d(16.3, 5.52, new Rotation2d(Math.PI));
+        new Pose2d(16.53, 5.52, new Rotation2d(Math.PI));
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(6, 6, 10);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.6, .6, 7);
 

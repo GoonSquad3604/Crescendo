@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -56,6 +57,28 @@ public class Vision extends SubsystemBase {
       System.exit(1);
     }
   }
+
+  // public double lookUpTable(Pose2d pos) {
+  //   Pose2d pose =pos;
+  //   Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+
+  //   var alliance = DriverStation.getAlliance();
+  //   if (alliance.isPresent()) {
+  //     if (alliance.get() == DriverStation.Alliance.Blue)
+  //       target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+  //   } //696969
+
+  //   double distance = pose.getTranslation().getDistance(target.getTranslation());
+  //   double[] distanceTable = {};
+  //   double[] angleTable = {};
+
+  //   double temp =56;
+  //   double  temp2 = 0;
+  //   for(int i = 0; i<distanceTable.length; i++) {
+  //     if
+  //   }
+    
+  // }
 
   public double getDistOfTag(Pose2d prevPose) {
     try {

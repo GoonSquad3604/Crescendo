@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
+import frc.robot.commands.shooter.AmpFireNew;
 import frc.robot.commands.shooter.AutoAimCont;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionAutoAim;
@@ -253,7 +254,8 @@ public class RobotContainer {
     // s_Index.setIndexPower(.2),s_Index), new InstantCommand(() -> s_Shooter.setPower(.12)))
     //     );
 
-    buttonBox.button(12).and(ampTrigger).onTrue(new ShootAmp());
+    
+    buttonBox.button(12).and(ampTrigger).onTrue(new AmpFireNew());
 
     buttonBox
         .button(12)

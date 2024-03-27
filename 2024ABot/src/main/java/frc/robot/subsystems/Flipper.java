@@ -11,6 +11,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,7 +24,7 @@ public class Flipper extends SubsystemBase {
   private SparkPIDController flipperPIDController;
   private AbsoluteEncoder angleEncoder;
   private double setFlipper;
-
+  private DigitalInput sensor;
   /** Creates a new Flipper. */
   public Flipper() {
     flipperMotor = new CANSparkMax(Constants.FlipperConstants.flipperID, MotorType.kBrushless);
@@ -32,6 +34,7 @@ public class Flipper extends SubsystemBase {
     flipperPIDController = flipperMotor.getPIDController();
     flipperPIDController.setFeedbackDevice(angleEncoder);
     
+    sensor = new DigitalInput(2);
 
     flipperPIDController.setP(2.2); // geometry dash
     flipperPIDController.setI(0);
@@ -46,7 +49,9 @@ public class Flipper extends SubsystemBase {
   public void runFlipper() {
     flipperMotor.set(0.1);
   }
-
+  public boolean noteGone () {
+    return sensor.get();
+  }
   public void setFlipperUp() {
     flipperPIDController.setReference(Constants.FlipperConstants.flipperUp, ControlType.kPosition);
   }
@@ -61,6 +66,10 @@ public class Flipper extends SubsystemBase {
 
   public void stopFlipper() {
     flipperMotor.set(0);
+  }
+
+  public boolean flipperSensor() {
+    return !sensor.get();
   }
 
   public void panic() {
@@ -101,7 +110,7 @@ public class Flipper extends SubsystemBase {
     //   SmartDashboard.putNumber("FlipperkP", flipperP);
 
     SmartDashboard.putNumber("FlipperPosition", angleEncoder.getPosition());
-
+    SmartDashboard.putBoolean("Flipper Sensor", !sensor.get());
     // double newSetFlipper = SmartDashboard.getNumber("setFlipper", 0);
     // if (newSetFlipper != setFlipper) {
     //   setFlipper = newSetFlipper;
