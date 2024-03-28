@@ -12,6 +12,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -198,7 +200,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
 
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
@@ -244,8 +246,8 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("RSpinFF", kFFRight);
 
     // SmartDashboard.putNumber("AnglekP", angleP);
-    // trapAngle = SmartDashboard.getNumber("trap angle", 48);
-    // SmartDashboard.putNumber("trap angle", trapAngle);
+    trapAngle = SmartDashboard.getNumber("trap angle", 48);
+    SmartDashboard.putNumber("trap angle", trapAngle);
     // SmartDashboard.putNumber("aNGLe dest", trapAngle);
 
     //   double newAnglekD = SmartDashboard.getNumber("AnglekD", 0);

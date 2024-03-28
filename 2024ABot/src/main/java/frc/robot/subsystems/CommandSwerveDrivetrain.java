@@ -16,6 +16,8 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -25,9 +27,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
+import frc.util.SwerveVoltageRequest;
+
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 
 /**
@@ -63,7 +70,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               null,
               Volts.of(4),
               null,
-              (state) -> SignalLogger.writeString("state", state.toString())),
+              (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> setControl(TranslationCharacterization.withVolts(volts)), null, this));
 
@@ -73,7 +80,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               null,
               Volts.of(4),
               null,
-              (state) -> SignalLogger.writeString("state", state.toString())),
+              (state) -> Logger.recordOutput("Rotation/SysIdState", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> setControl(RotationCharacterization.withVolts(volts)), null, this));
   private final SysIdRoutine SysIdRoutineSteer =
@@ -82,7 +89,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               null,
               Volts.of(7),
               null,
-              (state) -> SignalLogger.writeString("state", state.toString())),
+              (state) -> Logger.recordOutput("Steer/SysIdState", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> setControl(SteerCharacterization.withVolts(volts)),
               null,
@@ -192,6 +199,56 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     return m_kinematics.toChassisSpeeds(getState().ModuleStates);
   }
 
+   private SwerveVoltageRequest driveVoltageRequest = new SwerveVoltageRequest(true);
+//Logger.recordOutput("Drive/SysIdState", state.toString())
+    private SysIdRoutine m_driveSysIdRoutine =
+    new SysIdRoutine(
+        new SysIdRoutine.Config(null, null, null,(state) ->Logger.recordOutput("Drive/SysIdState", state.toString())),
+        new SysIdRoutine.Mechanism(
+            (Measure<Voltage> volts) -> setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
+            null,
+            this));
+
+    private SwerveVoltageRequest steerVoltageRequest = new SwerveVoltageRequest(false);
+
+    private SysIdRoutine m_steerSysIdRoutine =
+    new SysIdRoutine(
+        new SysIdRoutine.Config(null, null, null,(state) ->Logger.recordOutput("Drive/SysIdState", state.toString())),
+        new SysIdRoutine.Mechanism(
+            (Measure<Voltage> volts) -> setControl(steerVoltageRequest.withVoltage(volts.in(Volts))),
+            null,
+            this));
+
+    // private SysIdRoutine m_slipSysIdRoutine =
+    // new SysIdRoutine(
+    //     new SysIdRoutine.Config(Volts.of(0.25).per(Seconds.of(1)), null, null, ModifiedSignalLogger.logState()),
+    //     new SysIdRoutine.Mechanism(
+    //         (Measure<Voltage> volts) -> setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
+    //         null,
+    //         this));
+    
+    public Command runDriveQuasiTest(Direction direction)
+    {
+        return m_driveSysIdRoutine.quasistatic(direction);
+    }
+
+    public Command runDriveDynamTest(SysIdRoutine.Direction direction) {
+        return m_driveSysIdRoutine.dynamic(direction);
+    }
+
+    public Command runSteerQuasiTest(Direction direction)
+    {
+        return m_steerSysIdRoutine.quasistatic(direction);
+    }
+
+    public Command runSteerDynamTest(SysIdRoutine.Direction direction) {
+        return m_steerSysIdRoutine.dynamic(direction);
+    }
+
+    // public Command runDriveSlipTest()
+    // {
+    //     return m_slipSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward);
+    // }
   private void startSimThread() {
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 

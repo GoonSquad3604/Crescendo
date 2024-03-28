@@ -86,6 +86,8 @@ public class Flipper extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("flip sensor", flipperSensor());
+
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("appliedOutput", flipperMotor.getAppliedOutput());
     // double newFlipperkD = SmartDashboard.getNumber("FlipperkD", 0);

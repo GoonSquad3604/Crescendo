@@ -36,10 +36,10 @@ public class AmpFireNew extends Command {
     // set shooter to amp fire rpm.
     // start timer
     count =0;
-    speed = .08;
+    speed = .05;
     timer.reset();
     triggered = false;
-    s_Index.setIndexPower(.1);
+    s_Index.setIndexPower(.14);
     s_Shooter.setPower(speed);
     // s_Shooter.setPower(.05);
     // s_Shooter.setShooterRPM(
@@ -56,10 +56,28 @@ public class AmpFireNew extends Command {
     if(s_Flipper.flipperSensor() && count==0 && !triggered){
       count++;
       triggered= true;
+      // s_Shooter.setShooterRPM(0, 0);
+      // s_Shooter.setPower(.03);
+      // s_Flipper.setFlipperUp();
     }
-    if(triggered && !s_Flipper.flipperSensor()) triggered = false;
-    if(s_Flipper.flipperSensor() &&count==1 && !triggered) s_Flipper.setFlipperUp();
+    if(triggered && !s_Flipper.flipperSensor())
+    //  {
+    //   s_Shooter.setShooterRPM(0, 0);
+    //   s_Flipper.setFlipperUp();
+    // }
+    triggered = false;
+    if(s_Flipper.flipperSensor() &&count==1 && !triggered){ 
+      s_Shooter.setShooterRPM(0, 0);
+      triggered=true;
+      count++;
+    // s_Flipper.setFlipperUp();
+    }
+    if(!s_Flipper.flipperSensor()&&count==2){
+      // s_Flipper.setFlipperUp();
+
+    }
   } 
+
 
   // Called once the command ends or is interrupted.
   @Override
@@ -74,6 +92,6 @@ public class AmpFireNew extends Command {
   @Override
   public boolean isFinished() {
     // should finish when timer is like 1 sec.
-    return timer.get() == 1.5;
+    return timer.get() == 20;
   }
 }
