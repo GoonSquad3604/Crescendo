@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
@@ -40,11 +41,11 @@ public class AmpFireNew extends Command {
     timer.reset();
     triggered = false;
     s_Index.setIndexPower(.14);
-    s_Shooter.setPower(speed);
+    // s_Shooter.setPower(speed);
     // s_Shooter.setPower(.05);
-    // s_Shooter.setShooterRPM(
-    //     Constants.ShooterConstants.leftShooterAmpRPM+100,
-    //     Constants.ShooterConstants.rightShooterAmpRPM-100);
+    s_Shooter.setShooterRPM(
+        Constants.ShooterConstants.leftShooterAmpRPM,
+        Constants.ShooterConstants.rightShooterAmpRPM);
 
     timer.start();
   }
@@ -60,20 +61,33 @@ public class AmpFireNew extends Command {
       // s_Shooter.setPower(.03);
       // s_Flipper.setFlipperUp();
     }
-    if(triggered && !s_Flipper.flipperSensor())
+    if(triggered && !s_Flipper.flipperSensor()&& count==1)
     //  {
     //   s_Shooter.setShooterRPM(0, 0);
     //   s_Flipper.setFlipperUp();
     // }
     triggered = false;
-    if(s_Flipper.flipperSensor() &&count==1 && !triggered){ 
+
+    if(s_Flipper.flipperSensor() && count==1 && !triggered){ 
       s_Shooter.setShooterRPM(0, 0);
       triggered=true;
       count++;
     // s_Flipper.setFlipperUp();
     }
-    if(!s_Flipper.flipperSensor()&&count==2){
-      // s_Flipper.setFlipperUp();
+    if(!s_Flipper.flipperSensor()&& count==2 && triggered){
+      triggered=false;
+
+
+    }
+    if(s_Flipper.flipperSensor() && count==2 && !triggered){
+          s_Flipper.setFlipperUp();
+          count++;
+          // triggered = true;
+    }
+
+    if(!s_Flipper.flipperSensor() && count == 3){
+      // s_Flipper.setFlipperDown();
+        // s_Flipper.setFlipperUp();
 
     }
   } 

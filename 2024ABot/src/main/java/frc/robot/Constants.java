@@ -27,15 +27,15 @@ public final class Constants {
     public static final int leftShooterSpeakerRPM = -4000;
     public static final int rightShooterSpeakerRPM = 6000;
 
-    public static final int leftShooterAmpRPM = -300;
-    public static final int rightShooterAmpRPM = 300;
+    public static final int leftShooterAmpRPM = -150;
+    public static final int rightShooterAmpRPM = 150;
 
     public static final int leftShooterTrapRPM = -1000; // -3300
     public static final int rightShooterTrapRPM = 2000; // 4200
 
     // Shooter Positions
     public static final double shooterSpeaker = 56; //56
-    public static final double shooterAmp = 24; // 44 30 34  //ramp 50 degrees .15 power .73 ramp pos
+    public static final double shooterAmp = 40; // 44 30 34  //ramp 50 degrees .15 power .73 ramp pos
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
 
@@ -121,7 +121,7 @@ public final class Constants {
   public static final class FlipperConstants {
     public static final int flipperID = 10;
     public static final double flipperDown = .808;
-    public static final double flipperUp = .47; //.457
+    public static final double flipperUp = .5; //.457
     public static final double  crap = .26;
   }
 

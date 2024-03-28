@@ -40,7 +40,7 @@ public class Flipper extends SubsystemBase {
     flipperPIDController.setI(0);
     flipperPIDController.setD(0);
 
-    flipperPIDController.setOutputRange(-.4, .25);
+    flipperPIDController.setOutputRange(-.15, .25);
     flipperMotor.setIdleMode(IdleMode.kBrake);
 
     flipperMotor.enableVoltageCompensation(12);
