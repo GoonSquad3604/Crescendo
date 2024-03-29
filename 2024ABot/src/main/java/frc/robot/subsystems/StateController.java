@@ -104,6 +104,10 @@ public class StateController extends SubsystemBase {
     return rightShooterSpeed;
   }
 
+  public boolean isTravelMode() {
+    return m_Mode == RobotMode.TRAVEL;
+  }
+
   public boolean isIntakeMode() {
     return m_Mode == RobotMode.INTAKE;
   }

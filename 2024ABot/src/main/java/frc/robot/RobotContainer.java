@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.ReturnDistanc;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.AmpFireNew;
@@ -122,6 +123,7 @@ public class RobotContainer {
     Trigger climberTrigger = new Trigger(s_StateController::isClimberMode);
     Trigger ampTrigger = new Trigger(s_StateController::isAmpMode);
     Trigger speakerTrigger = new Trigger(s_StateController::isSpeakerMode);
+    Trigger travelTrigger = new Trigger(s_StateController:: isTravelMode);
     driver
         .rightTrigger()
         .whileTrue(
@@ -141,7 +143,7 @@ public class RobotContainer {
                         new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    // driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
     // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
     // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
@@ -157,7 +159,9 @@ public class RobotContainer {
         .button(2)
         .onTrue(
             new SpeakerMode()
-                .andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController)));
+                .andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController))
+                // .andThen(new ReturnDistanc(s_Shooter, drivetrain.getState().Pose))
+                );
     // buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
     buttonBox.button(3).onTrue(new AmpMode());
     // buttonBox.button(3).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(-1500,2000)));
@@ -251,8 +255,10 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> s_Shooter.shooterTo()));
     buttonBox
         .button(12)
-        .and(ampTrigger.negate())
+        .and(ampTrigger.negate()).and(travelTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
+
+    buttonBox.button(12).and(travelTrigger).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000)).andThen(Commands.waitSeconds(.7).andThen(new InstantCommand(() -> s_Index.setIndexRPM(-6000)))));
     // buttonBox
     //     .button(12)
     //     .and(ampTrigger)

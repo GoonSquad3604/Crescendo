@@ -19,7 +19,6 @@ public class ShooterTo extends InstantCommand {
     // Use addRequirements() here to declare subsystem dependencies.
 
     m_Shooter = Shooter.getInstance();
-    m_reference = reference;
 
     addRequirements(m_Shooter);
   }

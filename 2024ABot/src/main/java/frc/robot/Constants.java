@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,12 +21,14 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
+    //shooterTable
+
     public static final int leftID = 15;
     public static final int rightID = 14;
     public static final int angleID = 5;
 
     // RPMS
-    public static final int leftShooterSpeakerRPM = -4000;
+    public static final int leftShooterSpeakerRPM = -6000;
     public static final int rightShooterSpeakerRPM = 6000;
 
     public static final int leftShooterAmpRPM = -150;
@@ -39,7 +43,7 @@ public final class Constants {
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
 
-    public static final double shooterTravel = 12;
+    public static final double shooterTravel = 8;
 
     public static final double shooterMax = 68.8; // 68.8 degrees
 
