@@ -98,16 +98,24 @@ public class Climber extends SubsystemBase {
 
   public void lowerClimber() {
     leftClimberPIDController.setReference(
-        Constants.ClimberConstants.leftClimbedPos, ControlType.kPosition);
+        Constants.ClimberConstants.leftClimbedPosStable, ControlType.kPosition);
     rightClimberPIDController.setReference(
-        Constants.ClimberConstants.rightClimbedPos, ControlType.kPosition);
+        Constants.ClimberConstants.rightClimbedPosStable, ControlType.kPosition);
+  }
+
+  public void climberTo(double leftPos, double rightPos) {
+    leftClimberPIDController.setReference(
+        leftPos, ControlType.kPosition);
+    rightClimberPIDController.setReference(
+        rightPos, ControlType.kPosition);
+
   }
 
   public void climbPos() {
     leftClimberPIDController.setReference(
-        Constants.ClimberConstants.leftClimbedPos, ControlType.kPosition);
+        Constants.ClimberConstants.leftClimbedPosStable, ControlType.kPosition);
     rightClimberPIDController.setReference(
-        Constants.ClimberConstants.rightClimbedPos, ControlType.kPosition);
+        Constants.ClimberConstants.rightClimbedPosStable, ControlType.kPosition);
   }
 
   public void stopClimber() {

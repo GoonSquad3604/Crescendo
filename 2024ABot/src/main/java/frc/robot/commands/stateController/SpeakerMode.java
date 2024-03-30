@@ -31,7 +31,7 @@ public class SpeakerMode extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+    m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp+ .04);
     m_StateController.setSpeaker();
     m_Flipper.setFlipperDown();
     // m_Shooter.shooterTo(40);

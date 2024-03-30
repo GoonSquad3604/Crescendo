@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.ReturnDistanc;
+import frc.robot.commands.climber.MagicClimb;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.AmpFireNew;
@@ -44,6 +45,7 @@ import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.AutoShootAngle;
+import frc.robot.commands.vision.AutoShootAngleNew;
 import frc.robot.commands.vision.RotateToAmp;
 import frc.robot.commands.vision.RotateToSpeaker;
 // import frc.robot.commands.vision.Aim;
@@ -133,7 +135,7 @@ public class RobotContainer {
                         .withVelocityX(-driver.getLeftY() * MaxSpeed * .2)
                         .withVelocityY(-driver.getLeftX() * MaxSpeed * .2)
                         .withRotationalRate(-driver.getRightX() * MaxAngularRate * .5)));
-    driver.leftTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
+    // driver.leftTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
     driver
         .b()
         .whileTrue(
@@ -159,7 +161,8 @@ public class RobotContainer {
         .button(2)
         .onTrue(
             new SpeakerMode()
-                .andThen(new AutoShootAngle(drivetrain, s_Shooter, s_StateController))
+            // .andThen(new InstantCommand(() -> s_Shooter.lookUpTable(drivetrain.getState().Pose)))
+                .andThen(new AutoShootAngleNew(s_Shooter, drivetrain))
                 // .andThen(new ReturnDistanc(s_Shooter, drivetrain.getState().Pose))
                 );
     // buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
@@ -234,7 +237,7 @@ public class RobotContainer {
     buttonBox
         .button(10)
         .and(climberTrigger)
-        .onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
+        .onTrue(new InstantCommand(() -> s_Climber.raiseCimber(),s_Climber));
     // buttonBox.button(10).and(ampTrigger).onTrue(shimmy);
     // buttonBox
     //     .button(11)
@@ -248,7 +251,10 @@ public class RobotContainer {
     buttonBox
         .button(11)
         .and(climberTrigger)
-        .onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
+        .onTrue(
+            // new InstantCommand(() -> s_Climber.lowerClimber())
+            new MagicClimb(s_Climber, drivetrain)
+        );
     buttonBox
         .button(11)
         .and(speakerTrigger)
@@ -286,7 +292,7 @@ public class RobotContainer {
     buttonBox.button(12).and(ampTrigger).onTrue(new AmpFireNew());
         // buttonBox.button(12).and(ampTrigger).onTrue(new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
 
-
+    buttonBox.button(12).and(climberTrigger).onTrue(new InstantCommand(() -> s_Climber.stopClimber()));
     buttonBox
         .button(12)
         .and(climberTrigger)
@@ -318,7 +324,12 @@ public class RobotContainer {
     // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
     // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // driver.start().onTrue(new Aim(drivetrain));
-    driver.start().onTrue(aimAndShootCommand);
+    // driver.leftTrigger().and(travelTrigger).onTrue(aimAndShootCommand.andThen(new InstantCommand(() -> s_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterSpeakerRPM, Constants.ShooterConstants.rightShooterSpeakerRPM))).andThen(Commands.waitSeconds(.6)).andThen(new InstantCommand(()->s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
+    driver.leftTrigger().and(speakerTrigger).onTrue(aimAndShootCommand.andThen(new InstantCommand(()->s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
+    driver.leftTrigger().onFalse(new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
+                new InstantCommand(() -> s_Index.indexStop()),
+                new AfterShot()));
     driver.a().onTrue(aimAndShootCommandAmp);
     driver.y().and(driver.b()).onTrue(new InstantCommand(() ->s_Flipper.panic()));
     driver.y().onFalse(new InstantCommand(()-> s_Flipper.setFlipperDown()));
@@ -326,10 +337,10 @@ public class RobotContainer {
     // driver.start().onTrue(new AutoShootAngle(drivetrain, s_Shooter,s_StateController));
     // driver.start()
     //             .onTrue(drivetrain.addMeasurementCommand(() -> getBestPose()));
-    // pit.b().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    // pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    // pit.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    // pit.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    pit.b().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
+    pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+    pit.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
+    pit.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     // pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     // pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     // driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));

@@ -212,7 +212,11 @@ public class Shooter extends SubsystemBase {
     double distance = pose.getTranslation().getDistance(target.getTranslation());
     var x = LookUpTable.calcShooterTableEntry(distance);
     double angle = x.angle;
-    return distance;
+    SmartDashboard.putNumber("ang", angle);
+    SmartDashboard.putNumber("dist", distance);
+
+    
+    return angle;
   }
   @Override
   public void periodic() {
