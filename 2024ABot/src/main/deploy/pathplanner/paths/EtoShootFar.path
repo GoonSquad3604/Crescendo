@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.238644776221937,
-        "y": 5.66762813240929
+        "x": 4.603868960824342,
+        "y": 5.7844864444177295
       },
       "prevControl": {
-        "x": 4.336026702895635,
-        "y": 6.573280050474692
+        "x": 4.70125088749804,
+        "y": 6.690138362483132
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,48 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "rotationOverride"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.41,
     "maxAcceleration": 3.5,

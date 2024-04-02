@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -77,7 +76,7 @@ public class Vision extends SubsystemBase {
   //   for(int i = 0; i<distanceTable.length; i++) {
   //     if
   //   }
-    
+
   // }
 
   public double getDistOfTag(Pose2d prevPose) {

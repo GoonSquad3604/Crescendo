@@ -4,7 +4,7 @@
 
 package frc.robot.commands.vision;
 
-import com.pathplanner.lib.path.PathPlannerTrajectory.State;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,10 +15,13 @@ import frc.robot.subsystems.StateController;
 public class AutoShootAngleNew extends Command {
   /** Creates a new AutoShootAngleNew. */
   Shooter m_shoot;
+  @AutoLogOutput
   Pose2d pose;
   StateController stateController;
   CommandSwerveDrivetrain swerve;
+  @AutoLogOutput
   double angle;
+
   public AutoShootAngleNew(Shooter shoot, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     swerve = drive;
@@ -36,10 +39,21 @@ public class AutoShootAngleNew extends Command {
   @Override
   public void execute() {
     pose = swerve.getState().Pose;
-    if(stateController.isSpeakerMode()) {
-    angle = m_shoot.lookUpTable(pose);
-    m_shoot.shooterTo(angle);
+    
+    if (stateController.isSpeakerMode()) {
+      angle =  m_shoot.lookUpTable(pose);
+      m_shoot.shooterTo(angle);
     }
+  }
+
+  @AutoLogOutput
+  public double updateAngle() {
+    return m_shoot.lookUpTable(pose);
+  }
+
+  @AutoLogOutput
+  public Pose2d updatePose() {
+    return swerve.getState().Pose;
   }
 
   // Called once the command ends or is interrupted.

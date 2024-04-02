@@ -11,7 +11,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +24,7 @@ public class Flipper extends SubsystemBase {
   private AbsoluteEncoder angleEncoder;
   private double setFlipper;
   private DigitalInput sensor;
+
   /** Creates a new Flipper. */
   public Flipper() {
     flipperMotor = new CANSparkMax(Constants.FlipperConstants.flipperID, MotorType.kBrushless);
@@ -33,7 +33,7 @@ public class Flipper extends SubsystemBase {
     angleEncoder = flipperMotor.getAbsoluteEncoder(Type.kDutyCycle);
     flipperPIDController = flipperMotor.getPIDController();
     flipperPIDController.setFeedbackDevice(angleEncoder);
-    
+
     sensor = new DigitalInput(2);
 
     flipperPIDController.setP(2.2); // geometry dash
@@ -49,15 +49,18 @@ public class Flipper extends SubsystemBase {
   public void runFlipper() {
     flipperMotor.set(0.1);
   }
-  public boolean noteGone () {
+
+  public boolean noteGone() {
     return sensor.get();
   }
+
   public void setFlipperUp() {
     flipperPIDController.setReference(Constants.FlipperConstants.flipperUp, ControlType.kPosition);
   }
 
   public void setFlipperDown() {
-    flipperPIDController.setReference(Constants.FlipperConstants.flipperDown, ControlType.kPosition);
+    flipperPIDController.setReference(
+        Constants.FlipperConstants.flipperDown, ControlType.kPosition);
   }
 
   public void runFlipperBackward() {

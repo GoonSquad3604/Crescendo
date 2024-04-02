@@ -329,7 +329,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "runIntakeFasterCont"
+                        "name": "runIntake"
                       }
                     },
                     {
@@ -342,12 +342,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "revShooter"
           }
         },
         {

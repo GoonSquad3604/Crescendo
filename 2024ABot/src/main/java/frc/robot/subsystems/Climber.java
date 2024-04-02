@@ -104,11 +104,8 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberTo(double leftPos, double rightPos) {
-    leftClimberPIDController.setReference(
-        leftPos, ControlType.kPosition);
-    rightClimberPIDController.setReference(
-        rightPos, ControlType.kPosition);
-
+    leftClimberPIDController.setReference(leftPos, ControlType.kPosition);
+    rightClimberPIDController.setReference(rightPos, ControlType.kPosition);
   }
 
   public void climbPos() {
@@ -127,6 +124,9 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("left climber height", leftClimberEncoder.getPosition());
     SmartDashboard.putNumber("right climber height", rightClimberEncoder.getPosition());
+    SmartDashboard.putNumber("leftCurrent", leftClimberMotor.getAppliedOutput());
+    SmartDashboard.putNumber("rightCurrent", rightClimberMotor.getAppliedOutput());
+
     // SmartDashboard.putBoolean("STOP!!!!!!!!", (leftClimberEncoder.getPosition() <= 100));
   }
 }

@@ -10,7 +10,6 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
-import frc.robot.subsystems.rAMP;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -20,6 +19,7 @@ public class AmpMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   Index m_Index;
+
   // rAMP m_ramp;
 
   public AmpMode() {

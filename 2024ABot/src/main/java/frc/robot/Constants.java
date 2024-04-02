@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,7 +19,7 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    //shooterTable
+    // shooterTable
 
     public static final int leftID = 15;
     public static final int rightID = 14;
@@ -38,8 +36,9 @@ public final class Constants {
     public static final int rightShooterTrapRPM = 2000; // 4200
 
     // Shooter Positions
-    public static final double shooterSpeaker = 56; //56
-    public static final double shooterAmp = 40; // 44 30 34  //ramp 50 degrees .15 power .73 ramp pos
+    public static final double shooterSpeaker = 56; // 56
+    public static final double shooterAmp =
+        40; // 44 30 34  //ramp 50 degrees .15 power .73 ramp pos
     public static final double shooterTrap = 68;
     public static final double shooterHome = 65.5;
 
@@ -130,9 +129,9 @@ public final class Constants {
 
   public static final class FlipperConstants {
     public static final int flipperID = 10;
-    public static final double flipperDown = .808;
-    public static final double flipperUp = .5; //.457
-    public static final double  crap = .26;
+    public static final double flipperDown = .973;
+    public static final double flipperUp = .668; // .457
+    public static final double crap = .26;
   }
 
   public static final class rAMPConstants {
@@ -151,7 +150,8 @@ public final class Constants {
      * camera's location.
      */
     public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
+
+    public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
         new Pose2d(1.95, 6.82, new Rotation2d(-Math.PI));
     public static final Pose2d RED_AMP_DISTANCE_TARGET =
         new Pose2d(14.6, 6.82, new Rotation2d(Math.PI));

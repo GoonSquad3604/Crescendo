@@ -36,7 +36,7 @@ public class AmpFireNew extends Command {
     // set indexer to speed to fire
     // set shooter to amp fire rpm.
     // start timer
-    count =0;
+    count = 0;
     speed = .05;
     timer.reset();
     triggered = false;
@@ -54,44 +54,41 @@ public class AmpFireNew extends Command {
   @Override
   public void execute() {
 
-    if(s_Flipper.flipperSensor() && count==0 && !triggered){
+    if (s_Flipper.flipperSensor() && count == 0 && !triggered) {
       count++;
-      triggered= true;
+      triggered = true;
       // s_Shooter.setShooterRPM(0, 0);
       // s_Shooter.setPower(.03);
       // s_Flipper.setFlipperUp();
     }
-    if(triggered && !s_Flipper.flipperSensor()&& count==1)
-    //  {
-    //   s_Shooter.setShooterRPM(0, 0);
-    //   s_Flipper.setFlipperUp();
-    // }
-    triggered = false;
+    if (triggered && !s_Flipper.flipperSensor() && count == 1)
+      //  {
+      //   s_Shooter.setShooterRPM(0, 0);
+      //   s_Flipper.setFlipperUp();
+      // }
+      triggered = false;
 
-    if(s_Flipper.flipperSensor() && count==1 && !triggered){ 
+    if (s_Flipper.flipperSensor() && count == 1 && !triggered) {
       s_Shooter.setShooterRPM(0, 0);
-      triggered=true;
+      triggered = true;
       count++;
-    // s_Flipper.setFlipperUp();
+      // s_Flipper.setFlipperUp();
     }
-    if(!s_Flipper.flipperSensor()&& count==2 && triggered){
-      triggered=false;
-
-
+    if (!s_Flipper.flipperSensor() && count == 2 && triggered) {
+      triggered = false;
     }
-    if(s_Flipper.flipperSensor() && count==2 && !triggered){
-          s_Flipper.setFlipperUp();
-          count++;
-          // triggered = true;
+    if (s_Flipper.flipperSensor() && count == 2 && !triggered) {
+      s_Flipper.setFlipperUp();
+      count++;
+      // triggered = true;
     }
 
-    if(!s_Flipper.flipperSensor() && count == 3){
+    if (!s_Flipper.flipperSensor() && count == 3) {
       // s_Flipper.setFlipperDown();
-        // s_Flipper.setFlipperUp();
+      // s_Flipper.setFlipperUp();
 
     }
-  } 
-
+  }
 
   // Called once the command ends or is interrupted.
   @Override

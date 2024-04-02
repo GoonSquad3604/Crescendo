@@ -7,15 +7,15 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Shooter;
 
 public class ReturnDistanc extends Command {
   /** Creates a new ReturnDistanc. */
   Shooter m_Shooter;
+
   Pose2d pose;
   double distance;
+
   public ReturnDistanc(Shooter shooter, Pose2d pose) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Shooter = shooter;

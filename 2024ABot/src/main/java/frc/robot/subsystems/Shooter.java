@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -199,15 +198,16 @@ public class Shooter extends SubsystemBase {
   public void shooterToPos(double pos) {
     anglePIDController.setReference(pos, ControlType.kPosition);
   }
-   public double lookUpTable(Pose2d pos) {
-    Pose2d pose =pos;
+
+  public double lookUpTable(Pose2d pos) {
+    Pose2d pose = pos;
     Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
 
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
       if (alliance.get() == DriverStation.Alliance.Blue)
         target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
-    } 
+    }
 
     double distance = pose.getTranslation().getDistance(target.getTranslation());
     var x = LookUpTable.calcShooterTableEntry(distance);
@@ -215,9 +215,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("ang", angle);
     SmartDashboard.putNumber("dist", distance);
 
-    
     return angle;
   }
+
   @Override
   public void periodic() {
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());

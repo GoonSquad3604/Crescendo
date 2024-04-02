@@ -43,6 +43,12 @@
               "data": {
                 "name": "shooterTravel"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "NOverride"
+              }
             }
           ]
         }

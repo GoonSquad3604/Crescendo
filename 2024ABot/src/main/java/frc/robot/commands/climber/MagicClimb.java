@@ -4,6 +4,8 @@
 
 package frc.robot.commands.climber;
 
+import org.littletonrobotics.junction.AutoLogOutput;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
@@ -12,15 +14,17 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class MagicClimb extends Command {
   /** Creates a new MagicClimb. */
   Climber m_climb;
+
   CommandSwerveDrivetrain m_drive;
-  double roll;
+  double pitch;
   boolean dontCorrect;
+
   public MagicClimb(Climber climb, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    roll = drive.getPigeon2().getRoll().getValueAsDouble();
+    pitch = drive.getPigeon2().getPitch().getValueAsDouble();
     m_climb = climb;
     m_drive = drive;
-    addRequirements(m_climb, m_drive);
+    addRequirements(m_climb);
   }
 
   // Called when the command is initially scheduled.
@@ -32,18 +36,23 @@ public class MagicClimb extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   roll = m_drive.getPigeon2().getRoll().getValueAsDouble();
-    if(-5<roll && roll<5 && !dontCorrect) {
-      m_climb.climberTo(Constants.ClimberConstants.leftClimbedPosStable, Constants.ClimberConstants.rightClimbedPosStable);
-    } else if(roll >= 5) {
-      m_climb.climberTo(Constants.ClimberConstants.leftClimbedPosLeftTaller, Constants.ClimberConstants.rightClimbedPosLeftTaller);
+    pitch = m_drive.getPigeon2().getPitch().getValueAsDouble();
+    if (-5 < pitch && pitch < 5 && !dontCorrect) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosStable,
+          Constants.ClimberConstants.rightClimbedPosStable);
+    } else if (pitch >= 5) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosLeftTaller,
+          Constants.ClimberConstants.rightClimbedPosLeftTaller);
+      dontCorrect = true;
+    } else if (pitch <= -5) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosRightTaller,
+          Constants.ClimberConstants.rightClimbedPosRightTaller);
       dontCorrect = true;
     }
-    else if(roll <= -5) {
-      m_climb.climberTo(Constants.ClimberConstants.leftClimbedPosRightTaller, Constants.ClimberConstants.rightClimbedPosRightTaller);
-      dontCorrect = true;
-    }
-    System.out.println(m_drive.getPigeon2().getRoll().getValue());
+    // System.out.println(m_drive.getPigeon2().getPitch().getValueAsDouble());
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +64,6 @@ public class MagicClimb extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return roll>20 ||roll<-20;
+    return pitch > 20 || pitch < -20;
   }
 }

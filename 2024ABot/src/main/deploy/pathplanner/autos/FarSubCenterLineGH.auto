@@ -107,31 +107,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "runIntakeFasterCont"
+                        "name": "runIntake"
                       }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoAim"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
           }
         },
         {
@@ -190,28 +172,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "runIntakeFasterCont"
+                  "name": "runIntake"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoAim"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
           }
         },
         {

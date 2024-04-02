@@ -10,11 +10,13 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Voltage;
@@ -28,12 +30,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.util.SwerveVoltageRequest;
-
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 
@@ -52,6 +55,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
+  
+  @AutoLogOutput
+  private boolean autoAimInPath = false;
 
   private final SwerveRequest.ApplyChassisSpeeds AutoRequest =
       new SwerveRequest.ApplyChassisSpeeds();
@@ -152,7 +158,32 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
           return false;
         }, // Change this if the path needs to be flipped on red vs blue
         this); // Subsystem for requirements
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationToSpeakerTarget);
   }
+
+  public Optional<Rotation2d> getRotationToSpeakerTarget() {
+
+    if(autoAimInPath) {
+        Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+        Pose2d pose = this.getState().Pose;
+
+        var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+            if (alliance.get() == DriverStation.Alliance.Blue) 
+              target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+          }
+            Translation2d distance = new Translation2d(pose.getX() - target.getX(), pose.getY() - target.getY());
+            Rotation2d angle = distance.getAngle();
+
+            return Optional.of(angle);
+          }
+          return Optional.empty();
+    }
+
+    public void setAutoAimPath(boolean aimSpeaker) {
+      autoAimInPath = aimSpeaker;
+    }
+  
 
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
     return run(() -> this.setControl(requestSupplier.get()));
@@ -199,56 +230,66 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     return m_kinematics.toChassisSpeeds(getState().ModuleStates);
   }
 
-   private SwerveVoltageRequest driveVoltageRequest = new SwerveVoltageRequest(true);
-//Logger.recordOutput("Drive/SysIdState", state.toString())
-    private SysIdRoutine m_driveSysIdRoutine =
-    new SysIdRoutine(
-        new SysIdRoutine.Config(null, null, null,(state) ->Logger.recordOutput("Drive/SysIdState", state.toString())),
-        new SysIdRoutine.Mechanism(
-            (Measure<Voltage> volts) -> setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
-            null,
-            this));
+  private SwerveVoltageRequest driveVoltageRequest = new SwerveVoltageRequest(true);
+  // Logger.recordOutput("Drive/SysIdState", state.toString())
+  private SysIdRoutine m_driveSysIdRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null,
+              null,
+              null,
+              (state) -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(
+              (Measure<Voltage> volts) ->
+                  setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
+              null,
+              this));
 
-    private SwerveVoltageRequest steerVoltageRequest = new SwerveVoltageRequest(false);
+  private SwerveVoltageRequest steerVoltageRequest = new SwerveVoltageRequest(false);
 
-    private SysIdRoutine m_steerSysIdRoutine =
-    new SysIdRoutine(
-        new SysIdRoutine.Config(null, null, null,(state) ->Logger.recordOutput("Drive/SysIdState", state.toString())),
-        new SysIdRoutine.Mechanism(
-            (Measure<Voltage> volts) -> setControl(steerVoltageRequest.withVoltage(volts.in(Volts))),
-            null,
-            this));
+  private SysIdRoutine m_steerSysIdRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null,
+              null,
+              null,
+              (state) -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(
+              (Measure<Voltage> volts) ->
+                  setControl(steerVoltageRequest.withVoltage(volts.in(Volts))),
+              null,
+              this));
 
-    // private SysIdRoutine m_slipSysIdRoutine =
-    // new SysIdRoutine(
-    //     new SysIdRoutine.Config(Volts.of(0.25).per(Seconds.of(1)), null, null, ModifiedSignalLogger.logState()),
-    //     new SysIdRoutine.Mechanism(
-    //         (Measure<Voltage> volts) -> setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
-    //         null,
-    //         this));
-    
-    public Command runDriveQuasiTest(Direction direction)
-    {
-        return m_driveSysIdRoutine.quasistatic(direction);
-    }
+  // private SysIdRoutine m_slipSysIdRoutine =
+  // new SysIdRoutine(
+  //     new SysIdRoutine.Config(Volts.of(0.25).per(Seconds.of(1)), null, null,
+  // ModifiedSignalLogger.logState()),
+  //     new SysIdRoutine.Mechanism(
+  //         (Measure<Voltage> volts) ->
+  // setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
+  //         null,
+  //         this));
 
-    public Command runDriveDynamTest(SysIdRoutine.Direction direction) {
-        return m_driveSysIdRoutine.dynamic(direction);
-    }
+  public Command runDriveQuasiTest(Direction direction) {
+    return m_driveSysIdRoutine.quasistatic(direction);
+  }
 
-    public Command runSteerQuasiTest(Direction direction)
-    {
-        return m_steerSysIdRoutine.quasistatic(direction);
-    }
+  public Command runDriveDynamTest(SysIdRoutine.Direction direction) {
+    return m_driveSysIdRoutine.dynamic(direction);
+  }
 
-    public Command runSteerDynamTest(SysIdRoutine.Direction direction) {
-        return m_steerSysIdRoutine.dynamic(direction);
-    }
+  public Command runSteerQuasiTest(Direction direction) {
+    return m_steerSysIdRoutine.quasistatic(direction);
+  }
 
-    // public Command runDriveSlipTest()
-    // {
-    //     return m_slipSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward);
-    // }
+  public Command runSteerDynamTest(SysIdRoutine.Direction direction) {
+    return m_steerSysIdRoutine.dynamic(direction);
+  }
+
+  // public Command runDriveSlipTest()
+  // {
+  //     return m_slipSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward);
+  // }
   private void startSimThread() {
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 

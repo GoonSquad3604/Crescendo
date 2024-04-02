@@ -21,6 +21,7 @@ public class TravelMode extends InstantCommand {
   StateController m_StateController;
   rAMP m_ramp;
   Flipper m_flipper;
+
   public TravelMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
@@ -28,7 +29,7 @@ public class TravelMode extends InstantCommand {
     m_StateController = StateController.getInstance();
     m_flipper = Flipper.getInstance();
     // m_ramp = rAMP.getInstance();
-    addRequirements(m_Intake, m_Shooter, m_StateController,m_flipper);
+    addRequirements(m_Intake, m_Shooter, m_StateController, m_flipper);
   }
 
   // Called when the command is initially scheduled.
