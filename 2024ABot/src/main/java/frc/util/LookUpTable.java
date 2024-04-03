@@ -86,11 +86,10 @@ public class LookUpTable {
     LookUpTableEntry closestHigher = table.get(table.size() - 1);
 
     if (distance <= closestLower.distance) return closestLower;
-    if (distance >= closestHigher.distance &&distance< closestHigher.distance+1)
+    if (distance >= closestHigher.distance && distance < closestHigher.distance + 1)
       return closestHigher;
-      // return new LookUpTableEntry(distance, 56);
-       if (distance >= closestHigher.distance+1 )
-      return new LookUpTableEntry(distance, 56);
+    // return new LookUpTableEntry(distance, 56);
+    if (distance >= closestHigher.distance + 1) return new LookUpTableEntry(distance, 56);
 
     for (LookUpTableEntry entry : table) {
       if (entry.distance < distance

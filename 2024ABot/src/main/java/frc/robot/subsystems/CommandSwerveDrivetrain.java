@@ -35,7 +35,6 @@ import frc.robot.generated.TunerConstants;
 import frc.util.SwerveVoltageRequest;
 import java.util.Optional;
 import java.util.function.Supplier;
-
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
@@ -48,16 +47,17 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private static final double kSimLoopPeriod = 0.005; // 5 ms
   private Notifier m_simNotifier = null;
   private double m_lastSimTime;
-  private final Field2d m_field = new Field2d();
+   private final Field2d m_field = new Field2d();
   /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
   private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
   /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
   private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
-  
-  @AutoLogOutput
-  private boolean autoAimInPath = false;
+
+  @AutoLogOutput private boolean autoAimInPath = false;
+
+  @AutoLogOutput private Pose2d robotPose;
 
   private final SwerveRequest.ApplyChassisSpeeds AutoRequest =
       new SwerveRequest.ApplyChassisSpeeds();
@@ -158,32 +158,32 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
           return false;
         }, // Change this if the path needs to be flipped on red vs blue
         this); // Subsystem for requirements
-        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationToSpeakerTarget);
+    PPHolonomicDriveController.setRotationTargetOverride(this::getRotationToSpeakerTarget);
   }
 
   public Optional<Rotation2d> getRotationToSpeakerTarget() {
 
-    if(autoAimInPath) {
-        Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
-        Pose2d pose = this.getState().Pose;
+    if (autoAimInPath) {
+      Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
+      Pose2d pose = this.getState().Pose;
 
-        var alliance = DriverStation.getAlliance();
-          if (alliance.isPresent()) {
-            if (alliance.get() == DriverStation.Alliance.Blue) 
-              target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
-          }
-            Translation2d distance = new Translation2d(pose.getX() - target.getX(), pose.getY() - target.getY());
-            Rotation2d angle = distance.getAngle();
+      var alliance = DriverStation.getAlliance();
+      if (alliance.isPresent()) {
+        if (alliance.get() == DriverStation.Alliance.Blue)
+          target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
+      }
+      Translation2d distance =
+          new Translation2d(pose.getX() - target.getX(), pose.getY() - target.getY());
+      Rotation2d angle = distance.getAngle();
 
-            return Optional.of(angle);
-          }
-          return Optional.empty();
+      return Optional.of(angle);
     }
+    return Optional.empty();
+  }
 
-    public void setAutoAimPath(boolean aimSpeaker) {
-      autoAimInPath = aimSpeaker;
-    }
-  
+  public void setAutoAimPath(boolean aimSpeaker) {
+    autoAimInPath = aimSpeaker;
+  }
 
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
     return run(() -> this.setControl(requestSupplier.get()));
@@ -235,10 +235,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private SysIdRoutine m_driveSysIdRoutine =
       new SysIdRoutine(
           new SysIdRoutine.Config(
-              null,
-              null,
-              null,
-              (state) -> SignalLogger.writeString("state", state.toString())),
+              null, null, null, (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
               (Measure<Voltage> volts) ->
                   setControl(driveVoltageRequest.withVoltage(volts.in(Volts))),
@@ -250,10 +247,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private SysIdRoutine m_steerSysIdRoutine =
       new SysIdRoutine(
           new SysIdRoutine.Config(
-              null,
-              null,
-              null,
-              (state) -> SignalLogger.writeString("state", state.toString())),
+              null, null, null, (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
               (Measure<Voltage> volts) ->
                   setControl(steerVoltageRequest.withVoltage(volts.in(Volts))),
@@ -310,6 +304,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   @Override
   public void periodic() {
     m_field.setRobotPose(this.getState().Pose);
+
+    robotPose = this.getState().Pose;
     // SmartDashboard.putNumber("xPose",this.getState().Pose.getX());
     // SmartDashboard.putNumber("yPose", this.getState().Pose.getY());
     /* Periodically try to apply the operator perspective */

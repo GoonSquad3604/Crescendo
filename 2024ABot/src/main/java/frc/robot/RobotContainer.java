@@ -26,13 +26,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.climber.MagicClimb;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AfterShot;
 import frc.robot.commands.shooter.AmpFireNew;
-import frc.robot.commands.shooter.AutoAimCont;
 import frc.robot.commands.shooter.FeedUntillSensor;
-import frc.robot.commands.shooter.RepositionAutoAim;
 import frc.robot.commands.shooter.RepositionNote;
 import frc.robot.commands.shooter.RepositionNoteAuto;
 import frc.robot.commands.stateController.AmpMode;
@@ -41,6 +40,8 @@ import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.AutoShootAngleNew;
+import frc.robot.commands.vision.LookUpTableAuton;
+import frc.robot.commands.vision.LookUpTableInst;
 import frc.robot.commands.vision.RotateToAmp;
 import frc.robot.commands.vision.RotateToSpeaker;
 // import frc.robot.commands.vision.Aim;
@@ -56,8 +57,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import frc.robot.subsystems.Vision;
 import java.util.Optional;
-
-import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 
 public class RobotContainer {
@@ -227,19 +226,17 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.stopShooter(), s_Shooter),
                 new InstantCommand(() -> s_Index.indexStop())));
 
-    // buttonBox
-    //     .button(10)
-    //     .and(speakerTrigger)
-    //     .onTrue(new InstantCommand(() -> s_Shooter.shooterTo(s_Vision.getShooterAngle())));
+   
     buttonBox
         .button(10)
         .and(climberTrigger)
         .onTrue(new InstantCommand(() -> s_Climber.raiseCimber(), s_Climber));
     // buttonBox.button(10).and(ampTrigger).onTrue(shimmy);
-    // buttonBox
-    //     .button(11)
-    //     .and(ampTrigger)
-    //     .onTrue(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    buttonBox.button(11).and(ampTrigger).onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
+    buttonBox
+        .button(11)
+        .and(ampTrigger)
+        .onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
     buttonBox
         .button(11)
@@ -277,16 +274,16 @@ public class RobotContainer {
     //     );
     // driver.leftBumper().whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
     // driver.rightBumper().whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-    pit.x().onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
-    pit.x().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
+    // pit.x().onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
+    // pit.x().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
     // driver.rightTrigger().whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
     // driver.leftTrigger().whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-    // pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
-    // pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
+    pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
+    pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
 
-    // pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
-    // pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
+    pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
+    pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
 
     // pit.a().and(pit.pov(0)).whileTrue(drivetrain.runSteerQuasiTest(Direction.kForward));
     // pit.a().and(pit.pov(180)).whileTrue(drivetrain.runSteerQuasiTest(Direction.kReverse));
@@ -326,12 +323,7 @@ public class RobotContainer {
                     new InstantCommand(() -> s_Flipper.setFlipperDown()))
                 .andThen(new AfterShot()));
 
-    // driver.a().onTrue(new InstantCommand(() -> s_Climber.raiseCimber()));
-    // driver.y().onTrue(new InstantCommand(() -> s_Climber.lowerClimber()));
-    // driver.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
-    // driver.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    // driver.y().onTrue(new InstantCommand(() -> s_Climber.climberDown()));
-    // driver.y().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
+   
     // driver.start().onTrue(new Aim(drivetrain));
     // driver.leftTrigger().and(travelTrigger).onTrue(aimAndShootCommand.andThen(new
     // InstantCommand(() ->
@@ -341,7 +333,7 @@ public class RobotContainer {
         .leftTrigger()
         .and(speakerTrigger)
         .onTrue(
-            aimAndShootCommand.andThen(
+            aimAndShootCommand.andThen(Commands.waitSeconds(.4)).andThen(
                 new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
     driver
         .leftTrigger()
@@ -399,9 +391,9 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
-     NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "rotationOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(true)));
-        NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "NOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(false)));
     NamedCommands.registerCommand(
         "rampDown", new InstantCommand(() -> s_Flipper.setFlipperDown(), s_Flipper));
@@ -411,8 +403,8 @@ public class RobotContainer {
             new InstantCommand(() -> s_Intake.runIntake(), s_Intake),
             new FeedUntillSensor(),
             new RepositionNoteAuto(s_Index, s_Intake),
-            new AutoShootAngleNew(s_Shooter, drivetrain)));
-   
+            new LookUpTableInst(s_Shooter, drivetrain)));
+
     NamedCommands.registerCommand(
         "runIntake",
         new SequentialCommandGroup(
@@ -458,7 +450,7 @@ public class RobotContainer {
         "shooterTo24", new InstantCommand(() -> s_Shooter.shooterTo(24), s_Shooter));
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
-    NamedCommands.registerCommand("varAngle", new AutoShootAngleNew(s_Shooter, drivetrain));
+    NamedCommands.registerCommand("varAngle", new LookUpTableAuton(s_Shooter, drivetrain));
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
     // shimmy = new SequentialCommandGroup(new InstantCommand(() -> s_rAMP.setrAMPTO(.65)),
     // Commands.waitSeconds(.5), new InstantCommand(() ->s_rAMP.setrAMPTO(.73)));
@@ -550,3 +542,4 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 }
+

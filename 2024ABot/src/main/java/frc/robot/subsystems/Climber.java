@@ -58,8 +58,8 @@ public class Climber extends SubsystemBase {
     leftClimberPIDController.setD(0);
     rightClimberPIDController.setD(0);
 
-    leftClimberPIDController.setOutputRange(-.6, .6);
-    rightClimberPIDController.setOutputRange(-.6, .6);
+    leftClimberPIDController.setOutputRange(-.85, .85);
+    rightClimberPIDController.setOutputRange(-.85, .85);
 
     leftClimberMotor.setIdleMode(IdleMode.kBrake);
     rightClimberMotor.setIdleMode(IdleMode.kBrake);

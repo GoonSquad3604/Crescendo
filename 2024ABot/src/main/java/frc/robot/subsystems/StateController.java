@@ -8,13 +8,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.util.RobotMode;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class StateController extends SubsystemBase {
   /** Creates a new StateController. */
   public static StateController _instance;
 
   // private Vision m_Vision;
-  private RobotMode m_Mode;
+  @AutoLogOutput private RobotMode m_Mode;
   private double leftShooterSpeed;
   private double rightShooterSpeed;
 

@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
 import org.littletonrobotics.junction.AutoLogOutput;
 
-public class AutoShootAngleNew extends Command {
+public class LookUpTableAuton extends Command {
   /** Creates a new AutoShootAngleNew. */
   Shooter m_shoot;
 
@@ -20,7 +20,7 @@ public class AutoShootAngleNew extends Command {
   CommandSwerveDrivetrain swerve;
   @AutoLogOutput double angle;
 
-  public AutoShootAngleNew(Shooter shoot, CommandSwerveDrivetrain drive) {
+  public LookUpTableAuton(Shooter shoot, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     swerve = drive;
     m_shoot = shoot;
@@ -38,10 +38,10 @@ public class AutoShootAngleNew extends Command {
   public void execute() {
     pose = swerve.getState().Pose;
 
-    if (stateController.isSpeakerMode()) {
+   
       angle = m_shoot.lookUpTable(pose);
       m_shoot.shooterTo(angle);
-    }
+    
   }
 
   @AutoLogOutput
