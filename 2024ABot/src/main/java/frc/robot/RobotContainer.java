@@ -190,8 +190,9 @@ public class RobotContainer {
     //                 new InstantCommand(() -> s_Shooter.stopShooter()),
     //                 new InstantCommand(() -> s_Index.indexStop(), s_Index)).andThen(new
     // TravelMode()));
+    buttonBox.button(7).and(climberTrigger).onTrue(new InstantCommand(()-> s_Climber.climberTo(Constants.ClimberConstants.leftClimbedPosStable, Constants.ClimberConstants.rightClimbedPosStable)));
     buttonBox
-        .button(7)
+        .button(7).and(climberTrigger.negate())
         .onTrue(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.shooterTo(50)),

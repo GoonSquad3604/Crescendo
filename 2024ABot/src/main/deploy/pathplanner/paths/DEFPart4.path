@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -42,6 +42,18 @@
               "type": "named",
               "data": {
                 "name": "rotationOverride"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
               }
             }
           ]
