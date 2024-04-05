@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.27025654051308,
-        "y": 5.716319095746139
+        "x": 8.37737665985415,
+        "y": 5.6384135544071805
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.536979024575332,
-        "y": 7.182874127621635
+        "x": 7.644099143916402,
+        "y": 7.104968586282676
       },
       "isLocked": false,
       "linkedName": "EndOfDEFPart3"
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -47,13 +47,13 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "varAngle"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "varAngle"
+                "name": "revShooter"
               }
             }
           ]

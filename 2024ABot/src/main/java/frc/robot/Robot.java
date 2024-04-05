@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +18,10 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+   
+
+
+
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
@@ -55,6 +60,15 @@ public class Robot extends LoggedRobot {
     Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values
     // be added.
     m_robotContainer = new RobotContainer();
+    PortForwarder.add(5800, "10.36.4.11",5800);
+    PortForwarder.add(1181, "10.36.4.11",1181);
+    PortForwarder.add(1182, "10.36.4.11",1182);
+    PortForwarder.add(1183, "10.36.4.11",1183);
+    PortForwarder.add(1184, "10.36.4.11",1184);
+    PortForwarder.add(1185, "10.36.4.11",1185);
+    PortForwarder.add(1186, "10.36.4.11",1186);
+    PortForwarder.add(1187, "10.36.4.11",1187);
+    PortForwarder.add(1188, "10.36.4.11",1188);
   }
 
   @Override

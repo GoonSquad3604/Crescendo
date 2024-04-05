@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.620831476538397,
-        "y": 2.8922432222088648
+        "x": 8.153398228504642,
+        "y": 2.804599488202535
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.721846667277536,
-        "y": 1.186908741727504
+        "x": 7.254413419243781,
+        "y": 1.099265007721174
       },
       "isLocked": false,
       "linkedName": "PickUpG"
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.65,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "sequential",
         "data": {

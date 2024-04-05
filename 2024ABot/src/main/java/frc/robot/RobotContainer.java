@@ -265,7 +265,7 @@ public class RobotContainer {
         .onTrue(
             new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000))
                 .andThen(
-                    Commands.waitSeconds(.7)
+                    Commands.waitSeconds(.3)
                         .andThen(new InstantCommand(() -> s_Index.setIndexRPM(-6000)))));
     // buttonBox
     //     .button(12)
@@ -330,6 +330,19 @@ public class RobotContainer {
     // InstantCommand(() ->
     // s_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterSpeakerRPM,
     // Constants.ShooterConstants.rightShooterSpeakerRPM))).andThen(Commands.waitSeconds(.6)).andThen(new InstantCommand(()->s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
+     driver
+        .a()
+        .and(speakerTrigger)
+        .onTrue(
+            aimAndShootCommandAmp.andThen(Commands.waitSeconds(.4)).andThen(
+                new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
+    driver
+        .a()
+        .onFalse(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
+                new InstantCommand(() -> s_Index.indexStop()),
+                new AfterShot()));
     driver
         .leftTrigger()
         .and(speakerTrigger)
@@ -343,7 +356,7 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Shooter.stopShooterRPM()),
                 new InstantCommand(() -> s_Index.indexStop()),
                 new AfterShot()));
-    driver.a().onTrue(aimAndShootCommandAmp);
+    // driver.a().onTrue(aimAndShootCommandAmp);
     driver.y().and(driver.b()).onTrue(new InstantCommand(() -> s_Flipper.panic()));
     driver.y().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
@@ -521,8 +534,8 @@ public class RobotContainer {
   }
 
   public boolean distanceFilter() {
-    return leftVision.getDistOfTag(drivetrain.getState().Pose) < 4
-        || rightVision.getDistOfTag(drivetrain.getState().Pose) < 4;
+    return leftVision.getDistOfTag(drivetrain.getState().Pose) < 5
+        || rightVision.getDistOfTag(drivetrain.getState().Pose) < 5;
   }
 
   public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {

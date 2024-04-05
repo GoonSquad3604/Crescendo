@@ -101,7 +101,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 7.0
+                        "waitTime": 5.0
                       }
                     },
                     {
@@ -119,25 +119,13 @@
         {
           "type": "named",
           "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "fire"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -150,6 +138,12 @@
           "type": "named",
           "data": {
             "name": "stopIndex"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooterHome"
           }
         },
         {
@@ -188,25 +182,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "runIntakeFaster"
+                        "name": "runIntake"
                       }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "revShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {

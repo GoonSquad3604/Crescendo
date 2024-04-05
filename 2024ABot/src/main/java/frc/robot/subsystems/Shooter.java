@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -37,9 +40,10 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter _instance;
   private double angleD, angleP, angleI, kPLeft, kFFLeft, kPRight, kFFRight;
-
-  private double leftRPM = 4000;
-  private double rightRPM = 6500;
+  @AutoLogOutput
+  private double leftRPM = -6000;
+  @AutoLogOutput
+  private double rightRPM = 6000;
   private double trapAngle = 48;
 
   /** Creates a new Shooter. */
@@ -220,9 +224,11 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
     // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
-
+    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+    leftRPM = leftShooterEncoder.getVelocity();
+    rightRPM = rightShooterEncoder.getVelocity();
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
     // SmartDashboard.putNumber("rightShooterRPM", rightShooterEncoder.getVelocity());
 

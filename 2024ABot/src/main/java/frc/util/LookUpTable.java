@@ -40,13 +40,13 @@ public class LookUpTable {
     table.add(new LookUpTableEntry(2.9976, 30));
 
     table.add(new LookUpTableEntry(3.165, 30));
-    table.add(new LookUpTableEntry(3.3277, 28));
-    table.add(new LookUpTableEntry(3.48137, 26));
-    table.add(new LookUpTableEntry(3.68, 26));
-    table.add(new LookUpTableEntry(3.877, 26));
-    table.add(new LookUpTableEntry(3.967, 24));
-    table.add(new LookUpTableEntry(4.12278, 23));
-    table.add(new LookUpTableEntry(4.3035, 23));
+    table.add(new LookUpTableEntry(3.3277, 30));
+    table.add(new LookUpTableEntry(3.48137, 30));
+    table.add(new LookUpTableEntry(3.68, 30));
+    table.add(new LookUpTableEntry(3.877, 28));
+    table.add(new LookUpTableEntry(3.967, 26));
+    table.add(new LookUpTableEntry(4.12278, 25));
+    table.add(new LookUpTableEntry(4.3035, 25));
     table.add(new LookUpTableEntry(4.565, 23));
     table.add(new LookUpTableEntry(4.8058, 22));
     table.add(new LookUpTableEntry(5.0639, 21));
