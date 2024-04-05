@@ -46,6 +46,12 @@ public class Shooter extends SubsystemBase {
   private double rightRPM = 6000;
   private double trapAngle = 48;
 
+  @AutoLogOutput
+  private double trackedAngle = 56;
+
+  @AutoLogOutput
+  private double trackedLookUpTableAngle = 56;
+
   /** Creates a new Shooter. */
   public Shooter() {
 
@@ -194,7 +200,7 @@ public class Shooter extends SubsystemBase {
   public void shooterTo(double position) {
     anglePIDController.setReference(position * .00297 + .49717, ControlType.kPosition);
   }
-
+// .004324 + .5256
   public void shooterTo() {
     anglePIDController.setReference(trapAngle * .00297 + .49717, ControlType.kPosition);
   }
@@ -206,7 +212,6 @@ public class Shooter extends SubsystemBase {
   public double lookUpTable(Pose2d pos) {
     Pose2d pose = pos;
     Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
-
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
       if (alliance.get() == DriverStation.Alliance.Blue)
@@ -219,14 +224,18 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("ang", angle);
     SmartDashboard.putNumber("dist", distance);
 
+    trackedLookUpTableAngle = angle;
+
     return angle;
   }
 
   @Override
   public void periodic() {
+
+    trackedAngle = (getShooterAngleClicks() - .49717) /.00297;
     
-    // SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    // SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+    SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
+    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
     leftRPM = leftShooterEncoder.getVelocity();
     rightRPM = rightShooterEncoder.getVelocity();
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());

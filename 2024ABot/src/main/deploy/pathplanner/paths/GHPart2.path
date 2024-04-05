@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.153398228504642,
-        "y": 2.804599488202535
+        "x": 8.37737665985415,
+        "y": 2.8435522588720152
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.254413419243781,
-        "y": 1.099265007721174
+        "x": 7.4783918505932885,
+        "y": 1.1382177783906544
       },
       "isLocked": false,
       "linkedName": "PickUpG"
     },
     {
       "anchor": {
-        "x": 2.7258827107665837,
-        "y": 3.2608355112180614
+        "x": 2.1936243160742555,
+        "y": 3.5252257455879086
       },
       "prevControl": {
-        "x": 3.350799788019329,
-        "y": 1.4871259372148369
+        "x": 2.818541393327001,
+        "y": 1.751516171584684
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {

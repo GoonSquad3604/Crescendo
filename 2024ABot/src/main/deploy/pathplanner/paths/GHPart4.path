@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.44554400852574,
-        "y": 1.1977976980865002
+        "x": 8.562402320534177,
+        "y": 1.1783213127517596
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.977214567801817,
-        "y": 0.50177140475633
+        "x": 7.094072879810255,
+        "y": 0.48229501942158937
       },
       "isLocked": false,
       "linkedName": "endofGHPart3"
     },
     {
       "anchor": {
-        "x": 2.7258827107665837,
-        "y": 3.2608355112180614
+        "x": 2.1936243160742555,
+        "y": 3.5252257455879086
       },
       "prevControl": {
-        "x": 2.3289736741644957,
-        "y": 1.9918132665447605
+        "x": 1.7967152794721675,
+        "y": 2.2562035009146078
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -56,7 +56,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
