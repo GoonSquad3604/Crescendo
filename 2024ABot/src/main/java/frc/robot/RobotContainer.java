@@ -140,7 +140,7 @@ public class RobotContainer {
                         new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    driver.leftBumper().and(driver.rightBumper()).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
     // pit.leftBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
     // pit.rightBumper().onTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 

@@ -48,9 +48,9 @@ public class LookUpTable {
     table.add(new LookUpTableEntry(4.12278, 25));
     table.add(new LookUpTableEntry(4.3035, 25));
     table.add(new LookUpTableEntry(4.565, 23));
-    table.add(new LookUpTableEntry(4.8058, 22));
-    table.add(new LookUpTableEntry(5.0639, 23));
-    table.add(new LookUpTableEntry(5.3029, 22));
+    table.add(new LookUpTableEntry(4.8058, 23));
+    table.add(new LookUpTableEntry(5.0639, 25));
+    table.add(new LookUpTableEntry(5.3029, 24));
 
     // 6200 rpm
 
