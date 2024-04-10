@@ -38,10 +38,8 @@ public class LookUpTableAuton extends Command {
   public void execute() {
     pose = swerve.getState().Pose;
 
-   
-      angle = m_shoot.lookUpTable(pose);
-      m_shoot.shooterTo(angle);
-    
+    angle = m_shoot.lookUpTable(pose);
+    m_shoot.shooterTo(angle);
   }
 
   @AutoLogOutput

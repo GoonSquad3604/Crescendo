@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
-
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -21,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.util.LookUpTable;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Shooter extends SubsystemBase {
   // Declares variables
@@ -40,17 +38,13 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter _instance;
   private double angleD, angleP, angleI, kPLeft, kFFLeft, kPRight, kFFRight;
-  @AutoLogOutput
-  private double leftRPM = -6000;
-  @AutoLogOutput
-  private double rightRPM = 6000;
+  @AutoLogOutput private double leftRPM = -6000;
+  @AutoLogOutput private double rightRPM = 6000;
   private double trapAngle = 48;
 
-  @AutoLogOutput
-  private double trackedAngle = 56;
+  @AutoLogOutput private double trackedAngle = 56;
 
-  @AutoLogOutput
-  private double trackedLookUpTableAngle = 56;
+  @AutoLogOutput private double trackedLookUpTableAngle = 56;
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -200,7 +194,8 @@ public class Shooter extends SubsystemBase {
   public void shooterTo(double position) {
     anglePIDController.setReference(position * .00297 + .49717, ControlType.kPosition);
   }
-// .004324 + .5256
+
+  // .004324 + .5256
   public void shooterTo() {
     anglePIDController.setReference(trapAngle * .00297 + .49717, ControlType.kPosition);
   }
@@ -232,8 +227,8 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
 
-    trackedAngle = (getShooterAngleClicks() - .49717) /.00297;
-    
+    trackedAngle = (getShooterAngleClicks() - .49717) / .00297;
+
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
     SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
     leftRPM = leftShooterEncoder.getVelocity();

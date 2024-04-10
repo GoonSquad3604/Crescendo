@@ -4,13 +4,12 @@
 
 package frc.robot.commands.vision;
 
-import org.littletonrobotics.junction.AutoLogOutput;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,6 +21,7 @@ public class LookUpTableInst extends InstantCommand {
   StateController stateController;
   CommandSwerveDrivetrain swerve;
   @AutoLogOutput double angle;
+
   public LookUpTableInst(Shooter shoot, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     swerve = drive;
@@ -36,8 +36,7 @@ public class LookUpTableInst extends InstantCommand {
   public void initialize() {
     pose = swerve.getState().Pose;
 
-   
-      angle = m_shoot.lookUpTable(pose);
-      m_shoot.shooterTo(angle);
+    angle = m_shoot.lookUpTable(pose);
+    m_shoot.shooterTo(angle);
   }
 }
