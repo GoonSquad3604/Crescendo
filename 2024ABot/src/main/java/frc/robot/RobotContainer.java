@@ -230,7 +230,7 @@ public class RobotContainer {
                 () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
     buttonBox.button(9).onTrue(new SpeakerMode());
     buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
-    buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.11)));
+    // buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() -> s_Shooter.setPower(.11)));
     buttonBox
         .button(9)
         .and(climberTrigger)
@@ -274,37 +274,15 @@ public class RobotContainer {
         .button(12)
         .and(travelTrigger)
         .onTrue(
-            new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000))
+            new InstantCommand(() -> s_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterSpeakerRPM, Constants.ShooterConstants.rightShooterSpeakerRPM))
                 .andThen(
                     Commands.waitSeconds(.3)
-                        .andThen(new InstantCommand(() -> s_Index.setIndexRPM(-6000)))));
-    // buttonBox
-    //     .button(12)
-    //     .and(ampTrigger)
-    //     .onTrue(new ParallelCommandGroup(new InstantCommand(() ->
-    // s_Index.setIndexPower(.2),s_Index), new InstantCommand(() -> s_Shooter.setPower(.12)))
-    //     );
-    // driver.leftBumper().whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-    // driver.rightBumper().whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-    // pit.x().onTrue(new InstantCommand(() -> s_Flipper.setFlipperUp()));
-    // pit.x().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
-
-    // driver.rightTrigger().whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-    // driver.leftTrigger().whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-    pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
-    pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
-
-    pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
-    pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
-
-    // pit.a().and(pit.pov(0)).whileTrue(drivetrain.runSteerQuasiTest(Direction.kForward));
-    // pit.a().and(pit.pov(180)).whileTrue(drivetrain.runSteerQuasiTest(Direction.kReverse));
-
-    // pit.b().and(pit.pov(0)).whileTrue(drivetrain.runSteerDynamTest(Direction.kForward));
-    // pit.b().and(pit.pov(180)).whileTrue(drivetrain.runSteerDynamTest(Direction.kReverse));
+                        .andThen(new InstantCommand(() -> s_Index.setIndexRPM(Constants.IndexConstants.indexSpeakerRPM)))));
+   
+    
+   
     buttonBox.button(12).and(ampTrigger).onTrue(new AmpFireNew());
-    // buttonBox.button(12).and(ampTrigger).onTrue(new InstantCommand(() ->
-    // s_Index.setIndexRPM(-6000)));
+    
 
     buttonBox
         .button(12)
@@ -383,13 +361,16 @@ public class RobotContainer {
     pit.b().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
     pit.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
     pit.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
-    // pit.x().onTrue(new InstantCommand(() -> s_Intake.cleam()));
-    // pit.x().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-    // driver.y().onTrue(new InstantCommand(() -> s_rAMP.runrAMP()));
-    // driver.y().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
 
-    // driver.a().onTrue(new InstantCommand(() -> s_rAMP.runrAMPBack()));
-    // driver.a().onFalse(new InstantCommand(() -> s_rAMP.stoprAMP()));
+    pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
+    pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
+
+    pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
+    pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
+
+    pit.rightBumper().onTrue(new InstantCommand(() -> s_Intake.cleam()));
+    pit.rightBumper().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+   
 
     // driver.start().onFalse(new InstantCommand(() -> s_Flipper.stopFlipper()));
     // driver.y().and(indexTrigger.negate()).onTrue(

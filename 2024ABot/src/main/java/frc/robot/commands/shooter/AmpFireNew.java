@@ -33,16 +33,11 @@ public class AmpFireNew extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // set indexer to speed to fire
-    // set shooter to amp fire rpm.
-    // start timer
     count = 0;
-    speed = .05;
     timer.reset();
     triggered = false;
-    s_Index.setIndexPower(.14);
-    // s_Shooter.setPower(speed);
-    // s_Shooter.setPower(.05);
+    s_Index.setIndexPower(Constants.IndexConstants.indexAmpSpeed);
+
     s_Shooter.setShooterRPM(
         Constants.ShooterConstants.leftShooterAmpRPM,
         Constants.ShooterConstants.rightShooterAmpRPM);
@@ -53,41 +48,37 @@ public class AmpFireNew extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    //first rising edge
     if (s_Flipper.flipperSensor() && count == 0 && !triggered) {
       count++;
       triggered = true;
-      // s_Shooter.setShooterRPM(0, 0);
-      // s_Shooter.setPower(.03);
-      // s_Flipper.setFlipperUp();
     }
+
+    //first falling edge
     if (triggered && !s_Flipper.flipperSensor() && count == 1)
-      //  {
-      //   s_Shooter.setShooterRPM(0, 0);
-      //   s_Flipper.setFlipperUp();
-      // }
       triggered = false;
 
+    //second rising edge
     if (s_Flipper.flipperSensor() && count == 1 && !triggered) {
       s_Shooter.setShooterRPM(0, 0);
       triggered = true;
       count++;
       // s_Flipper.setFlipperUp();
     }
+
+    // second falling edge;
     if (!s_Flipper.flipperSensor() && count == 2 && triggered) {
       triggered = false;
     }
+
+    //third rising edge;
     if (s_Flipper.flipperSensor() && count == 2 && !triggered) {
       s_Flipper.setFlipperUp();
       count++;
       // triggered = true;
     }
 
-    if (!s_Flipper.flipperSensor() && count == 3) {
-      // s_Flipper.setFlipperDown();
-      // s_Flipper.setFlipperUp();
-
-    }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -102,7 +93,6 @@ public class AmpFireNew extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // should finish when timer is like 1 sec.
-    return timer.get() == 20;
+    return timer.get() >= 3;
   }
 }

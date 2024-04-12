@@ -57,27 +57,7 @@ public class Vision extends SubsystemBase {
     }
   }
 
-  // public double lookUpTable(Pose2d pos) {
-  //   Pose2d pose =pos;
-  //   Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
-
-  //   var alliance = DriverStation.getAlliance();
-  //   if (alliance.isPresent()) {
-  //     if (alliance.get() == DriverStation.Alliance.Blue)
-  //       target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
-  //   } //696969
-
-  //   double distance = pose.getTranslation().getDistance(target.getTranslation());
-  //   double[] distanceTable = {};
-  //   double[] angleTable = {};
-
-  //   double temp =56;
-  //   double  temp2 = 0;
-  //   for(int i = 0; i<distanceTable.length; i++) {
-  //     if
-  //   }
-
-  // }
+ 
 
   public double getDistOfTag(Pose2d prevPose) {
     try {

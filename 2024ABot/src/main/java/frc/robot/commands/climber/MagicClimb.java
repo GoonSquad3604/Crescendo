@@ -9,14 +9,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-
+import frc.robot.Constants.ClimberConstants;
 public class MagicClimb extends Command {
   /** Creates a new MagicClimb. */
   Climber m_climb;
 
+
   CommandSwerveDrivetrain m_drive;
   double pitch;
   boolean dontCorrect;
+  
+  private double angle = ClimberConstants.magicAngle;
 
   private Timer timer;
 
@@ -41,16 +44,16 @@ public class MagicClimb extends Command {
   @Override
   public void execute() {
     pitch = m_drive.getPigeon2().getPitch().getValueAsDouble();
-    if (-8 < pitch && pitch < 8 && !dontCorrect) {
+    if (-angle < pitch && pitch < angle && !dontCorrect) {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosStable,
           Constants.ClimberConstants.rightClimbedPosStable);
-    } else if (pitch >= 8) {
+    } else if (pitch >= angle) {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosLeftTaller,
           Constants.ClimberConstants.rightClimbedPosLeftTaller);
       dontCorrect = true;
-    } else if (pitch <= -8) {
+    } else if (pitch <= -angle) {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosRightTaller,
           Constants.ClimberConstants.rightClimbedPosRightTaller);

@@ -87,6 +87,8 @@ public final class Constants {
 
     public static final double minRightClimberHeight = 2;
     public static final double minLeftClimberHeight = 2;
+
+    public static final double magicAngle = 8;
   }
 
   public static final class IntakeConstants {
@@ -117,7 +119,7 @@ public final class Constants {
 
     public static final int indexAmpRPM = -800;
 
-    public static final double indexAmpSpeed = 1;
+    public static final double indexAmpSpeed = .14;
     public static final int indexSpeakerRPM = -6000;
     public static final double indexSpeakerSpeed = 1;
 
@@ -125,6 +127,11 @@ public final class Constants {
     public static final double indexkI = 0.0;
     public static final double indexkD = 0.0;
     public static final double indexkF = 0.00016;
+
+    public static final double feedSpeed = .3;
+    public static final double repositionSpeed = -.1;
+    public static final double repositionSpeedAuto = -.2;
+
   }
 
   public static final class FlipperConstants {
