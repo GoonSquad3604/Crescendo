@@ -161,6 +161,18 @@
         "data": {
           "commands": [
             {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            },
+            {
               "type": "race",
               "data": {
                 "commands": [

@@ -23,9 +23,13 @@ public class StateController extends SubsystemBase {
   private double indexSpeed;
 
   private boolean intakeEnabled;
+  private LED s_LeftLED;
+  private LED s_RightLED;
 
   public StateController() {
     // m_Vision = Vision.getInstance();
+    // s_LeftLED = left;
+    // s_RightLED = right;
     setTravel();
   }
 
@@ -49,6 +53,9 @@ public class StateController extends SubsystemBase {
     m_Mode = RobotMode.TRAVEL;
     shooterAngle = Constants.ShooterConstants.shooterTravel;
     intakeEnabled = false;
+
+    // s_LeftLED.setColor(255, 0, 255);
+    // s_RightLED.setColor(255, 0, 255);
   }
 
   public void setClimber() {
@@ -70,6 +77,9 @@ public class StateController extends SubsystemBase {
     shooterAngle = Constants.ShooterConstants.shooterAmp;
     leftShooterSpeed = Constants.ShooterConstants.leftShooterAmpRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterAmpRPM;
+
+    // s_LeftLED.setColor(255, 255, 0);
+    // s_RightLED.setColor(255, 255, 0);
   }
 
   public void setSpeaker() {
@@ -79,6 +89,8 @@ public class StateController extends SubsystemBase {
     leftShooterSpeed = Constants.ShooterConstants.leftShooterSpeakerRPM;
     rightShooterSpeed = Constants.ShooterConstants.rightShooterSpeakerRPM;
 
+    // s_LeftLED.setColor(0, 0, 255);
+    // s_RightLED.setColor(0, 0, 255);
     // indexSpeed = m_Vision.getShooterSpeed() * 1.35;
     // leftShooterSpeed = m_Vision.getShooterSpeed();
     // rightShooterSpeed = m_Vision.getShooterSpeed();

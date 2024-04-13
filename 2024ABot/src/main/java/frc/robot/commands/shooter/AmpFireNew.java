@@ -48,17 +48,16 @@ public class AmpFireNew extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //first rising edge
+    // first rising edge
     if (s_Flipper.flipperSensor() && count == 0 && !triggered) {
       count++;
       triggered = true;
     }
 
-    //first falling edge
-    if (triggered && !s_Flipper.flipperSensor() && count == 1)
-      triggered = false;
+    // first falling edge
+    if (triggered && !s_Flipper.flipperSensor() && count == 1) triggered = false;
 
-    //second rising edge
+    // second rising edge
     if (s_Flipper.flipperSensor() && count == 1 && !triggered) {
       s_Shooter.setShooterRPM(0, 0);
       triggered = true;
@@ -71,14 +70,12 @@ public class AmpFireNew extends Command {
       triggered = false;
     }
 
-    //third rising edge;
+    // third rising edge;
     if (s_Flipper.flipperSensor() && count == 2 && !triggered) {
       s_Flipper.setFlipperUp();
       count++;
       // triggered = true;
     }
-
-    
   }
 
   // Called once the command ends or is interrupted.

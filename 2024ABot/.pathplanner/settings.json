@@ -3,7 +3,6 @@
   "robotLength": 0.86995,
   "holonomicMode": true,
   "pathFolders": [
-    "AEDPaths",
     "BEFPaths",
     "DEFPath",
     "EFBPaths",

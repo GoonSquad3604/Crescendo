@@ -131,7 +131,14 @@ public final class Constants {
     public static final double feedSpeed = .3;
     public static final double repositionSpeed = -.1;
     public static final double repositionSpeedAuto = -.2;
+  }
 
+  public static final class LEDConstants {
+    public static final int IDLeft = 1;
+    public static final int lengthLeft = 15;
+
+    public static final int IDRight = 0;
+    public static final int lengthRight = 30;
   }
 
   public static final class FlipperConstants {

@@ -57,8 +57,6 @@ public class Vision extends SubsystemBase {
     }
   }
 
- 
-
   public double getDistOfTag(Pose2d prevPose) {
     try {
       Pose2d target;

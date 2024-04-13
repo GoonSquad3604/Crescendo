@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.299479142168161,
-      "y": 5.561921247299285
+      "x": 1.3087611360407905,
+      "y": 5.589767228917173
     },
     "rotation": 0
   },
@@ -24,12 +24,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "shooterSpeaker"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 0.25
@@ -44,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SixNoteFastest"
+            "pathName": "test"
           }
         }
       ]

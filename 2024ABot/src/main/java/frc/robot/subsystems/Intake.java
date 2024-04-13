@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,6 +25,8 @@ public class Intake extends SubsystemBase {
   private SparkPIDController intakePIDController;
   private SparkPIDController hingePIDController;
 
+  private DigitalInput intakeSensor;
+
   private double p, i, d;
 
   /** Creates a new Intake. */
@@ -33,6 +36,7 @@ public class Intake extends SubsystemBase {
     d = 0;
     hingeMotor = new CANSparkFlex(Constants.IntakeConstants.hingeID, MotorType.kBrushless);
     intakeMotor = new CANSparkFlex(Constants.IntakeConstants.intakeID, MotorType.kBrushless);
+    intakeSensor = new DigitalInput(1);
 
     intakePIDController = intakeMotor.getPIDController();
     // leftHingeMotor.follow(rightHingeMotor);
@@ -94,6 +98,10 @@ public class Intake extends SubsystemBase {
   // raises the Hinge into the Intake
   public void raiseHinge() {
     hingeMotor.set(-.4);
+  }
+
+  public boolean hasNote() {
+    return !intakeSensor.get();
   }
 
   // lowers the Hinge out of the Intake

@@ -204,6 +204,11 @@ public class Shooter extends SubsystemBase {
     anglePIDController.setReference(pos, ControlType.kPosition);
   }
 
+  public double[] getRPMS() {
+    double[] rpms = {leftShooterEncoder.getVelocity(), rightShooterEncoder.getVelocity()};
+    return rpms;
+  }
+
   public double lookUpTable(Pose2d pos) {
     Pose2d pose = pos;
     Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
