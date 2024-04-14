@@ -3,137 +3,137 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.820539149982354,
-        "y": 6.631709206483362
+        "x": 1.299479142168161,
+        "y": 5.561921247299285
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.06018733934459297,
-        "y": 7.6861593589608885
+        "x": 1.3737350931491992,
+        "y": 4.828643731361537
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.891103684930188,
-        "y": 7.5957902805525634
+        "x": 2.561830308845803,
+        "y": 4.225314129640605
       },
       "prevControl": {
-        "x": 2.8409798529887564,
-        "y": 7.8927047665569745
+        "x": 2.8588541127699543,
+        "y": 4.113930203169049
       },
       "nextControl": {
-        "x": 6.30314162170368,
-        "y": 7.391288234537712
+        "x": 2.0368333761932815,
+        "y": 4.4221879793853
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.172874613839383,
+        "x": 2.923828069878362,
+        "y": 5.6825871676434705
+      },
+      "prevControl": {
+        "x": 1.0234758859047954,
+        "y": 5.411108284218664
+      },
+      "nextControl": {
+        "x": 3.0537759840951777,
+        "y": 5.701151155388731
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.923828069878362,
+        "y": 6.963502322066373
+      },
+      "prevControl": {
+        "x": 0.3805617487778185,
+        "y": 5.793971094115028
+      },
+      "nextControl": {
+        "x": 3.212036801979651,
+        "y": 7.096036264565505
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.8984374265044828,
+        "y": 5.6825871676434705
+      },
+      "prevControl": {
+        "x": 3.8418469675007616,
+        "y": 6.75780588871421
+      },
+      "nextControl": {
+        "x": 3.9077194203771115,
+        "y": 5.506229284063505
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.620831476538397,
+        "y": 5.6825871676434705
+      },
+      "prevControl": {
+        "x": 5.855184759005343,
+        "y": 7.045934141075259
+      },
+      "nextControl": {
+        "x": 8.845616925695008,
+        "y": 5.571777439185985
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.142224605436865,
+        "y": 6.582940573288553
+      },
+      "prevControl": {
+        "x": 5.216480556417903,
+        "y": 7.204834162754745
+      },
+      "nextControl": {
+        "x": 5.083888746179566,
+        "y": 6.0943777520086755
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.49423497186259,
         "y": 7.488670161207463
       },
       "prevControl": {
-        "x": 7.997587145826724,
-        "y": 8.014532565245439
+        "x": 8.419979020881552,
+        "y": 7.915641879348424
       },
       "nextControl": {
-        "x": 8.405665835856494,
-        "y": 6.790296495156131
+        "x": 8.632744870082243,
+        "y": 6.6922382464444565
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.6738296015144822,
-        "y": 6.339563426457815
+        "x": 5.3000185012715715,
+        "y": 6.582940573288553
       },
       "prevControl": {
-        "x": 5.6159246272133565,
-        "y": 7.634293443590377
-      },
-      "nextControl": {
-        "x": 3.6181376382787036,
-        "y": 6.302435450967296
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.172874613839383,
-        "y": 5.852653793089319
-      },
-      "prevControl": {
-        "x": 8.23784857094779,
-        "y": 6.539521339663918
-      },
-      "nextControl": {
-        "x": 8.165827198708476,
-        "y": 5.778152547419716
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.652734268431501,
-        "y": 6.480838640689626
-      },
-      "prevControl": {
-        "x": 6.773535028551539,
-        "y": 6.303320507875583
-      },
-      "nextControl": {
-        "x": 4.531933508311463,
-        "y": 6.6583567735036695
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.68723829737102,
-        "y": 6.339563426457815
-      },
-      "prevControl": {
-        "x": 2.9045123807922586,
-        "y": 5.969512105097758
-      },
-      "nextControl": {
-        "x": 1.153730596945147,
-        "y": 6.50174976738728
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.285825830910921,
-        "y": 5.534075265681396
-      },
-      "prevControl": {
-        "x": 2.236960523303763,
-        "y": 5.552639253426655
-      },
-      "nextControl": {
-        "x": 4.334691138518079,
-        "y": 5.515511277936136
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.5550036532171827,
-        "y": 7.353346064716821
-      },
-      "prevControl": {
-        "x": -0.49194567524937527,
-        "y": 6.211660818383365
+        "x": 5.801246170393577,
+        "y": 6.4344286713264776
       },
       "nextControl": null,
       "isLocked": false,
@@ -142,32 +142,32 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 5.6,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -28.00999999999999,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
       "rotationDegrees": 0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 4.0,
+      "waypointRelativePos": 3,
+      "rotationDegrees": 36.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3.8,
       "rotationDegrees": 0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 4.0,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 7.0,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 4.0,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 6.95,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 5.050000000000001,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -176,11 +176,65 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.4,
+      "waypointRelativePos": 0.5499999999999999,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "race",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "runIntake"
+                    }
+                  },
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 2.5
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.5,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fire"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.25
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -192,7 +246,95 @@
               "data": {
                 "name": "shooterHome"
               }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.85,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "race",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "runIntake"
+                    }
+                  },
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 2.5
+                    }
+                  }
+                ]
+              }
             },
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fire"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.4
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.9000000000000004,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
             {
               "type": "race",
               "data": {
@@ -230,7 +372,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 3.0,
+      "waypointRelativePos": 4.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -244,7 +386,7 @@
             {
               "type": "wait",
               "data": {
-                "waitTime": 0.25
+                "waitTime": 0.4
               }
             },
             {
@@ -258,11 +400,53 @@
               "data": {
                 "name": "shooterHome"
               }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 4.9,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            },
+            {
+              "type": "race",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "runIntake"
+                    }
+                  },
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 4.0
+                    }
+                  }
+                ]
+              }
             },
             {
               "type": "named",
               "data": {
-                "name": "NOverride"
+                "name": "revShooterFaster"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
               }
             }
           ]
@@ -271,7 +455,42 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 3.7,
+      "waypointRelativePos": 6.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fire"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.4
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 6.7,
       "command": {
         "type": "sequential",
         "data": {
@@ -298,7 +517,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -313,7 +532,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 6.3,
+      "waypointRelativePos": 7.449999999999999,
       "command": {
         "type": "sequential",
         "data": {
@@ -321,144 +540,7 @@
             {
               "type": "named",
               "data": {
-                "name": "fire"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.25
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "stopShooter"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "shooterHome"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 6.6000000000000005,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "race",
-              "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "runIntake"
-                    }
-                  },
-                  {
-                    "type": "wait",
-                    "data": {
-                      "waitTime": 2.5
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "revShooter"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "varAngle"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 7.55,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "fire"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.25
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "shooterHome"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "stopShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 7.75,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "race",
-              "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "runIntake"
-                    }
-                  },
-                  {
-                    "type": "wait",
-                    "data": {
-                      "waitTime": 2.0
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "revShooter"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "varAngle"
+                "name": "rotationOverride"
               }
             }
           ]
@@ -484,7 +566,65 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 2.5,
+      "waypointRelativePos": 0.3,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 6.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fire"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.4
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 5.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -501,7 +641,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 5.699999999999999,
+      "waypointRelativePos": 6.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -509,7 +649,7 @@
             {
               "type": "named",
               "data": {
-                "name": "rotationOverride"
+                "name": "NOverride"
               }
             }
           ]
@@ -525,13 +665,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 29.511498557090267,
+    "rotation": 21.250505507133223,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 58.57043438516149,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

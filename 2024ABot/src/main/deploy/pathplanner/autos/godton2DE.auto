@@ -2,21 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.820539149982354,
-      "y": 6.631709206483362
+      "x": 1.299479142168161,
+      "y": 5.561921247299285
     },
-    "rotation": 59.53445508093767
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "named",
-          "data": {
-            "name": "shooterSpeaker"
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -30,27 +24,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "fire"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
+            "name": "shooterSpeaker"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "test"
+            "pathName": "SixNoteDE"
           }
         }
       ]

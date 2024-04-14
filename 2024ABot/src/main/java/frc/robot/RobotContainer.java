@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.LED.RAINBOW;
 import frc.robot.commands.LED.SetLEDSYellow;
 import frc.robot.commands.LED.SpeakerLEDMode;
 import frc.robot.commands.climber.MagicClimb;
@@ -157,13 +158,14 @@ public class RobotContainer {
     //     .onTrue(
     //         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode(m_LED));
+    buttonBox.button(2).onTrue(new SpeakerLEDMode(m_LED));
     buttonBox
         .button(2)
         .onTrue(
             new SpeakerMode()
                 // .andThen(new InstantCommand(() ->
                 // s_Shooter.lookUpTable(drivetrain.getState().Pose)))
-                .andThen(new AutoShootAngleNew(s_Shooter, drivetrain)).andThen(new SpeakerLEDMode(m_LED))
+                .andThen(new AutoShootAngleNew(s_Shooter, drivetrain))
             // .andThen(new ReturnDistanc(s_Shooter, drivetrain.getState().Pose))
             );
     // buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
@@ -175,6 +177,7 @@ public class RobotContainer {
     // buttonBox.button(3).onTrue(new RepositionForAmp());
     buttonBox.button(4).onTrue(new TrapMode());
     buttonBox.button(5).onTrue(new ClimberMode());
+    buttonBox.button(5).onTrue(new RAINBOW(m_LED));
     // buttonBox.button(6).onTrue(new InstantCommand(() -> s_rAMP.setrAMPUp()));
 
     buttonBox
@@ -227,14 +230,9 @@ public class RobotContainer {
     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Index.setIndexPower(-.3)));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
-    buttonBox
-        .button(9)
-        .and(ampTrigger)
-        .onTrue(
-            new InstantCommand(
-                () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker), s_Shooter));
-    buttonBox.button(9).onTrue(new SpeakerMode());
-    buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(56)));
+   
+    buttonBox.button(9).onTrue(new SpeakerMode().alongWith(new SpeakerLEDMode(m_LED)));
+    buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker)));
     // buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() ->
     // s_Shooter.setPower(.11)));
     buttonBox
@@ -362,6 +360,7 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Index.indexStop()),
                 new TravelMode(m_LED)));
     // driver.a().onTrue(aimAndShootCommandAmp);
+    driver.y().onTrue(new RAINBOW(m_LED));
     driver.y().and(driver.b()).onTrue(new InstantCommand(() -> s_Flipper.panic()));
     driver.y().onFalse(new InstantCommand(() -> s_Flipper.setFlipperDown()));
 
@@ -408,7 +407,10 @@ public class RobotContainer {
     s_Index.indexStop();
     s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     s_Flipper.setFlipperDown();
+    m_LED.setColor(255, 255, 255);
+    // m_LED.rainbow();
     // s_rAMP.setrAMPUp();
+    
   }
 
   public RobotContainer() {
@@ -445,7 +447,7 @@ public class RobotContainer {
         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
 
     NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000), s_Shooter));
     NamedCommands.registerCommand(
         "revShooterFaster",
         new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000), s_Shooter));
@@ -468,7 +470,7 @@ public class RobotContainer {
 
     m_LED.setColor(255, 255, 255);
     // rightLED.setColor(255, 255, 255);
-
+    
     aimAndShootCommandAmp =
         Commands.runOnce(
                 () -> {

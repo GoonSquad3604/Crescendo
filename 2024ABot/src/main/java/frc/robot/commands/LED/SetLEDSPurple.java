@@ -23,6 +23,6 @@ public class SetLEDSPurple extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Led.setColor(255, 0, 255);
+    s_Led.setColor(200, 0, 255);
   }
 }

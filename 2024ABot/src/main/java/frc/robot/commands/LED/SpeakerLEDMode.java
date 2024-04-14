@@ -16,6 +16,7 @@ public class SpeakerLEDMode extends Command {
   private Timer timer;
   public SpeakerLEDMode(LED led) {
     // Use addRequirements() here to declare subsystem dependencies.
+    timer = new Timer();
     shooter = Shooter.getInstance();
     s_Led = led;
     addRequirements(s_Led);
@@ -24,6 +25,7 @@ public class SpeakerLEDMode extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() { 
+    s_Led.setColor(0, 0, 0);
     timer.reset();
     timer.start();
   }
@@ -36,11 +38,11 @@ public class SpeakerLEDMode extends Command {
       s_Led.setColor(0, 0, 255);
     }
     else{ 
-      if(timer.get()>.2){
-      s_Led.setColor(0, 0, 255);
+      if(timer.get()>.3){
+      s_Led.setColor(10, 10, 31);
       timer.reset();
-      }else if(timer.get()<=.2){ 
-        s_Led.setColor(0, 0, 0);
+      }else if(timer.get()<=.3){ 
+        s_Led.setColor(0, 0, 255);
       } 
 
     }

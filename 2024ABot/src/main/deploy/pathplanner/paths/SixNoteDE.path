@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3737350931491992,
-        "y": 4.828643731361537
+        "x": 1.3269251686783332,
+        "y": 4.7522380216765185
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.561830308845803,
-        "y": 4.225314129640605
+        "x": 2.4176027474237634,
+        "y": 4.255590195640653
       },
       "prevControl": {
-        "x": 2.8588541127699543,
-        "y": 4.113930203169049
+        "x": 2.4956911681139293,
+        "y": 4.2268680179155345
       },
       "nextControl": {
-        "x": 2.0368333761932815,
-        "y": 4.4221879793853
+        "x": 1.570379985362581,
+        "y": 4.56721236099649
       },
       "isLocked": false,
       "linkedName": null
@@ -64,16 +64,16 @@
     },
     {
       "anchor": {
-        "x": 3.8984374265044828,
-        "y": 5.6825871676434705
+        "x": 3.4401129774976043,
+        "y": 5.561921247299285
       },
       "prevControl": {
-        "x": 3.8418469675007616,
-        "y": 6.75780588871421
+        "x": 3.391422014160755,
+        "y": 6.310348848455705
       },
       "nextControl": {
-        "x": 3.9077194203771115,
-        "y": 5.506229284063505
+        "x": 3.4464665864935453,
+        "y": 5.464260079525281
       },
       "isLocked": false,
       "linkedName": null
@@ -84,12 +84,12 @@
         "y": 7.594677905405193
       },
       "prevControl": {
-        "x": 5.782682182648316,
-        "y": 7.576113917659933
+        "x": 7.666488595136148,
+        "y": 7.7808159412285605
       },
       "nextControl": {
-        "x": 8.836452671247866,
-        "y": 7.596337563279799
+        "x": 8.831474252589366,
+        "y": 7.544946262819401
       },
       "isLocked": false,
       "linkedName": null
@@ -295,7 +295,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 2.7,
+      "waypointRelativePos": 2.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -372,7 +372,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 4.2,
+      "waypointRelativePos": 4.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -650,6 +650,41 @@
               "type": "named",
               "data": {
                 "name": "NOverride"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "fire"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.25
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
               }
             }
           ]

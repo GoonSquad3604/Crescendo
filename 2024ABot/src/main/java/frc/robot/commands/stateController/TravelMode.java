@@ -44,7 +44,7 @@ public class TravelMode extends InstantCommand {
     m_Shooter.shooterTo(m_StateController.getAngle());
     m_Shooter.setPower(0);
     m_flipper.setFlipperDown();
-    leftLED.setColor(255, 0, 255);
+    leftLED.setColor(200, 0, 255);
     // m_ramp.setrAMPUp();
   }
 }
