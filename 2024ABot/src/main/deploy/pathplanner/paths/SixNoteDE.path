@@ -203,7 +203,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -280,7 +280,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -357,13 +357,13 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "varAngle"
+                "name": "varAngleMovementAdj"
               }
             }
           ]

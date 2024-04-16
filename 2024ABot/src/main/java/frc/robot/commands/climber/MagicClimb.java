@@ -48,12 +48,12 @@ public class MagicClimb extends Command {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosStable,
           Constants.ClimberConstants.rightClimbedPosStable);
-    } else if (pitch >= angle) {
+    } else if (pitch >= angle&&!dontCorrect) {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosLeftTaller,
           Constants.ClimberConstants.rightClimbedPosLeftTaller);
       dontCorrect = true;
-    } else if (pitch <= -angle) {
+    } else if (pitch <= -angle&&!dontCorrect) {
       m_climb.climberTo(
           Constants.ClimberConstants.leftClimbedPosRightTaller,
           Constants.ClimberConstants.rightClimbedPosRightTaller);

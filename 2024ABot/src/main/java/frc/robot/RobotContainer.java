@@ -43,6 +43,7 @@ import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.AutoShootAngleNew;
 import frc.robot.commands.vision.LookUpTableAuton;
+import frc.robot.commands.vision.LookUpTableAutonMovementAdj;
 import frc.robot.commands.vision.LookUpTableInst;
 import frc.robot.commands.vision.RotateToAmp;
 import frc.robot.commands.vision.RotateToSpeaker;
@@ -272,7 +273,8 @@ public class RobotContainer {
         .button(12)
         .and(ampTrigger.negate())
         .and(travelTrigger.negate())
-        .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
+        // .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
+        .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
 
     buttonBox
         .button(12)
@@ -351,7 +353,9 @@ public class RobotContainer {
                 .andThen(Commands.waitSeconds(.4))
                 .andThen(
                     new InstantCommand(
-                        () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
+                        // () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())
+                        () -> s_Index.setIndexPower(1)
+                        )));
     driver
         .leftTrigger()
         .onFalse(
@@ -447,12 +451,14 @@ public class RobotContainer {
         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)));
 
     NamedCommands.registerCommand(
-        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000), s_Shooter));
+        "revShooter", new InstantCommand(() -> s_Shooter.setShooterRPM(-4500, 6000), s_Shooter));
     NamedCommands.registerCommand(
         "revShooterFaster",
         new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
+    NamedCommands.registerCommand("fire100power", new InstantCommand(() -> s_Index.setIndexPower(1)));
+
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
     NamedCommands.registerCommand("runIndex", new InstantCommand(() -> s_Index.setIndexPower(-.4)));
     NamedCommands.registerCommand(
@@ -466,6 +472,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new LookUpTableAuton(s_Shooter, drivetrain));
+    NamedCommands.registerCommand("varAngleMovementAdj", new LookUpTableAutonMovementAdj(s_Shooter, drivetrain));
+
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
 
     m_LED.setColor(255, 255, 255);

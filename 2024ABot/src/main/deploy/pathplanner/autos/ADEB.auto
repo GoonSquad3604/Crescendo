@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.299479142168161,
-      "y": 5.561921247299285
+      "x": 0.8400155353098376,
+      "y": 6.641447399146282
     },
-    "rotation": 0
+    "rotation": 62.300527191945
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "rampDown"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "revShooter"
+            "name": "shooterSpeaker"
           }
         },
         {
@@ -32,13 +26,19 @@
         {
           "type": "named",
           "data": {
-            "name": "shooterSpeaker"
+            "name": "revShooterFaster"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "SixNoteDE"
+            "pathName": "ADEB path"
           }
         }
       ]
