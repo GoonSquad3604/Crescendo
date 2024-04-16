@@ -42,6 +42,7 @@ import frc.robot.commands.stateController.SpeakerMode;
 import frc.robot.commands.stateController.TrapMode;
 import frc.robot.commands.stateController.TravelMode;
 import frc.robot.commands.vision.AutoShootAngleNew;
+import frc.robot.commands.vision.LookUpTableAdjustmentMinusThree;
 import frc.robot.commands.vision.LookUpTableAuton;
 import frc.robot.commands.vision.LookUpTableAutonMovementAdj;
 import frc.robot.commands.vision.LookUpTableInst;
@@ -473,6 +474,7 @@ public class RobotContainer {
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new LookUpTableAuton(s_Shooter, drivetrain));
     NamedCommands.registerCommand("varAngleMovementAdj", new LookUpTableAutonMovementAdj(s_Shooter, drivetrain));
+    NamedCommands.registerCommand("varAngleMinusThree", new LookUpTableAdjustmentMinusThree(s_Shooter, drivetrain));
 
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
 
