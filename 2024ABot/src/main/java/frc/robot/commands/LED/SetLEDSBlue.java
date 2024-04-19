@@ -11,21 +11,18 @@ import frc.robot.subsystems.LED;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetLEDSBlue extends InstantCommand {
-  private LED s_Left;
-  private LED s_Right;
+  private LED s_Led;
 
-  public SetLEDSBlue(LED left, LED right) {
+  public SetLEDSBlue(LED led) {
     // Use addRequirements() here to declare subsystem dependencies.
-    s_Left = left;
-    s_Right = right;
+    s_Led = led;
 
-    addRequirements(s_Left, s_Right);
+    addRequirements(s_Led);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Left.setColor(0, 0, 255);
-    s_Right.setColor(0, 0, 255);
+    s_Led.setColor(0, 0, 255);
   }
 }

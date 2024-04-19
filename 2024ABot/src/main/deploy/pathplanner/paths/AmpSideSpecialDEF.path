@@ -64,16 +64,16 @@
     },
     {
       "anchor": {
-        "x": 8.250780155178342,
-        "y": 5.75527186641562
+        "x": 8.43580581585837,
+        "y": 5.7650100590829885
       },
       "prevControl": {
-        "x": 6.975076915752882,
-        "y": 8.355369308603386
+        "x": 7.16010257643291,
+        "y": 8.365107501270758
       },
       "nextControl": {
-        "x": 8.4073300759416,
-        "y": 5.436196837073713
+        "x": 8.592355736621627,
+        "y": 5.445935029741082
       },
       "isLocked": false,
       "linkedName": null
@@ -96,16 +96,16 @@
     },
     {
       "anchor": {
-        "x": 8.153398228504642,
-        "y": 4.197161039636433
+        "x": 8.250780155178342,
+        "y": 4.119255498297474
       },
       "prevControl": {
-        "x": 7.471724741788748,
-        "y": 3.496011167585799
+        "x": 7.569106668462448,
+        "y": 3.4181056262468403
       },
       "nextControl": {
-        "x": 8.570201058731671,
-        "y": 4.625872522155664
+        "x": 8.667582985405371,
+        "y": 4.547966980816705
       },
       "isLocked": false,
       "linkedName": null
@@ -207,7 +207,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -335,7 +335,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -402,7 +402,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 5.5,
+      "waypointRelativePos": 5.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -446,7 +446,7 @@
             {
               "type": "named",
               "data": {
-                "name": "revShooter"
+                "name": "revShooterFaster"
               }
             },
             {
@@ -493,6 +493,23 @@
               "type": "named",
               "data": {
                 "name": "fire"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 6.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterTravel"
               }
             }
           ]

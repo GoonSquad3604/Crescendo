@@ -28,11 +28,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.LED.RAINBOW;
+import frc.robot.commands.LED.SetLEDSBlue;
 import frc.robot.commands.LED.SetLEDSYellow;
 import frc.robot.commands.LED.SpeakerLEDMode;
 import frc.robot.commands.climber.MagicClimb;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AmpFireNew;
+import frc.robot.commands.shooter.BabyBird;
 import frc.robot.commands.shooter.FeedUntillSensor;
 import frc.robot.commands.shooter.RepositionNote;
 import frc.robot.commands.shooter.RepositionNoteAuto;
@@ -160,7 +162,7 @@ public class RobotContainer {
     //     .onTrue(
     //         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode(m_LED));
-    buttonBox.button(2).onTrue(new SpeakerLEDMode(m_LED));
+    buttonBox.button(2).onTrue(new SetLEDSBlue(m_LED));
     buttonBox
         .button(2)
         .onTrue(
@@ -216,10 +218,12 @@ public class RobotContainer {
         .button(7)
         .and(climberTrigger.negate())
         .onTrue(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.shooterTo(50)),
-                new InstantCommand(() -> s_Shooter.babyBird(200, 200)),
-                new InstantCommand(() -> s_Index.babyBirdIndex())));
+            // new ParallelCommandGroup(
+            //     new InstantCommand(() -> s_Shooter.shooterTo(50)),
+            //     new InstantCommand(() -> s_Shooter.babyBird(200, 200)),
+            //     new InstantCommand(() -> s_Index.babyBirdIndex()))
+            new BabyBird().andThen(new TravelMode(m_LED))
+                );
 
     buttonBox
         .button(7)
@@ -233,7 +237,7 @@ public class RobotContainer {
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
    
-    buttonBox.button(9).onTrue(new SpeakerMode().alongWith(new SpeakerLEDMode(m_LED)));
+    buttonBox.button(9).onTrue(new SpeakerMode().alongWith(new SetLEDSBlue(m_LED)));
     buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker)));
     // buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() ->
     // s_Shooter.setPower(.11)));
@@ -274,8 +278,8 @@ public class RobotContainer {
         .button(12)
         .and(ampTrigger.negate())
         .and(travelTrigger.negate())
-        // .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
-        .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
+        .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
+        // .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
 
     buttonBox
         .button(12)
@@ -341,11 +345,11 @@ public class RobotContainer {
                         () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
     driver
         .a()
-        .onFalse(
+        .onFalse(Commands.waitSeconds(.4).andThen(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooterRPM()),
                 new InstantCommand(() -> s_Index.indexStop()),
-                new TravelMode(m_LED)));
+                new TravelMode(m_LED))));
     driver
         .leftTrigger()
         .and(speakerTrigger)
@@ -354,16 +358,16 @@ public class RobotContainer {
                 .andThen(Commands.waitSeconds(.4))
                 .andThen(
                     new InstantCommand(
-                        // () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())
-                        () -> s_Index.setIndexPower(1)
+                        () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())
+                        // () -> s_Index.setIndexPower(1)
                         )));
     driver
         .leftTrigger()
-        .onFalse(
+        .onFalse(Commands.waitSeconds(.4).andThen(
             new ParallelCommandGroup(
                 new InstantCommand(() -> s_Shooter.stopShooterRPM()),
                 new InstantCommand(() -> s_Index.indexStop()),
-                new TravelMode(m_LED)));
+                new TravelMode(m_LED))));
     // driver.a().onTrue(aimAndShootCommandAmp);
     driver.y().onTrue(new RAINBOW(m_LED));
     driver.y().and(driver.b()).onTrue(new InstantCommand(() -> s_Flipper.panic()));

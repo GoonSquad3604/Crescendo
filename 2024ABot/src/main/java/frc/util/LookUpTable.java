@@ -6,6 +6,8 @@ package frc.util;
 
 import java.util.ArrayList;
 
+import frc.robot.Constants;
+
 /** Add your docs here. */
 public class LookUpTable {
 
@@ -34,22 +36,22 @@ public class LookUpTable {
 
     table.add(new LookUpTableEntry(2.7423408, 35));
     table.add(new LookUpTableEntry(2.801, 34));
-
     table.add(new LookUpTableEntry(2.84599, 34));
     table.add(new LookUpTableEntry(2.880, 32));
-    table.add(new LookUpTableEntry(2.9976, 30));
 
-    table.add(new LookUpTableEntry(3.165, 30));
-    table.add(new LookUpTableEntry(3.3277, 30));
-    table.add(new LookUpTableEntry(3.48137, 30));
-    table.add(new LookUpTableEntry(3.68, 30));
-    table.add(new LookUpTableEntry(3.877, 29));
-    table.add(new LookUpTableEntry(3.967, 26));
-    table.add(new LookUpTableEntry(4.12278, 25));
-    table.add(new LookUpTableEntry(4.3035, 25));
-    table.add(new LookUpTableEntry(4.565, 23));
-    table.add(new LookUpTableEntry(4.8058, 22));
-    table.add(new LookUpTableEntry(5.0639, 21));
+    table.add(new LookUpTableEntry(2.9976, 32));//30
+    table.add(new LookUpTableEntry(3.165, 32));//30
+    table.add(new LookUpTableEntry(3.3277, 32));
+    table.add(new LookUpTableEntry(3.48137, 32));
+    table.add(new LookUpTableEntry(3.68, 32)); //32
+    table.add(new LookUpTableEntry(3.877, 31)); //29
+    table.add(new LookUpTableEntry(3.967, 28));//26
+    table.add(new LookUpTableEntry(4.12278, 27)); //25
+    table.add(new LookUpTableEntry(4.3035, 27));//25
+    table.add(new LookUpTableEntry(4.565, 24));//23
+    table.add(new LookUpTableEntry(4.8058, 23));//22
+    table.add(new LookUpTableEntry(5.0639, 22));//21
+
     table.add(new LookUpTableEntry(5.3029, 21));
 
     // 6200 rpm
@@ -89,7 +91,7 @@ public class LookUpTable {
     if (distance >= closestHigher.distance && distance < closestHigher.distance + 1)
       return closestHigher;
     // return new LookUpTableEntry(distance, 56);
-    if (distance >= closestHigher.distance + 1) return new LookUpTableEntry(distance, 56);
+    if (distance >= closestHigher.distance + 1) return new LookUpTableEntry(distance, Constants.ShooterConstants.passingAngle);
 
     for (LookUpTableEntry entry : table) {
       if (entry.distance < distance

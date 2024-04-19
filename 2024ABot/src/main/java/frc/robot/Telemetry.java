@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 
 public class Telemetry {
   private final double MaxSpeed;
-  private final StructArrayPublisher<SwerveModuleState> publisher;
+//   private final StructArrayPublisher<SwerveModuleState> publisher;
 
   /**
    * Construct a telemetry object, with the specified max speed of the robot
@@ -31,21 +31,21 @@ public class Telemetry {
   public Telemetry(double maxSpeed) {
     MaxSpeed = maxSpeed;
 
-    publisher = NetworkTableInstance.getDefault()
-                .getStructArrayTopic("/SwerveStates", SwerveModuleState.struct).publish();
-        SignalLogger.start();
+    // publisher = NetworkTableInstance.getDefault()
+    //             .getStructArrayTopic("/SwerveStates", SwerveModuleState.struct).publish();
+    //     SignalLogger.start();
 
-        PathPlannerLogging.setLogActivePathCallback((poses) -> {
-            double[] arr = new double[poses.size() * 3];
-            int ndx = 0;
-            for (Pose2d onepose : poses) {
-                arr[ndx + 0] = onepose.getX();
-                arr[ndx + 1] = onepose.getY();
-                arr[ndx + 2] = onepose.getRotation().getDegrees();
-                ndx += 3;
-            }
-            trajPub.set(arr);
-        });
+    //     PathPlannerLogging.setLogActivePathCallback((poses) -> {
+    //         double[] arr = new double[poses.size() * 3];
+    //         int ndx = 0;
+    //         for (Pose2d onepose : poses) {
+    //             arr[ndx + 0] = onepose.getX();
+    //             arr[ndx + 1] = onepose.getY();
+    //             arr[ndx + 2] = onepose.getRotation().getDegrees();
+    //             ndx += 3;
+    //         }
+    //         trajPub.set(arr);
+    //     });
   }
 
   /* What to publish over networktables for telemetry */
@@ -55,7 +55,7 @@ public class Telemetry {
   private final NetworkTable table = inst.getTable("Pose");
   private final DoubleArrayPublisher fieldPub = table.getDoubleArrayTopic("robotPose").publish();
   private final StringPublisher fieldTypePub = table.getStringTopic(".type").publish();
-  private final DoubleArrayPublisher trajPub = table.getDoubleArrayTopic("traj").publish();
+//   private final DoubleArrayPublisher trajPub = table.getDoubleArrayTopic("traj").publish();
 
   /* Robot speeds for general checking */
   private final NetworkTable driveStats = inst.getTable("Drive");
@@ -127,16 +127,16 @@ public class Telemetry {
     velocityY.set(velocities.getY());
     odomPeriod.set(state.OdometryPeriod);
     /* Telemeterize the module's states */
-    for (int i = 0; i < 4; ++i) {
-      m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
-      m_moduleDirections[i].setAngle(state.ModuleStates[i].angle);
-      m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
+    // for (int i = 0; i < 4; ++i) {
+    //   m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
+    //   m_moduleDirections[i].setAngle(state.ModuleStates[i].angle);
+    //   m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
 
-      // SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
-      publisher.set(state.ModuleStates);
+    //   // SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
+    //   publisher.set(state.ModuleStates);
 
-        SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
-        SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
-    }
+    //     SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
+    //     SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
+    // }
   }
 }
