@@ -6,9 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class LED extends SubsystemBase {
   private static LED _LeftInstance;
@@ -27,11 +25,11 @@ public class LED extends SubsystemBase {
     m_led.setData(m_ledBuffer);
     m_led.start();
   }
+
   public void rainbow(int pixel) {
 
     // For every pixel
     int m_rainbowFirstPixelHue = pixel;
-
 
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
 
@@ -44,7 +42,6 @@ public class LED extends SubsystemBase {
       // Set the value
 
       m_ledBuffer.setHSV(i, hue, 255, 128);
-
     }
 
     // Increase by to make the rainbow "move"
@@ -55,7 +52,6 @@ public class LED extends SubsystemBase {
 
     m_rainbowFirstPixelHue %= 180;
     m_led.setData(m_ledBuffer);
-
   }
 
   // public static LED getInstance(boolean left) {
@@ -71,13 +67,15 @@ public class LED extends SubsystemBase {
   //   return _RightInstance;
   // }
 
-  /** Sets Color.
+  /**
+   * Sets Color.
+   *
    * @param r r value [0-255]
    * @param g g value [0-255]
    * @param b b value [0-255]
    */
   public void setColor(int r, int g, int b) {
-    for(int i = 0; i < m_length; i++) {
+    for (int i = 0; i < m_length; i++) {
       m_ledBuffer.setRGB(i, r, g, b);
     }
 
@@ -86,7 +84,7 @@ public class LED extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
     // This method will be called once per scheduler run
   }
 }

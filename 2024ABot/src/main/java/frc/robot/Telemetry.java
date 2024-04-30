@@ -1,19 +1,14 @@
 package frc.robot;
 
-import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain.SwerveDriveState;
-import com.pathplanner.lib.util.PathPlannerLogging;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringPublisher;
-import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.util.Color;
@@ -21,7 +16,8 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 
 public class Telemetry {
   private final double MaxSpeed;
-//   private final StructArrayPublisher<SwerveModuleState> publisher;
+
+  //   private final StructArrayPublisher<SwerveModuleState> publisher;
 
   /**
    * Construct a telemetry object, with the specified max speed of the robot
@@ -55,7 +51,7 @@ public class Telemetry {
   private final NetworkTable table = inst.getTable("Pose");
   private final DoubleArrayPublisher fieldPub = table.getDoubleArrayTopic("robotPose").publish();
   private final StringPublisher fieldTypePub = table.getStringTopic(".type").publish();
-//   private final DoubleArrayPublisher trajPub = table.getDoubleArrayTopic("traj").publish();
+  //   private final DoubleArrayPublisher trajPub = table.getDoubleArrayTopic("traj").publish();
 
   /* Robot speeds for general checking */
   private final NetworkTable driveStats = inst.getTable("Drive");
@@ -135,7 +131,8 @@ public class Telemetry {
     //   // SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
     //   publisher.set(state.ModuleStates);
 
-    //     SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
+    //     SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(),
+    // pose.getRotation().getDegrees()});
     //     SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
     // }
   }

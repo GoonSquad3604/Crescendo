@@ -33,7 +33,7 @@ public class TravelMode extends InstantCommand {
     m_flipper = Flipper.getInstance();
     leftLED = left;
     // m_ramp = rAMP.getInstance();
-    addRequirements(m_Intake, m_Shooter, m_StateController, m_flipper,leftLED);
+    addRequirements(m_Intake, m_Shooter, m_StateController, m_flipper, leftLED);
   }
 
   // Called when the command is initially scheduled.
