@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Index;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -30,7 +31,7 @@ public class RepositionForAmp extends Command {
   public void execute() {
     // if sensor is triggered, move shooter to steeper angle.
     if (m_Index.hasNote()) {
-      m_Index.setIndexPower(.2);
+      m_Index.setIndexPower(Constants.IntakeConstants.repositionForAmpPower);
     } else {
       m_Index.indexStop();
     }

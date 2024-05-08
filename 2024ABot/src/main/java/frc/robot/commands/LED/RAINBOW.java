@@ -5,6 +5,7 @@
 package frc.robot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.LED;
 
 public class RAINBOW extends Command {

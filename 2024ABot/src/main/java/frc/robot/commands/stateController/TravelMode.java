@@ -20,7 +20,6 @@ public class TravelMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
-  rAMP m_ramp;
   Flipper m_flipper;
   LED leftLED;
   LED rightLED;
@@ -32,7 +31,6 @@ public class TravelMode extends InstantCommand {
     m_StateController = StateController.getInstance();
     m_flipper = Flipper.getInstance();
     leftLED = left;
-    // m_ramp = rAMP.getInstance();
     addRequirements(m_Intake, m_Shooter, m_StateController, m_flipper, leftLED);
   }
 
@@ -45,6 +43,5 @@ public class TravelMode extends InstantCommand {
     m_Shooter.setPower(0);
     m_flipper.setFlipperDown();
     leftLED.setColor(200, 0, 255);
-    // m_ramp.setrAMPUp();
   }
 }

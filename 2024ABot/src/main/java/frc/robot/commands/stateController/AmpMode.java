@@ -20,14 +20,12 @@ public class AmpMode extends InstantCommand {
   Shooter m_Shooter;
   Index m_Index;
 
-  // rAMP m_ramp;
 
   public AmpMode() {
     m_StateController = StateController.getInstance();
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
     m_Index = Index.getInstance();
-    // m_ramp = rAMP.getInstance();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Intake, m_Shooter, m_StateController);
@@ -37,13 +35,8 @@ public class AmpMode extends InstantCommand {
   @Override
   public void initialize() {
     m_StateController.setAmp();
-    // new RepositionForAmp();
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
-    // m_ramp.setrAMPDown();
-    // m_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterAmpRPM+200,
-    // Constants.ShooterConstants.rightShooterAmpRPM-200);
-    // m_Shooter.setPower(.07);
 
   }
 }
