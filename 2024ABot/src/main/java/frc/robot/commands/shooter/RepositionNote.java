@@ -30,7 +30,7 @@ public class RepositionNote extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_Index.setIndexPower(-0.1);
+    s_Index.setIndexPower(Constants.IntakeConstants.repositionNotePower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

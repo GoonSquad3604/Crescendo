@@ -2,41 +2,41 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.stateController;
+package frc.robot.commands.vision;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants;
-import frc.robot.subsystems.Index;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AmpMode extends InstantCommand {
-  StateController m_StateController;
-  Intake m_Intake;
-  Shooter m_Shooter;
-  Index m_Index;
+public class InstLookUpTablePlus2 extends InstantCommand {
+  Shooter m_shoot;
 
+  @AutoLogOutput Pose2d pose;
+  StateController stateController;
+  CommandSwerveDrivetrain swerve;
+  @AutoLogOutput double angle;
 
-  public AmpMode() {
-    m_StateController = StateController.getInstance();
-    m_Intake = Intake.getInstance();
-    m_Shooter = Shooter.getInstance();
-    m_Index = Index.getInstance();
-
+  public InstLookUpTablePlus2(Shooter shoot, CommandSwerveDrivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_Intake, m_Shooter, m_StateController);
+    swerve = drive;
+    m_shoot = shoot;
+
+    stateController = StateController.getInstance();
+    addRequirements(m_shoot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_StateController.setAmp();
-    m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
-    m_Shooter.shooterTo(Constants.ShooterConstants.shooterAmp);
+    pose = swerve.getState().Pose;
 
+    angle = m_shoot.lookUpTable(pose);
+    m_shoot.shooterTo(angle + 2);
   }
 }

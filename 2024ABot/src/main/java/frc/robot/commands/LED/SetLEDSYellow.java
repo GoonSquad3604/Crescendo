@@ -12,11 +12,12 @@ import frc.robot.subsystems.LED;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetLEDSYellow extends InstantCommand {
   private LED s_Led;
+
   // private LED s_Right;
 
   public SetLEDSYellow(LED led) {
     // Use addRequirements() here to declare subsystem dependencies.
-   s_Led = led;
+    s_Led = led;
     // s_Right = right;
 
     addRequirements(s_Led);

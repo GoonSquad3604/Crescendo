@@ -49,14 +49,14 @@ public class Climber extends SubsystemBase {
     leftClimberPIDController.setFeedbackDevice(leftClimberEncoder);
 
     // PIDs
-    leftClimberPIDController.setP(.5);
-    rightClimberPIDController.setP(.2);
+    leftClimberPIDController.setP(Constants.ClimberConstants.leftClimbkP);
+    rightClimberPIDController.setP(Constants.ClimberConstants.rightClimbkP);
 
-    leftClimberPIDController.setI(0);
-    rightClimberPIDController.setI(0);
+    leftClimberPIDController.setI(Constants.ClimberConstants.leftClimbkI);
+    rightClimberPIDController.setI(Constants.ClimberConstants.rightClimbkI);
 
-    leftClimberPIDController.setD(0);
-    rightClimberPIDController.setD(0);
+    leftClimberPIDController.setD(Constants.ClimberConstants.leftClimbkD);
+    rightClimberPIDController.setD(Constants.ClimberConstants.rightClimbkD);
 
     leftClimberPIDController.setOutputRange(-.95, .95);
     rightClimberPIDController.setOutputRange(-.95, .95);

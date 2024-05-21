@@ -5,12 +5,15 @@
 package frc.robot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.LED;
 
 public class RAINBOW extends Command {
   /** Creates a new RAINBOW. */
   private LED m_led;
+
   int start = 0;
+
   public RAINBOW(LED led) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_led = led;

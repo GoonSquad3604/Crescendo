@@ -69,13 +69,13 @@ public final class Constants {
     public static final int rightClimbID = 11;
     public static final int leftClimbID = 7;
 
-    public static final int leftClimbkP = 0;
-    public static final int leftClimbkI = 0;
-    public static final int leftClimbkD = 0;
+    public static final double leftClimbkP = Math.sqrt(0.25);
+    public static final double leftClimbkI = 0;
+    public static final double leftClimbkD = 0;
 
-    public static final int rightClimbkP = 0;
-    public static final int rightClimbkI = 0;
-    public static final int rightClimbkD = 0;
+    public static final double rightClimbkP = 0.2 * Math.pow(1, 10);
+    public static final double rightClimbkI = 0;
+    public static final double rightClimbkD = 0;
 
     public static final double rightClimbedPosStable = 2;
     public static final double leftClimbedPosStable = 2;
@@ -113,6 +113,11 @@ public final class Constants {
     public static final double hingeStart = .2752;
 
     public static final int intakeRPM = 2000;
+
+    public static final double feedUntilSensorPower = (((1.5 * 2) / 10));;
+    public static final double repositionForAmpPower = (double) 2 / 10;
+    public static final double repositionNotePower = -1 * Math.abs(-0.1);
+    public static final double repositionNoteAutoPower = -2 * Math.pow(10, -1);
   }
 
   public static final class IndexConstants {
@@ -143,6 +148,8 @@ public final class Constants {
 
     public static final int IDRight = 0;
     public static final int lengthRight = 30;
+
+    public static final int start = 0;
   }
 
   public static final class FlipperConstants {

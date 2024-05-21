@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.LED.RAINBOW;
 import frc.robot.commands.LED.SetLEDSBlue;
 import frc.robot.commands.LED.SetLEDSYellow;
-import frc.robot.commands.LED.SpeakerLEDMode;
 import frc.robot.commands.climber.MagicClimb;
 import frc.robot.commands.intake.SetIntakeDown;
 import frc.robot.commands.shooter.AmpFireNew;
@@ -79,8 +78,8 @@ public class RobotContainer {
   private final CommandJoystick buttonBox = new CommandJoystick(1);
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
-  private final LED m_LED =  new LED(1, Constants.LEDConstants.lengthLeft);
-//   private final LED rightLED = new LED(0, Constants.LEDConstants.lengthRight);
+  private final LED m_LED = new LED(1, Constants.LEDConstants.lengthLeft);
+  //   private final LED rightLED = new LED(0, Constants.LEDConstants.lengthRight);
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Intake s_Intake = Intake.getInstance();
   private final Climber s_Climber = Climber.getInstance();
@@ -192,8 +191,7 @@ public class RobotContainer {
                     new ParallelCommandGroup(
                         new InstantCommand(() -> s_Intake.runIntake()),
                         new SequentialCommandGroup(
-                            new FeedUntillSensor(m_LED, s_Intake),
-                            new RepositionNote()))));
+                            new FeedUntillSensor(m_LED, s_Intake), new RepositionNote()))));
     buttonBox.button(6).onFalse(new TravelMode(m_LED));
     buttonBox.button(6).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
@@ -222,8 +220,7 @@ public class RobotContainer {
             //     new InstantCommand(() -> s_Shooter.shooterTo(50)),
             //     new InstantCommand(() -> s_Shooter.babyBird(200, 200)),
             //     new InstantCommand(() -> s_Index.babyBirdIndex()))
-            new BabyBird().andThen(new TravelMode(m_LED))
-                );
+            new BabyBird().andThen(new TravelMode(m_LED)));
 
     buttonBox
         .button(7)
@@ -236,9 +233,13 @@ public class RobotContainer {
     buttonBox.button(8).onTrue(new InstantCommand(() -> s_Index.setIndexPower(-.3)));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
     buttonBox.button(8).onFalse(new InstantCommand(() -> s_Index.indexStop()));
-   
+
     buttonBox.button(9).onTrue(new SpeakerMode().alongWith(new SetLEDSBlue(m_LED)));
-    buttonBox.button(9).onTrue(new InstantCommand(() -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker)));
+    buttonBox
+        .button(9)
+        .onTrue(
+            new InstantCommand(
+                () -> s_Shooter.shooterTo(Constants.ShooterConstants.shooterSpeaker)));
     // buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() ->
     // s_Shooter.setPower(.11)));
     buttonBox
@@ -279,7 +280,7 @@ public class RobotContainer {
         .and(ampTrigger.negate())
         .and(travelTrigger.negate())
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
-        // .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
+    // .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
 
     buttonBox
         .button(12)
@@ -345,11 +346,13 @@ public class RobotContainer {
                         () -> s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
     driver
         .a()
-        .onFalse(Commands.waitSeconds(.4).andThen(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
-                new InstantCommand(() -> s_Index.indexStop()),
-                new TravelMode(m_LED))));
+        .onFalse(
+            Commands.waitSeconds(.4)
+                .andThen(
+                    new ParallelCommandGroup(
+                        new InstantCommand(() -> s_Shooter.stopShooterRPM()),
+                        new InstantCommand(() -> s_Index.indexStop()),
+                        new TravelMode(m_LED))));
     driver
         .leftTrigger()
         .and(speakerTrigger)
@@ -363,11 +366,13 @@ public class RobotContainer {
                         )));
     driver
         .leftTrigger()
-        .onFalse(Commands.waitSeconds(.4).andThen(
-            new ParallelCommandGroup(
-                new InstantCommand(() -> s_Shooter.stopShooterRPM()),
-                new InstantCommand(() -> s_Index.indexStop()),
-                new TravelMode(m_LED))));
+        .onFalse(
+            Commands.waitSeconds(.4)
+                .andThen(
+                    new ParallelCommandGroup(
+                        new InstantCommand(() -> s_Shooter.stopShooterRPM()),
+                        new InstantCommand(() -> s_Index.indexStop()),
+                        new TravelMode(m_LED))));
     // driver.a().onTrue(aimAndShootCommandAmp);
     driver.y().onTrue(new RAINBOW(m_LED));
     driver.y().and(driver.b()).onTrue(new InstantCommand(() -> s_Flipper.panic()));
@@ -419,7 +424,7 @@ public class RobotContainer {
     m_LED.setColor(255, 255, 255);
     // m_LED.rainbow();
     // s_rAMP.setrAMPUp();
-    
+
   }
 
   public RobotContainer() {
@@ -444,9 +449,7 @@ public class RobotContainer {
             new FeedUntillSensor(m_LED, s_Intake),
             new RepositionNoteAuto(s_Index, s_Intake)));
     NamedCommands.registerCommand(
-        "stopShooter", 
-        new InstantCommand(() -> s_Shooter.stopShooterRPM(), s_Shooter)
-        );
+        "stopShooter", new InstantCommand(() -> s_Shooter.stopShooterRPM(), s_Shooter));
     NamedCommands.registerCommand(
         "intakeDown",
         new InstantCommand(
@@ -462,7 +465,8 @@ public class RobotContainer {
         new InstantCommand(() -> s_Shooter.setShooterRPM(-6000, 6000), s_Shooter));
     //    NamedCommands.registerCommand( "revShooter", Commands.print("marker1"));
     NamedCommands.registerCommand("fire", new InstantCommand(() -> s_Index.setIndexRPM(-6000)));
-    NamedCommands.registerCommand("fire100power", new InstantCommand(() -> s_Index.setIndexPower(1)));
+    NamedCommands.registerCommand(
+        "fire100power", new InstantCommand(() -> s_Index.setIndexPower(1)));
 
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> s_Intake.stopIntake()));
     NamedCommands.registerCommand("runIndex", new InstantCommand(() -> s_Index.setIndexPower(-.4)));
@@ -477,14 +481,16 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "shooterTravel", new InstantCommand(() -> s_Shooter.shooterTo(12), s_Shooter));
     NamedCommands.registerCommand("varAngle", new LookUpTableAuton(s_Shooter, drivetrain));
-    NamedCommands.registerCommand("varAngleMovementAdj", new LookUpTableAutonMovementAdj(s_Shooter, drivetrain));
-    NamedCommands.registerCommand("varAngleMinusThree", new LookUpTableAdjustmentMinusThree(s_Shooter, drivetrain));
+    NamedCommands.registerCommand(
+        "varAngleMovementAdj", new LookUpTableAutonMovementAdj(s_Shooter, drivetrain));
+    NamedCommands.registerCommand(
+        "varAngleMinusThree", new LookUpTableAdjustmentMinusThree(s_Shooter, drivetrain));
 
     NamedCommands.registerCommand("autoAim", new RotateToSpeaker(drivetrain));
 
     m_LED.setColor(255, 255, 255);
     // rightLED.setColor(255, 255, 255);
-    
+
     aimAndShootCommandAmp =
         Commands.runOnce(
                 () -> {

@@ -39,7 +39,7 @@ public class LookUpTableAdjustmentMinusThree extends Command {
     pose = swerve.getState().Pose;
 
     angle = m_shoot.lookUpTable(pose);
-    m_shoot.shooterTo(angle-3);
+    m_shoot.shooterTo(angle - 3);
   }
 
   @AutoLogOutput

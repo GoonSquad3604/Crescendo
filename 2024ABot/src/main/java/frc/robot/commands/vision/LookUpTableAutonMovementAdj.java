@@ -39,7 +39,7 @@ public class LookUpTableAutonMovementAdj extends Command {
     pose = swerve.getState().Pose;
 
     angle = m_shoot.lookUpTable(pose);
-    m_shoot.shooterTo(angle-8);
+    m_shoot.shooterTo(angle - 8);
   }
 
   @AutoLogOutput
