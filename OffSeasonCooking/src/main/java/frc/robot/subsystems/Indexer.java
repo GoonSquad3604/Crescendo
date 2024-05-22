@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkLowLevel.MotorType;  
 
 public class Indexer extends SubsystemBase {
+    
     private static Indexer _instance;
     private CANSparkMax indexMotor1;
     private CANSparkMax indexMotor2;

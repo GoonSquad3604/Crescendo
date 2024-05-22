@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
+import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.Indexer;
 
@@ -19,12 +20,13 @@ public class RobotContainer {
 
   private final CommandXboxController driver = new CommandXboxController(0);
   
-  private final Turret s_Turret = Turret.getInstance();
+  private final Shooter s_Shooter = Shooter.getInstance();
   private final Indexer s_Indexer = Indexer.getInstance();
 
 
 
   public RobotContainer() {
+    m_drivetrain.setDefaultCommand(new DefaultDrive(() -> driver.getLeftY(), () -> driver.getRightX()));
     configureBindings();
   }
 
@@ -34,22 +36,22 @@ public class RobotContainer {
     m_drivetrain.arcadeDrive(-driver.getLeftY(), -driver.getRightX());
 
 
-    driver.a().onTrue(new InstantCommand(() -> s_Turret.spinTurretCounterClockwise()));
-    driver.a().onFalse(new InstantCommand(() -> s_Turret.stopTurret()));
+    driver.a().onTrue(new InstantCommand(() -> s_Shooter.spinTurretCounterClockwise()));
+    driver.a().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
 
-    driver.b().onTrue(new InstantCommand(() -> s_Turret.spinTurretClockwise()));
-    driver.b().onFalse(new InstantCommand(() -> s_Turret.stopTurret()));
+    driver.b().onTrue(new InstantCommand(() -> s_Shooter.spinTurretClockwise()));
+    driver.b().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
 
-    driver.rightTrigger().onTrue(new InstantCommand(() -> s_Turret.runShooter()));
-    driver.rightTrigger().onFalse(new InstantCommand(() -> s_Turret.stopShooter()));
+    driver.rightTrigger().onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
+    driver.rightTrigger().onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
     driver.leftTrigger().onTrue(new InstantCommand(() -> s_Indexer.runIndexer()));
     driver.leftTrigger().onFalse(new InstantCommand(() -> s_Indexer.stopIndexer()));
 
-    driver.leftBumper().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Turret.runShooterReverse()),
+    driver.leftBumper().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.runShooterReverse()),
       new InstantCommand(() -> s_Indexer.runIndexerReverse())));
 
-    driver.leftBumper().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Turret.stopShooter()),
+    driver.leftBumper().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.stopShooter()),
       new InstantCommand(() -> s_Indexer.stopIndexer())));
   }
 
