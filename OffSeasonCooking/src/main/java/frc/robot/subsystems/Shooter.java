@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase {
     private CANSparkMax turretMotor;
     private TalonFX shooterMotor;
 
-    private PIDController shooterPIDController = new PIDController(0, 0, 0);
+    
 
 
     public static Shooter getInstance() {
