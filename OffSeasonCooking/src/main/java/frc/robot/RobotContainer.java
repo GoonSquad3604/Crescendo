@@ -13,6 +13,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 
 public class RobotContainer {
 
@@ -22,7 +23,7 @@ public class RobotContainer {
   
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Indexer s_Indexer = Indexer.getInstance();
-
+private final Intake s_Intake = Intake.getInstance();
 
 
   public RobotContainer() {
@@ -42,11 +43,22 @@ public class RobotContainer {
     driver.b().onTrue(new InstantCommand(() -> s_Shooter.spinTurretClockwise()));
     driver.b().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
 
+    driver.x().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
+    driver.x().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    driver.y().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.y().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    // driver.rightStick().onTrue(new InstantCommand(() -> s_Intake.runIntake()));
+    // driver.rightStick().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
+
     driver.rightTrigger().onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
     driver.rightTrigger().onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-    driver.leftTrigger().onTrue(new InstantCommand(() -> s_Indexer.runIndexer()));
-    driver.leftTrigger().onFalse(new InstantCommand(() -> s_Indexer.stopIndexer()));
+    driver.leftTrigger().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()),
+      new InstantCommand(() -> s_Indexer.runIndexer())));
+       driver.leftTrigger().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()),
+      new InstantCommand(() -> s_Indexer.stopIndexer())));
 
     driver.leftBumper().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.runShooterReverse()),
       new InstantCommand(() -> s_Indexer.runIndexerReverse())));

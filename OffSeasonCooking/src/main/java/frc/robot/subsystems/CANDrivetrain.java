@@ -61,7 +61,7 @@ public class CANDrivetrain extends SubsystemBase {
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
   public void arcadeDrive(double speed, double rotation) {
-    diffDrive.arcadeDrive(speed, rotation);
+    diffDrive.arcadeDrive(-speed, rotation);
   }
 
   @Override

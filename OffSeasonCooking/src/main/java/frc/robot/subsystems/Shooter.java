@@ -33,20 +33,20 @@ public class Shooter extends SubsystemBase {
         shooterMotor = new TalonFX(8);
 
        // in init function, set slot 0 gains
-var slot0Configs = new Slot0Configs();
-slot0Configs.kS = 0.05; // Add 0.05 V output to overcome static friction
-slot0Configs.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
-slot0Configs.kP = 0.11; // An error of 1 rps results in 0.11 V output
-slot0Configs.kI = 0; // no output for integrated error
-slot0Configs.kD = 0; // no output for error derivative
+var shooterConfigs = new Slot0Configs();
+shooterConfigs.kS = 0.05; // Add 0.05 V output to overcome static friction
+shooterConfigs.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
+shooterConfigs.kP = 0.11; // An error of 1 rps results in 0.11 V output
+shooterConfigs.kI = 0; // no output for integrated error
+shooterConfigs.kD = 0; // no output for error derivative
 
-shooterMotor.getConfigurator().apply(slot0Configs);
+shooterMotor.getConfigurator().apply(shooterConfigs);
 
         // create a velocity closed-loop request, voltage output, slot 0 configs
-final VelocityVoltage m_request = new VelocityVoltage(0).withSlot(0);
+// final VelocityVoltage m_request = new VelocityVoltage(0).withSlot(0);
 
-// set velocity to 8 rps, add 0.5 V to overcome gravity
-shooterMotor.setControl(m_request.withVelocity(8).withFeedForward(0.5));
+// // set velocity to 8 rps, add 0.5 V to overcome gravity
+// shooterMotor.setControl(m_request.withVelocity((1.0/60)).withFeedForward(0.5));
     }
 
     public void spinTurretClockwise(){
@@ -62,7 +62,11 @@ shooterMotor.setControl(m_request.withVelocity(8).withFeedForward(0.5));
     }
 
     public void runShooter(){
-        shooterMotor.set(-.6);
+        // shooterMotor.set(-.6);
+        final VelocityVoltage m_request = new VelocityVoltage(0).withSlot(0);
+
+// set velocity to 8 rps, add 0.5 V to overcome gravity
+shooterMotor.setControl(m_request.withVelocity((-85)).withFeedForward(0.5));
     }
 
     public void stopShooter(){
