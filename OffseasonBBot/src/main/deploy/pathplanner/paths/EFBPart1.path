@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3658779393478129,
+        "y": 5.570246205735591
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6190709486994308,
+        "y": 6.680400169815762
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.645176958206822,
+        "y": 5.7844864444177295
+      },
+      "prevControl": {
+        "x": 7.953765278823557,
+        "y": 6.875164023163159
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "PickedUpE"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "EFBPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

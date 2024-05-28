@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.248382968889307,
+        "y": 6.086370417106196
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.661057564108011,
+        "y": 4.849619948350218
+      },
+      "isLocked": false,
+      "linkedName": "EndOfShootE"
+    },
+    {
+      "anchor": {
+        "x": 8.309209311182562,
+        "y": 4.197161039636433
+      },
+      "prevControl": {
+        "x": 6.721883906401266,
+        "y": 3.5739167089247594
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pickedUpF"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "EFBPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

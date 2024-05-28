@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8353794485366749,
+        "y": 4.457363976456348
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.8148994816461754,
+        "y": 0.42897863573504874
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.44554400852574,
+        "y": 3.135698038893113
+      },
+      "prevControl": {
+        "x": 7.537277205387609,
+        "y": 1.588157454246457
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "PickUpG"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 12.652556500557756,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "GHPaths",
+  "previewStartingState": {
+    "rotation": -56.1363094311817,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

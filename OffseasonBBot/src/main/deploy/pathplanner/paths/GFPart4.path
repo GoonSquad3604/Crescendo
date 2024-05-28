@@ -1,0 +1,87 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.309209311182562,
+        "y": 4.197161039636433
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.495469761907104,
+        "y": 5.096912195184685
+      },
+      "isLocked": false,
+      "linkedName": "pickedUpF"
+    },
+    {
+      "anchor": {
+        "x": 2.1936243160742555,
+        "y": 3.5252257455879086
+      },
+      "prevControl": {
+        "x": 3.6167928663731574,
+        "y": 2.17848788972565
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FshotFar"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooterTravel"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -43.24000000000001,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "GFPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

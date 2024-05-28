@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.44554400852574,
+        "y": 3.135698038893113
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.42589327892069,
+        "y": 1.4025175767938638
+      },
+      "isLocked": false,
+      "linkedName": "PickUpG"
+    },
+    {
+      "anchor": {
+        "x": 2.1936243160742555,
+        "y": 3.5252257455879086
+      },
+      "prevControl": {
+        "x": 2.5307995832754795,
+        "y": 1.5658762941320887
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FshotFar"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -43.24132648747614,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "GFPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

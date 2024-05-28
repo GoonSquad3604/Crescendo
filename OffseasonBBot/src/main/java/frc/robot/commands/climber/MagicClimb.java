@@ -1,0 +1,86 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands.climber;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+
+public class MagicClimb extends Command {
+  /** Creates a new MagicClimb. */
+  Climber m_climb;
+
+  CommandSwerveDrivetrain m_drive;
+  double pitch;
+  boolean dontCorrect;
+
+  private double angle = ClimberConstants.magicAngle;
+
+  private Timer timer;
+
+  public MagicClimb(Climber climb, CommandSwerveDrivetrain drive) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    pitch = drive.getPigeon2().getPitch().getValueAsDouble();
+    m_climb = climb;
+    m_drive = drive;
+    timer = new Timer();
+    addRequirements(m_climb);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    timer.reset();
+    //dontCorrect makes it so the robot will not readjust more than once
+    dontCorrect = false;
+    timer.start();
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    // Pitch is actually roll
+    pitch = m_drive.getPigeon2().getPitch().getValueAsDouble();
+    //if the robot is relatively straight, it will climb as normal
+    if (-angle < pitch && pitch < angle && !dontCorrect) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosStable,
+          Constants.ClimberConstants.rightClimbedPosStable);
+        } 
+        //When the robot is leaning to the right,
+        //the left climber will be set to a higher position than the right climber, so the robot will be upright
+        else if (pitch >= angle && !dontCorrect) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosLeftTaller,
+          Constants.ClimberConstants.rightClimbedPosLeftTaller);
+      dontCorrect = true;
+    } 
+     //When the robot is leaning to the left,
+    //the right climber will be set to a higher position than the left climber, so the robot will be upright
+    else if (pitch <= -angle && !dontCorrect) {
+      m_climb.climberTo(
+          Constants.ClimberConstants.leftClimbedPosRightTaller,
+          Constants.ClimberConstants.rightClimbedPosRightTaller);
+      dontCorrect = true;
+    }
+    // System.out.println(m_drive.getPigeon2().getPitch().getValueAsDouble());
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    m_climb.stopClimber();
+    timer.stop();
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return pitch > 20 || pitch < -20 || timer.get() >= 4;
+  }
+}
