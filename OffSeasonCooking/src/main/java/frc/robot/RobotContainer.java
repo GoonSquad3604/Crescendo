@@ -43,22 +43,32 @@ private final Intake s_Intake = Intake.getInstance();
     driver.b().onTrue(new InstantCommand(() -> s_Shooter.spinTurretClockwise()));
     driver.b().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
 
-    driver.x().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
-    driver.x().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-
-    driver.y().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.y().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
     driver.y().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    driver.x().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.x().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
 
     // driver.rightStick().onTrue(new InstantCommand(() -> s_Intake.runIntake()));
     // driver.rightStick().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
 
-    driver.rightTrigger().onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
-    driver.rightTrigger().onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
+    // driver.rightTrigger().onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
+    // driver.rightTrigger().onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-    driver.leftTrigger().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()),
-      new InstantCommand(() -> s_Indexer.runIndexer())));
-       driver.leftTrigger().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()),
-      new InstantCommand(() -> s_Indexer.stopIndexer())));
+    // driver.leftTrigger().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()),
+    //   new InstantCommand(() -> s_Indexer.runIndexer())));
+    //    driver.leftTrigger().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()),
+    //   new InstantCommand(() -> s_Indexer.stopIndexer())));
+
+    driver.leftTrigger().onTrue(new ParallelCommandGroup(
+      new InstantCommand(() -> s_Intake.setHingeTo(-0.26)),
+        new InstantCommand(() -> s_Indexer.runIndexer()), 
+          new InstantCommand(() -> s_Intake.runIntake())));
+
+    driver.leftTrigger().onFalse(new ParallelCommandGroup(
+      new InstantCommand(() -> s_Intake.setHingeTo(0)),
+        new InstantCommand(() -> s_Indexer.stopIndexer()), 
+          new InstantCommand(() -> s_Intake.stopIntake())));
 
     driver.leftBumper().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.runShooterReverse()),
       new InstantCommand(() -> s_Indexer.runIndexerReverse())));

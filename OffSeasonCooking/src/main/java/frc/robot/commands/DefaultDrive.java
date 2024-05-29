@@ -30,21 +30,13 @@ public class DefaultDrive extends Command {
     addRequirements(s_DriveTrain);
   }
 
-  //Called every time the scheduler runs while the command is scheduled.
  
 @Override
   public void execute() {
-  //   if(slower.getAsDouble() > .5) {
-  //     speed = 0.25;
-  //   }
-  //   else speed = 1;
     double leftVal = MathUtil.applyDeadband(leftDriveSupplier.getAsDouble(), 0.1)*speed;
   
     double rightVal = MathUtil.applyDeadband(rightDriveSupplier.getAsDouble(), 0.1)*speed;
   
-  // s_DriveTrain.setLeftDrivepower(leftVal);
-
-  // s_DriveTrain.setRightDrivepower(rightVal);
     s_DriveTrain.arcadeDrive(leftVal, rightVal);
   
   }
