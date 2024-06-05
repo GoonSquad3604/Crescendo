@@ -14,13 +14,14 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
   private static Intake _instance;
-  private WPI_TalonSRX bigWheel;
+  private WPI_TalonSRX spikeWheel;
   private WPI_TalonSRX hingeMotor;
-  private WPI_TalonSRX mainIntake;
+  private WPI_TalonSRX solidWheel;
   
   private ElevatorFeedforward hingeFeedForward;
   private DutyCycleEncoder hingeEncoder;
@@ -34,10 +35,10 @@ public class Intake extends SubsystemBase {
   
   public Intake() {
 
-    bigWheel = new WPI_TalonSRX(9);
-    hingeMotor = new WPI_TalonSRX(10);
+    spikeWheel = new WPI_TalonSRX(Constants.IntakeConstants.spikeWheelID);
+    hingeMotor = new WPI_TalonSRX(Constants.IntakeConstants.hingeID);
     hingeMotor.setNeutralMode(NeutralMode.Brake);
-    mainIntake = new WPI_TalonSRX(11);
+    solidWheel = new WPI_TalonSRX(Constants.IntakeConstants.solidWheelID);
 
     hingeEncoder = new DutyCycleEncoder(0);
     hingeEncoder.reset();
@@ -58,26 +59,9 @@ public class Intake extends SubsystemBase {
     return _instance;
   }
 
-  public void runIntake(){
-     bigWheel.set(0.6);
-     mainIntake.set(-0.6);
-  }
-
-  public void stopIntake(){
-    bigWheel.set(0);
-    mainIntake.set(0);
-  }
-
-  public void raiseHinge(){
-    hingeMotor.set(0.3);
-  }
-
-  public void lowerHinge(){
-    hingeMotor.set(-0.3);
-  }
-
-  public void stopHinge(){
-    hingeMotor.set(0);
+  public void setIntakeSpeed(double speed){
+    spikeWheel.set(speed);
+    solidWheel.set(-speed);
   }
 
   public void setHingeTo(double position){

@@ -5,6 +5,8 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
@@ -26,10 +28,10 @@ public class Shooter extends SubsystemBase {
     
 
     public Shooter() {
-        turretMotor = new CANSparkMax(7, MotorType.kBrushless);
+        turretMotor = new CANSparkMax(Constants.ShooterConstants.turretID, MotorType.kBrushless);
         turretMotor.restoreFactoryDefaults();
 
-        shooterMotor = new TalonFX(8);
+        shooterMotor = new TalonFX(Constants.ShooterConstants.shooterID);
 
         var shooterConfigs = new Slot0Configs();
 

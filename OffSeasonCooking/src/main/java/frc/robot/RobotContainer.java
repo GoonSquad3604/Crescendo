@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.DefaultDrive;
@@ -23,6 +24,7 @@ public class RobotContainer {
   private final CANDrivetrain m_drivetrain = CANDrivetrain.getInstance();
 
   private final CommandXboxController driver = new CommandXboxController(0);
+  private final CommandJoystick operator = new CommandJoystick(1);
   
   private final Shooter s_Shooter = Shooter.getInstance();
   private final Indexer s_Indexer = Indexer.getInstance();
@@ -32,8 +34,6 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    autoChooser = AutoBuilder.buildAutoChooser();
-    
     NamedCommands.registerCommand(
       "revShooter", new InstantCommand(() -> s_Shooter.runShooter()));
     NamedCommands.registerCommand(
@@ -41,7 +41,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
       "runIndexer", new InstantCommand(() -> s_Indexer.runIndexer()));
     NamedCommands.registerCommand(
-      "runIntake", new InstantCommand(() -> s_Intake.runIntake()));
+      "runIntake", new InstantCommand(() -> s_Intake.setIntakeSpeed(0.6)));
     NamedCommands.registerCommand(
       "hingeDown", new InstantCommand(() -> s_Intake.setHingeTo(-0.27)));
 
@@ -49,53 +49,42 @@ public class RobotContainer {
 
     configureBindings();
 
+    autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
   private void configureBindings() {
-
   
     m_drivetrain.arcadeDrive(-driver.getLeftY(), -driver.getRightX());
 
-
-    driver.a().onTrue(new InstantCommand(() -> s_Shooter.spinTurretCounterClockwise()));
-    driver.a().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
-
-    driver.b().onTrue(new InstantCommand(() -> s_Shooter.spinTurretClockwise()));
-    driver.b().onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
-
-    driver.y().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
-    driver.y().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-
-    driver.x().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
-    driver.x().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-
-    driver.rightStick().onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-    driver.rightStick().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
-
-    driver.rightTrigger().onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
-    driver.rightTrigger().onFalse(new InstantCommand(() -> s_Shooter.stopShooter()));
-
-    driver.leftTrigger().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.runIntake()),
-      new InstantCommand(() -> s_Indexer.runIndexer())));
-       driver.leftTrigger().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.stopIntake()),
-      new InstantCommand(() -> s_Indexer.stopIndexer())));
-
-    driver.leftTrigger().onTrue(new ParallelCommandGroup(
+    operator.button(6).onTrue(new ParallelCommandGroup(
       new InstantCommand(() -> s_Intake.setHingeTo(-0.27)),
         new InstantCommand(() -> s_Indexer.runIndexer()), 
-          new InstantCommand(() -> s_Intake.runIntake())));
-
-    driver.leftTrigger().onFalse(new ParallelCommandGroup(
+          new InstantCommand(() -> s_Intake.setIntakeSpeed(0.6))));
+    operator.button(6).onFalse(new ParallelCommandGroup(
       new InstantCommand(() -> s_Intake.setHingeTo(0)),
         new InstantCommand(() -> s_Indexer.stopIndexer()), 
-          new InstantCommand(() -> s_Intake.stopIntake())));
+          new InstantCommand(() -> s_Intake.setIntakeSpeed(0))));
 
-    driver.leftBumper().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.runShooterReverse()),
-      new InstantCommand(() -> s_Indexer.runIndexerReverse())));
+    operator.button(7).onTrue(new ParallelCommandGroup(
+      new InstantCommand(() -> s_Shooter.runShooterReverse()),
+        new InstantCommand(() -> s_Indexer.runIndexerReverse())));
+    operator.button(7).onFalse(new ParallelCommandGroup(
+      new InstantCommand(() -> s_Shooter.stopShooter()),
+        new InstantCommand(() -> s_Indexer.stopIndexer())));
 
-    driver.leftBumper().onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.stopShooter()),
-      new InstantCommand(() -> s_Indexer.stopIndexer())));
+    operator.button(9).onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
+
+    operator.button(10).onTrue(new InstantCommand(() -> s_Shooter.spinTurretCounterClockwise()));
+    operator.button(10).onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
+
+    operator.button(11).onTrue(new InstantCommand(() -> s_Shooter.spinTurretClockwise()));
+    operator.button(11).onFalse(new InstantCommand(() -> s_Shooter.stopTurret()));
+
+    operator.button(12).onTrue(new InstantCommand(() -> s_Indexer.runIndexer()));
+    operator.button(12).onFalse(new ParallelCommandGroup(
+      new InstantCommand(() -> s_Indexer.stopIndexer()),
+        new InstantCommand(() -> s_Shooter.stopShooter())));
   }
 
   public Command getAutonomousCommand() {

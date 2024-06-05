@@ -2,7 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkLowLevel.MotorType;  
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import frc.robot.Constants;
 
 public class Indexer extends SubsystemBase {
     
@@ -20,10 +21,10 @@ public class Indexer extends SubsystemBase {
     
 
     public Indexer() {
-        indexMotor1 = new CANSparkMax(5, MotorType.kBrushless);
+        indexMotor1 = new CANSparkMax(Constants.IndexerConstants.indexer1ID, MotorType.kBrushless);
         indexMotor1.restoreFactoryDefaults();
 
-        indexMotor2 = new CANSparkMax(6, MotorType.kBrushless);
+        indexMotor2 = new CANSparkMax(Constants.IndexerConstants.indexer2ID, MotorType.kBrushless);
         indexMotor1.restoreFactoryDefaults();
     }
 
