@@ -7,15 +7,21 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkPIDController;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,13 +39,17 @@ public class CANDrivetrain extends SubsystemBase {
   different method calls. */
   DifferentialDrive diffDrive;
   private static CANDrivetrain _instance;
-  DifferentialDriveOdometry m_odometry;
+  DifferentialDriveOdometry robotOdometry;
 
-  private Pose2d robotPose;
+  static Pose2d robotPose;
   WPI_PigeonIMU pigeon;
 
   SparkAbsoluteEncoder leftEncoder;
   SparkAbsoluteEncoder rightEncoder;
+
+
+
+
 
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
@@ -55,13 +65,11 @@ public class CANDrivetrain extends SubsystemBase {
 
     pigeon = new WPI_PigeonIMU(Constants.General.pigeonID);
 
-    m_odometry = new DifferentialDriveOdometry(
+    robotOdometry = new DifferentialDriveOdometry(
       pigeon.getRotation2d(),
         leftEncoder.getPosition(), rightEncoder.getPosition(),
           new Pose2d(5.0, 13.5, new Rotation2d()));
 
-    /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
-     *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
 
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
@@ -75,33 +83,60 @@ public class CANDrivetrain extends SubsystemBase {
     // the rears set to follow the fronts
     diffDrive = new DifferentialDrive(leftFront, rightFront);
 
-    AutoBuilder.configureRamsete(
-            robotPose, // Robot pose supplier
-            m_odometry.resetPosition(), // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getCurrentSpeeds, // Current ChassisSpeeds supplier
-            this::drive, // Method that will drive the robot given ChassisSpeeds
-            new ReplanningConfig(), // Default path replanning config. See the API for the options here
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
+    AutoBuilder.configureRamsete(
+      this::getPose, // Robot pose supplier
+      this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+      this::getCurrentSpeeds, // Current ChassisSpeeds supplier
+      this::drive, // Method that will drive the robot given ChassisSpeeds
+      new ReplanningConfig(), // Default path replanning config. See the API for the options here
+      () -> {
+        // Boolean supplier that controls when the path will be mirrored for the red alliance
+        // This will flip the path being followed to the red side of the field.
+        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      },
+      this // Reference to this subsystem to set requirements
     );
   }
 
   public static CANDrivetrain getInstance() {
     if(_instance == null) {
       _instance = new CANDrivetrain();
-
     }
     return _instance;
+  }
+
+  public Pose2d getPose() {
+    return robotPose;
+  }
+
+  private void resetPose(Pose2d pose2d) {
+    robotOdometry.resetPosition(pigeon.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition(), robotPose);
+  }
+
+  private ChassisSpeeds getCurrentSpeeds() {
+    // Creating my kinematics object: track width of 27 inches
+    DifferentialDriveKinematics kinematics =
+      new DifferentialDriveKinematics(Units.inchesToMeters(27.0));
+
+    // Example differential drive wheel speeds: 2 meters per second
+    // for the left side, 3 meters per second for the right side.
+    var wheelSpeeds = new DifferentialDriveWheelSpeeds(2.0, 2.0);
+
+    // Convert to chassis speeds.
+    ChassisSpeeds chassisSpeeds = kinematics.toChassisSpeeds(wheelSpeeds);
+
+    return chassisSpeeds;
+  }
+
+  private void drive(ChassisSpeeds chassisspeeds) {
+
   }
 
 
@@ -115,7 +150,7 @@ public class CANDrivetrain extends SubsystemBase {
   public void periodic() {
     var gyroAngle = pigeon.getRotation2d();
 
-    robotPose = m_odometry.update(gyroAngle,
+    robotPose = robotOdometry.update(gyroAngle,
       leftEncoder.getPosition(),
       rightEncoder.getPosition());
   }
