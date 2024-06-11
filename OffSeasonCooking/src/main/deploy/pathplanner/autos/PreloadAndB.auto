@@ -33,7 +33,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 1.0
           }
         },
         {
@@ -45,7 +45,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.0
           }
         },
         {
@@ -83,12 +83,6 @@
           "type": "wait",
           "data": {
             "waitTime": 2.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BToShoot"
           }
         },
         {

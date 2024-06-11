@@ -76,6 +76,18 @@ public class Intake extends SubsystemBase {
     lastTime = Timer.getFPGATimestamp();
   }
 
+  public void raiseHinge(){
+    hingeMotor.set(.3);
+  }
+
+  public void lowerHinge(){
+    hingeMotor.set(-.3);
+  }
+
+  public void stopHinge(){
+    hingeMotor.set(0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

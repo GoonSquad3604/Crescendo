@@ -57,6 +57,13 @@ public class RobotContainer {
   
     m_drivetrain.arcadeDrive(-driver.getLeftY(), -driver.getRightX());
 
+    driver.y().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
+    driver.y().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    driver.a().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.a().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+
     operator.button(6).onTrue(new ParallelCommandGroup(
       new InstantCommand(() -> s_Intake.setHingeTo(-0.27)),
         new InstantCommand(() -> s_Indexer.runIndexer()), 
