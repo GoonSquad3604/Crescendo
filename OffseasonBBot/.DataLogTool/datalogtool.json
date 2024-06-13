@@ -1,0 +1,8 @@
+{
+  "download": {
+    "deleteAfter": false,
+    "localDir": "C:\\logdownload",
+    "remoteDir": "/u/logs",
+    "serverTeam": "3604"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.37737665985415,
+        "y": 5.6384135544071805
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.644099143916402,
+        "y": 7.104968586282676
+      },
+      "isLocked": false,
+      "linkedName": "EndOfDEFPart3"
+    },
+    {
+      "anchor": {
+        "x": 4.1212052794475955,
+        "y": 5.868227045096066
+      },
+      "prevControl": {
+        "x": 4.176897242683375,
+        "y": 6.239506800001254
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "EndOfDEFPart2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "rotationOverride"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "varAngle"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "revShooter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "DEFPath",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

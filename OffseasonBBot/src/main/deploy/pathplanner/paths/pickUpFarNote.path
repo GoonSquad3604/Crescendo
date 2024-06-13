@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.85582141745541,
+        "y": 5.62867536173981
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6575112768871474,
+        "y": 5.5173360731150956
+      },
+      "isLocked": false,
+      "linkedName": "EndOfMidPickUpMid"
+    },
+    {
+      "anchor": {
+        "x": 2.9516740514962514,
+        "y": 6.9449383343211135
+      },
+      "prevControl": {
+        "x": 1.7450148480543874,
+        "y": 6.582940573288554
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pickedUpC"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 29.74,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

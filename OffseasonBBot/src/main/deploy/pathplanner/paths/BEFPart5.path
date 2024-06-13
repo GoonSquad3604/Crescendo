@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.309209311182562,
+        "y": 4.197161039636433
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.004291493754993,
+        "y": 4.158208268966955
+      },
+      "isLocked": false,
+      "linkedName": "pickedUpF"
+    },
+    {
+      "anchor": {
+        "x": 1.4243070953520323,
+        "y": 5.531293435066112
+      },
+      "prevControl": {
+        "x": 1.589856370697321,
+        "y": 5.365744159720822
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "subShotF"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.41,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "BEFPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
