@@ -43,9 +43,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-    CANDrivetrain.diffDrive.feed();
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void autonomousExit() {}
