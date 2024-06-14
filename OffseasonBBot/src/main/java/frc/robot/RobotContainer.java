@@ -389,11 +389,11 @@ public class RobotContainer {
     pit.a().onTrue(new InstantCommand(() -> s_Climber.climberUp()));
     pit.a().onFalse(new InstantCommand(() -> s_Climber.stopClimber()));
 
-    pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
-    pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
+    // pit.x().and(pit.pov(0)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kForward));
+    // pit.x().and(pit.pov(180)).whileTrue(drivetrain.runDriveQuasiTest(Direction.kReverse));
 
-    pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
-    pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
+    // pit.y().and(pit.pov(0)).whileTrue(drivetrain.runDriveDynamTest(Direction.kForward));
+    // pit.y().and(pit.pov(180)).whileTrue(drivetrain.runDriveDynamTest(Direction.kReverse));
 
     pit.rightBumper().onTrue(new InstantCommand(() -> s_Intake.cleam()));
     pit.rightBumper().onFalse(new InstantCommand(() -> s_Intake.stopIntake()));
@@ -431,10 +431,10 @@ public class RobotContainer {
   }
 //These are commands we use during the autonomous phase
   public RobotContainer() {
-    NamedCommands.registerCommand(
-        "rotationOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(true)));
-    NamedCommands.registerCommand(
-        "NOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(false)));
+    // NamedCommands.registerCommand(
+    //     "rotationOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(true)));
+    // NamedCommands.registerCommand(
+    //     "NOverride", new InstantCommand(() -> drivetrain.setAutoAimPath(false)));
     NamedCommands.registerCommand(
         "rampDown", new InstantCommand(() -> s_Flipper.setFlipperDown(), s_Flipper));
     NamedCommands.registerCommand(
