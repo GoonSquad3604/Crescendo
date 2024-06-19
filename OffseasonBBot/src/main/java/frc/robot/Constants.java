@@ -40,15 +40,13 @@ public final class Constants {
     public static final int rightShooterTrapRPM = 2000; // 4200
 
     // Shooter Positions
-    public static final double shooterSpeaker = 56; // 56
-    public static final double shooterAmp = 40; // 44 30 34  //ramp 50 degrees .15 power .73 ramp pos
-    public static final double shooterTrap = 68;
-    public static final double shooterHome = 65.5;
-    public static final double babyBirdPos = 50;
-    public static final double passingAngle = 45;
-    public static final double shooterTravel = 8;
+    public static final double shooterSpeaker = .81; // 56
+    public static final double shooterHome = .75;
+    public static final double babyBirdPos = .75;
+    public static final double passingAngle = .77;
+    public static final double shooterTravel = .67;
 
-    public static final double shooterMax = 68.8; // 68.8 degrees
+    // public static final double shooterMax = 68.8; // 68.8 degrees
 
     // PIDS
     public static final double shooterkP = 0.0005;
@@ -118,9 +116,9 @@ public final class Constants {
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-    public static final double hingeDown = .6292;
-    public static final double hingeUp = .3697;
-    public static final double hingeStart = .2752;
+    public static final double hingeDown = .4585;
+    public static final double hingeUp = .7630;
+    // public static final double hingeStart = .7990;
 
     public static final int intakeRPM = 2000;
 
@@ -130,7 +128,8 @@ public final class Constants {
     public static final double repositionNoteAutoPower = -2 * Math.pow(10, -1);
 
     public static final double cleam = -0.5;
-    public static final double raiseHinge = -0.4;
+    public static final double raiseHinge = -0.3;
+    public static final double lowerHinge = 0.3;
   }
 
   public static final class IndexConstants {
@@ -157,86 +156,7 @@ public final class Constants {
     public static final double babyBirdIndex = Math.max(0.2, 0.01);
   }
 
-  public static final class LEDConstants {
-    public static final int IDLeft = 1;
-    public static final int lengthLeft = 15;
 
-    public static final int IDRight = 0;
-    public static final int lengthRight = 30;
-
-    public static final int start = 0;
-  }
-
-  public static final class FlipperConstants {
-    public static final int flipperID = 10;
-    public static final double flipperDown = .973;
-    public static final double flipperUp = .668; // .457
-    public static final double crap = .26;
-    public static final double flipperP =  Math.floor(2.2) + 0.2;
-    public static final double flipperI =  (int) 0.999;
-    public static final double flipperD =  Math.log(1);
-
-    public static final double runFlipperPower = Math.signum(0.1) - 0.9;
-    public static final double runFlipperBackwardPower = Math.tan(Math.atan(-0.1));
-  }
-
-  public static final class rAMPConstants {
-    public static final int rAMPID = 10;
-    public static final double rAMPUP = .35;
-    public static final double almostUp = .4;
-    public static final double almostDown = .5;
-
-    public static final double rAMPDOWN = .73;
-  }
-
-  public static class VisionConstants {
-
-    /**
-     * Array of PhotonVision camera names. The values here match ROBOT_TO_CAMERA_TRANSFORMS for the
-     * camera's location.
-     */
-    public static final String[] APRILTAG_CAMERA_NAMES = {"Left", "Right"};
-
-    public static final Pose2d BLUE_AMP_DISTANCE_TARGET =
-        new Pose2d(1.95, 6.82, new Rotation2d(-Math.PI));
-    public static final Pose2d RED_AMP_DISTANCE_TARGET =
-        new Pose2d(14.6, 6.82, new Rotation2d(Math.PI));
-    public static final Pose2d BLUE_SPEAKER_DISTANCE_TARGET =
-        new Pose2d(0.2, 5.52, new Rotation2d(-Math.PI));
-    public static final Pose2d RED_SPEAKER_DISTANCE_TARGET =
-        new Pose2d(16.53, 5.52, new Rotation2d(Math.PI));
-    public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(6, 6, 10);
-    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(.6, .6, 7);
-
-    /**
-     * Physical location of the apriltag cameras on the robot, relative to the center of the robot.
-     * The values here math APRILTAG_CAMERA_NAMES for the camera's name.
-     */
-    public static final Transform3d LEFT_ROBOT_TO_CAMERA =
-        new Transform3d(
-            new Translation3d(-.2667, 0.24765, 0.56896), // 11.5 inches
-            new Rotation3d(
-                Math.toRadians(0),
-                -Math.toRadians(65),
-                Math.toRadians(120))); // pitch 46.9  roll55  yaw
-
-    public static final Transform3d RIGHT_ROBOT_TO_CAMERA =
-        new Transform3d(
-            new Translation3d(-.2667, -0.24765, 0.56896), // 11.5 inches
-            new Rotation3d(
-                Math.toRadians(0),
-                -Math.toRadians(65),
-                Math.toRadians(-120))); // pitch 46.9  roll55  yaw
-
-    public static final double FIELD_LENGTH = 16.54175;
-    public static final double FIELD_WIDTH = 8.0137;
-
-    /**
-     * Minimum target ambiguity. Targets with higher ambiguity will be discarded. Not appliable when
-     * multiple tags are in view in a single camera.
-     */
-    public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
-  }
 
   public static final
   class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned

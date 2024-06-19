@@ -8,36 +8,31 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LED;
 
 //Intakes note until the note is seen by the sensor
 public class FeedUntillSensor extends Command {
   /** Creates a new FeedUntillSensor. */
   Index s_Index;
 
-  private LED s_led;
   private Intake s_Intake;
 
-  public FeedUntillSensor(LED left, Intake intake) {
+  public FeedUntillSensor(Intake intake) {
     s_Index = Index.getInstance();
-    s_led = left;
     s_Intake = intake;
 
-    addRequirements(s_Index, s_led);
+    addRequirements(s_Index);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     s_Index.setIndexPower(Constants.IntakeConstants.feedUntilSensorPower); // .3
-    s_led.setColor(255, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (s_Intake.hasNote()) {
-      s_led.setColor(0, 255, 0);
     }
   }
 

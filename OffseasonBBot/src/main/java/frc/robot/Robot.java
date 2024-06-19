@@ -88,18 +88,6 @@ public class Robot extends LoggedRobot {
     // m_robotContainer.getAngle();
 
     // UNCOMMENT TO ACTIVATE VISION FOR AUTON
-    var visionEst = m_robotContainer.getBestPose();
-    if (m_robotContainer.distanceFilter()) {
-      visionEst.ifPresent(
-          est -> {
-            var estPose = est.estimatedPose.toPose2d();
-
-            var estStdDevs = m_robotContainer.getEstimationStdDevs(estPose);
-
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-          });
-    }
   }
 
   @Override

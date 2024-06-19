@@ -6,7 +6,6 @@ package frc.robot.commands.stateController;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.StateController;
@@ -20,15 +19,13 @@ public class SpeakerMode extends InstantCommand {
   Intake m_Intake;
   Shooter m_Shooter;
   StateController m_StateController;
-  Flipper m_Flipper;
 
   public SpeakerMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = Intake.getInstance();
     m_Shooter = Shooter.getInstance();
     m_StateController = StateController.getInstance();
-    m_Flipper = Flipper.getInstance();
-    addRequirements(m_Intake, m_Shooter, m_StateController, m_Flipper);
+    addRequirements(m_Intake, m_Shooter, m_StateController);
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +33,6 @@ public class SpeakerMode extends InstantCommand {
   public void initialize() {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp + .04);
     m_StateController.setSpeaker();
-    m_Flipper.setFlipperDown();
     // m_Shooter.shooterTo(40);
     m_Shooter.setShooterRPM(
         m_StateController.getLeftShooterSpeed(), m_StateController.getRightShooterSpeed());

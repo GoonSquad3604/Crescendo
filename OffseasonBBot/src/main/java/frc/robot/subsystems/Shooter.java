@@ -191,9 +191,9 @@ public class Shooter extends SubsystemBase {
   // Indexer methods
 
   // -0.002667*X + 0.7915
-  public void shooterTo(double position) {
-    anglePIDController.setReference(position * .00297 + .49717, ControlType.kPosition);
-  }
+  // public void shooterTo(double position) {
+  //   anglePIDController.setReference(position * .00251 + .6471, ControlType.kPosition);
+  // }
 
   // .004324 + .5256
   public void shooterTo() {
@@ -209,35 +209,16 @@ public class Shooter extends SubsystemBase {
     return rpms;
   }
 //returns angle to speaker using the robot's pose 
-  public double lookUpTable(Pose2d pos) {
-    Pose2d pose = pos;
-    //Sets target to red speaker
-    Pose2d target = Constants.VisionConstants.RED_SPEAKER_DISTANCE_TARGET;
-    var alliance = DriverStation.getAlliance();
-    //changes target to blue speaker if on blue alliance
-    if (alliance.isPresent()) {
-      if (alliance.get() == DriverStation.Alliance.Blue)
-        target = Constants.VisionConstants.BLUE_SPEAKER_DISTANCE_TARGET;
-    }
+  
 
-    double distance = pose.getTranslation().getDistance(target.getTranslation());
-    var x = LookUpTable.calcShooterTableEntry(distance);
-    double angle = x.angle;
-    SmartDashboard.putNumber("ang", angle);
-    SmartDashboard.putNumber("dist", distance);
-
-    trackedLookUpTableAngle = angle;
-
-    return angle;
-  }
-
+   
   @Override
   public void periodic() {
 
-    trackedAngle = (getShooterAngleClicks() - .49717) / .00297;
+    // trackedAngle = (getShooterAngleClicks() - .6471) / .00251;
 
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks() - .49717) / .00297);
+    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks()));
     leftRPM = leftShooterEncoder.getVelocity();
     rightRPM = rightShooterEncoder.getVelocity();
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());
@@ -285,7 +266,7 @@ public class Shooter extends SubsystemBase {
 
     // SmartDashboard.putNumber("AnglekP", angleP);
     //trapAngle = SmartDashboard.getNumber("trap angle", 48);
-    SmartDashboard.putNumber("trap angle", Constants.ShooterConstants.trapAngle);
+   
     // SmartDashboard.putNumber("aNGLe dest", trapAngle);
 
     //   double newAnglekD = SmartDashboard.getNumber("AnglekD", 0);

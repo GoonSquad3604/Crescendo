@@ -23,9 +23,7 @@ public class StateController extends SubsystemBase {
   private double indexSpeed;
 
   private boolean intakeEnabled;
-  private LED s_LeftLED;
-  private LED s_RightLED;
-
+  
   //Allows us to change what certain buttons do depending on the state the robot is in
   public StateController() {
     // m_Vision = Vision.getInstance();
@@ -64,24 +62,9 @@ public class StateController extends SubsystemBase {
     intakeEnabled = false;
   }
 
-  public void setTrap() {
-    m_Mode = RobotMode.TRAP;
-    indexSpeed = Constants.IndexConstants.indexTrapRPM;
-    shooterAngle = Constants.ShooterConstants.shooterTrap;
-    leftShooterSpeed = Constants.ShooterConstants.leftShooterTrapRPM;
-    rightShooterSpeed = Constants.ShooterConstants.rightShooterTrapRPM;
-  }
 
-  public void setAmp() {
-    m_Mode = RobotMode.AMP;
-    indexSpeed = Constants.IndexConstants.indexAmpRPM;
-    shooterAngle = Constants.ShooterConstants.shooterAmp;
-    leftShooterSpeed = Constants.ShooterConstants.leftShooterAmpRPM;
-    rightShooterSpeed = Constants.ShooterConstants.rightShooterAmpRPM;
 
-    // s_LeftLED.setColor(255, 255, 0);
-    // s_RightLED.setColor(255, 255, 0);
-  }
+ 
 
   public void setSpeaker() {
     m_Mode = RobotMode.SPEAKER;

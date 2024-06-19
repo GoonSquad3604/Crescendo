@@ -57,7 +57,7 @@ public class Intake extends SubsystemBase {
     hingePIDController.setP(Constants.IntakeConstants.hingekP);
     hingePIDController.setI(Constants.IntakeConstants.hingekI);
     hingePIDController.setD(Constants.IntakeConstants.hingekD);
-    hingePIDController.setOutputRange(-1, .9);
+    hingePIDController.setOutputRange(-.3, .3);
   }
 
   public static Intake getInstance() {
@@ -102,7 +102,7 @@ public class Intake extends SubsystemBase {
 
   // lowers the Hinge out of the Intake
   public void lowerHinge() {
-    hingeMotor.set(.4);
+    hingeMotor.set(Constants.IntakeConstants.lowerHinge);
   }
   //See next line
   public void stopHinge() {
@@ -115,7 +115,7 @@ public class Intake extends SubsystemBase {
     System.out.println(hingePos);
   }
 
-  // public void hingePosition(double position) {
+  // // public void hingePosition(double position) {
   //   hingePIDController.setReference(position, CANSparkMax.ControlType.kPosition);
   // }
 
