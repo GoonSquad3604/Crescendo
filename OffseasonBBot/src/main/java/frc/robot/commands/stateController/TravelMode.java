@@ -33,9 +33,9 @@ public class TravelMode extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
+     m_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     m_StateController.setTravel();
-    m_Shooter.shooterToPos(.67);
+    m_Shooter.shooterToAngle(Constants.ShooterConstants.shooterTravel);
     m_Shooter.setPower(0);
   }
 }

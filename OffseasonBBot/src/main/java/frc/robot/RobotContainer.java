@@ -133,6 +133,14 @@ public class RobotContainer {
     //     .onTrue(
     //         new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeStart)));
     buttonBox.button(1).onTrue(new TravelMode());
+
+    buttonBox.button(2).onTrue(new ParallelCommandGroup(
+        new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeDown)),
+            new InstantCommand(() -> s_Intake.runIntake())));
+
+    buttonBox.button(2).onFalse(new ParallelCommandGroup(
+        new InstantCommand(() -> s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp)),
+            new InstantCommand(() -> s_Intake.stopIntake())));
    
     // buttonBox.button(3).onTrue(new AmpMode().andThen(new RepositionForAmp()));
     // buttonBox.button(3).onTrue(new InstantCommand(() -> s_Shooter.setShooterRPM(-1500,2000)));
@@ -196,8 +204,9 @@ public class RobotContainer {
     buttonBox
         .button(9)
         .onTrue(
-            new InstantCommand(
-                () -> s_Shooter.shooterToPos(Constants.ShooterConstants.shooterSpeaker)));
+            new ParallelCommandGroup(new InstantCommand(
+                () -> s_Shooter.shooterToAngle(Constants.ShooterConstants.shooterSpeaker)), new InstantCommand(
+                () -> s_Shooter.setShooterRPM(Constants.ShooterConstants.rightShooterSpeakerRPM, Constants.ShooterConstants.leftShooterSpeakerRPM))));
     // buttonBox.button(9).and(ampTrigger).onTrue(new InstantCommand(() ->
     // s_Shooter.setPower(.11)));
     buttonBox
@@ -232,24 +241,26 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> s_Index.setIndexRPM(s_StateController.getIndexSpeed())));
     // .onTrue(new InstantCommand(() -> s_Index.setIndexPower(1)));
 
-    buttonBox
-        .button(12)
-        .and(travelTrigger)
-        .onTrue(
-            new InstantCommand(
-                    () ->
-                        s_Shooter.setShooterRPM(
-                            Constants.ShooterConstants.leftShooterSpeakerRPM,
-                            Constants.ShooterConstants.rightShooterSpeakerRPM))
-                .andThen(
-                    Commands.waitSeconds(.3)
-                        .andThen(
-                            new InstantCommand(
-                                () ->
-                                    s_Index.setIndexRPM(
-                                        Constants.IndexConstants.indexSpeakerRPM)))));
+    // buttonBox
+    //     .button(12)
+    //     .and(travelTrigger)
+    //     .onTrue(
+    //         new InstantCommand(
+    //                 () ->
+    //                     s_Shooter.setShooterRPM(
+    //                         Constants.ShooterConstants.leftShooterSpeakerRPM,
+    //                         Constants.ShooterConstants.rightShooterSpeakerRPM))
+    //             .andThen(
+    //                 Commands.waitSeconds(.3)
+    //                     .andThen(
+    //                         new InstantCommand(
+    //                             () ->
+    //                                 s_Index.setIndexRPM(
+    //                                     Constants.IndexConstants.indexSpeakerRPM)))));
 
-
+    buttonBox.button(12).onTrue(new InstantCommand(() -> s_Index.setIndexRPM(Constants.IndexConstants.indexSpeakerRPM)));
+    buttonBox.button(12).onFalse(new ParallelCommandGroup(new InstantCommand(() -> s_Shooter.stopShooter()), new InstantCommand(() -> s_Index.indexStop())));
+   
     buttonBox
         .button(12)
         .and(climberTrigger)
@@ -268,34 +279,20 @@ public class RobotContainer {
     // InstantCommand(() ->
     // s_Shooter.setShooterRPM(Constants.ShooterConstants.leftShooterSpeakerRPM,
     // Constants.ShooterConstants.rightShooterSpeakerRPM))).andThen(Commands.waitSeconds(.6)).andThen(new InstantCommand(()->s_Index.setIndexRPM(s_StateController.getIndexSpeed()))));
-    driver
-        .y()
-        .onTrue(
-            new InstantCommand(
-                () -> s_Shooter.raiseAngle()));
-    driver
-        .y()
-        .onFalse(
-            new InstantCommand(
-                () -> s_Shooter.stopAngle()));
-    driver
-        .b()
-            .onTrue(
-                new InstantCommand(
-                    () -> s_Shooter.lowerAngle()));
-    driver
-        .b()
-            .onFalse(
-                new InstantCommand(
-                    () -> s_Shooter.stopAngle()));
+    
+    driver.y().onTrue(new InstantCommand(() -> s_Shooter.raiseAngle()));
+    driver.y().onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
+
+    driver.b().onTrue(new InstantCommand(() -> s_Shooter.lowerAngle()));
+    driver.b().onFalse(new InstantCommand(() -> s_Shooter.stopAngle()));
    
     driver.rightStick().onTrue(new InstantCommand(() -> s_Intake.stopHinge()));
 
-    driver.a().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
-    driver.a().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
-
-    driver.x().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.x().onTrue(new InstantCommand(() -> s_Intake.raiseHinge()));
     driver.x().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
+
+    driver.a().onTrue(new InstantCommand(() -> s_Intake.lowerHinge()));
+    driver.a().onFalse(new InstantCommand(() -> s_Intake.stopHinge()));
    
     // driver.a().onTrue(aimAndShootCommandAmp);
 

@@ -45,7 +45,7 @@ public class RepositionNote extends Command {
 
     s_Intake.setHingeTo(Constants.IntakeConstants.hingeUp);
     s_StateController.setTravel();
-    s_Shooter.shooterToPos(Constants.ShooterConstants.shooterHome);
+    s_Shooter.shooterToAngle(Constants.ShooterConstants.shooterHome);
   }
 
   // Returns true when the command should end.

@@ -58,6 +58,7 @@ public class Shooter extends SubsystemBase {
 
     anglePIDController = angleMotor.getPIDController();
     angleEncoder = angleMotor.getAbsoluteEncoder(Type.kDutyCycle);
+    angleEncoder.setInverted(true);
 
     rightShooterEncoder = rightShooterMotor.getEncoder();
     rightShooterPIDController = rightShooterMotor.getPIDController();
@@ -88,7 +89,7 @@ public class Shooter extends SubsystemBase {
 
     rightShooterPIDController.setOutputRange(-1, 1);
     leftShooterPIDController.setOutputRange(-1, 1);
-    anglePIDController.setOutputRange(-1, 1);
+    anglePIDController.setOutputRange(-.3, .3);
 
     leftShooterMotor.enableVoltageCompensation(12);
     rightShooterMotor.enableVoltageCompensation(12);
@@ -200,8 +201,8 @@ public class Shooter extends SubsystemBase {
     anglePIDController.setReference(Constants.ShooterConstants.trapAngle * .00297 + .49717, ControlType.kPosition);
   }
 //Sets shooter angle to specific position
-  public void shooterToPos(double pos) {
-    anglePIDController.setReference(pos, ControlType.kPosition);
+  public void shooterToAngle(double angle) {
+    anglePIDController.setReference((angle - 131.8) / -372.2, ControlType.kPosition);
   }
 //returs array of speeds from each shooter encoder.
   public double[] getRPMS() {
@@ -218,7 +219,7 @@ public class Shooter extends SubsystemBase {
     // trackedAngle = (getShooterAngleClicks() - .6471) / .00251;
 
     SmartDashboard.putNumber("ShooterAngleEncoder", getShooterAngleClicks());
-    SmartDashboard.putNumber("ShooterAngle", (getShooterAngleClicks()));
+    SmartDashboard.putNumber("ShooterAngle", ((getShooterAngleClicks() * -372.2) + 131.8));
     leftRPM = leftShooterEncoder.getVelocity();
     rightRPM = rightShooterEncoder.getVelocity();
     // SmartDashboard.putNumber("leftShooterRPM", leftShooterEncoder.getVelocity());

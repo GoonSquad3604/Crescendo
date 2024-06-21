@@ -42,6 +42,8 @@ public class Intake extends SubsystemBase {
     hingeMotor.restoreFactoryDefaults();
     hingePIDController = hingeMotor.getPIDController();
     hingeEncoder = hingeMotor.getAbsoluteEncoder(Type.kDutyCycle);
+    hingeEncoder.setInverted(true);
+
     hingeMotor.setIdleMode(IdleMode.kBrake);
 
     hingePIDController.setFeedbackDevice(hingeEncoder);
@@ -57,11 +59,10 @@ public class Intake extends SubsystemBase {
     hingePIDController.setP(Constants.IntakeConstants.hingekP);
     hingePIDController.setI(Constants.IntakeConstants.hingekI);
     hingePIDController.setD(Constants.IntakeConstants.hingekD);
-    hingePIDController.setOutputRange(-.3, .3);
+    hingePIDController.setOutputRange(-.5, .5);
   }
 
   public static Intake getInstance() {
-
     if (_instance == null) {
       _instance = new Intake();
     }

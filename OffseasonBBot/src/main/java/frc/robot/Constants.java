@@ -40,13 +40,15 @@ public final class Constants {
     public static final int rightShooterTrapRPM = 2000; // 4200
 
     // Shooter Positions
-    public static final double shooterSpeaker = .81; // 56
-    public static final double shooterHome = .75;
-    public static final double babyBirdPos = .75;
-    public static final double passingAngle = .77;
-    public static final double shooterTravel = .67;
+    public static final double shooterSpeaker = 60;
+    public static final double shooterHome = 60;
+    public static final double babyBirdPos = 60;
+    public static final double passingAngle = 30;
+    public static final double shooterTravel = 10;
+    public static final double trapAngle = 48.0;
 
-    // public static final double shooterMax = 68.8; // 68.8 degrees
+
+    // public static final double shooterMax = 68.8; 
 
     // PIDS
     public static final double shooterkP = 0.0005;
@@ -54,7 +56,6 @@ public final class Constants {
     public static final double shooterkD = 0.0;
     public static final double shooterkF = 0.00016;
 
-    
 
     public static final double angleUpP = 0.0;
     public static final double angleDownP = 0.0;
@@ -62,9 +63,6 @@ public final class Constants {
     public static final double anglekP = 9.0;
     public static final double anglekI = 0.0;
     public static final double anglekD = 0.0;
-
-    public static final double trapAngle = 48.0;
-
 
   }
 
@@ -116,9 +114,8 @@ public final class Constants {
     public static final double hingekI = 0.0;
     public static final double hingekD = 0.0;
 
-    public static final double hingeDown = .4585;
-    public static final double hingeUp = .7630;
-    // public static final double hingeStart = .7990;
+    public static final double hingeDown = .5350;
+    public static final double hingeUp = .2965;
 
     public static final int intakeRPM = 2000;
 

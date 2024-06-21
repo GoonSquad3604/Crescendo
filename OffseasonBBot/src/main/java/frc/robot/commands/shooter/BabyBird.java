@@ -39,7 +39,7 @@ public class BabyBird extends Command {
 
     s_Shooter.setShooterRPM(
         Constants.ShooterConstants.babyBirdLeftRPM, Constants.ShooterConstants.babyBirdRightRPM);
-    s_Shooter.shooterToPos(Constants.ShooterConstants.babyBirdPos);
+    s_Shooter.shooterToAngle(Constants.ShooterConstants.babyBirdPos);
 
     timer.start();
   }

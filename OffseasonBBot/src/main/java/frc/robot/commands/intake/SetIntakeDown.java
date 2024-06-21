@@ -32,6 +32,6 @@ public class SetIntakeDown extends InstantCommand {
   public void initialize() {
     m_Intake.setHingeTo(Constants.IntakeConstants.hingeDown);
     m_StateController.setIntake();
-    m_Shooter.shooterToPos(Constants.ShooterConstants.shooterHome);
+    m_Shooter.shooterToAngle(Constants.ShooterConstants.shooterHome);
   }
 }

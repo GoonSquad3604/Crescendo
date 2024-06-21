@@ -31,6 +31,6 @@ public class AfterShot extends InstantCommand {
   public void initialize() {
 
     m_StateContoller.setTravel();
-    m_Shooter.shooterToPos(Constants.ShooterConstants.shooterTravel);
+    m_Shooter.shooterToAngle(Constants.ShooterConstants.shooterTravel);
   }
 }
